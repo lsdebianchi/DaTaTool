@@ -1,0 +1,45 @@
+window.onload = function() {
+  paper.setup(document.getElementById("paper_canvas"));
+  paper_tool = new paper.Tool();
+  load_paper_handlers();
+};
+
+function propagate_settings() {
+  $("canvas").css("background-color", scene_state.settings.background.color);
+}
+
+function run_scene() {
+  SCENE_RUNNING = true;
+
+  save_scene(current_project.name + "_LOG");
+
+  for (var i in scene_state.elements) {
+    if (scene_state.elements[i]) assign_methods(scene_state.elements[i]);
+  }
+
+  paper.view.onFrame = function(event) {
+    for (var i in scene_state.elements) {
+      for (var j in attr_list) {
+        var d = scene_state.elements[i]["data_" + attr_list[j]];
+        if (d.method) d.method(d.var);
+      }
+      if (scene_state.elements[i].edgeLoop)
+        applyEdgeLoop(scene_state.elements[i]);
+      core_propagation(
+        scene_state.elements[i],
+        scene_state.elements[i]._paper_elem
+      );
+    }
+    runTime.frames++;
+  };
+}
+
+function stop_scene() {
+  SCENE_RUNNING = false;
+
+  runTime = {
+    frames: 0
+  };
+  load_scene(current_project.name + "_LOG");
+  paper.view.onFrame = function(event) {};
+}

@@ -1,0 +1,65 @@
+var _LAST_FILLCOLOR = "#525252";
+var _LAST_STROKECOLOR = "#ffffff";
+var _LAST_STROKE_WIDTH = 1;
+
+var SCENE_RUNNING = false;
+var HIDE_HEADBAR = false;
+var DROP_OBJECT = {
+  active: false,
+  type: undefined
+};
+var TRANSFORM = {
+  active: false,
+  type: undefined,
+  initial_pos: null,
+  target_pos: null,
+  initial_val: NaN,
+  ratio: NaN,
+  initial_distance: NaN
+};
+var LINEMAKING = {
+  active: false,
+  type: "line"
+};
+var runTime = {
+  frames: 0
+};
+var PREVENT_HOTKEYS = false;
+var EXPRESSION_PANEL_OPEN = false;
+
+var width = window.innerWidth;
+var height = window.innerHeight;
+var current_project = new Scene({});
+var current_element = new Element({});
+var current_expression = {
+  dataBehaviour: undefined,
+  dataSource: "time",
+  dataType: "frames",
+  expression: "",
+  inputType: ""
+};
+var paper_elements = [];
+var paper_tool;
+
+var scene_state = {
+  play_setting: {
+    time: true,
+    physics: true,
+    sensor: true,
+    data: true,
+    event: true
+  },
+
+  settings: {
+    background: {
+      color: "#000000"
+    }
+  },
+
+  elements: [],
+
+  objects: {}
+};
+
+var mouseX = 0;
+var mouseY = 0;

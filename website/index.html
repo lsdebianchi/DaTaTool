@@ -1,0 +1,463 @@
+<html>
+  <head>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+      <link href="https://fonts.googleapis.com/css?family=Baloo+Tamma|Barlow|Black+Han+Sans|Cardo|Chakra+Petch|Chivo|Crete+Round|Indie+Flower|Josefin+Slab|Julius+Sans+One|Lora|Montserrat|Nanum+Gothic+Coding|Oswald|Ovo|Patua+One|Permanent+Marker|Press+Start+2P|Questrial|Rasa|Roboto" rel="stylesheet">
+
+      <link rel="stylesheet" href="./css/style.css">
+
+
+      <title>DataDraw</title>
+
+  </head>
+
+  <body>
+
+    <div id="canvas_wrapper">
+      <canvas id="paper_canvas" width="100vw" height="100vh"></canvas>
+    </div>
+
+    <div id="headbar">
+
+      <div id="headcontent" class="">
+        <div id="save_status" class="hide"></div>
+
+        <div id="scene_name">
+          <input type="text" value="test_scene"></input>
+        </div>
+
+        <div id="menu_options">
+
+          <div id="scene_options">
+            <div class="drop_down title" id="scene_option_title">Scene</div>
+            <div class="drop_down_content">
+              <div class="drop_down_option" id="save_option">Save</div>
+              <div class="drop_down_option" id="load_option">Load</div>
+            </div>
+          </div>
+
+          <div id="edit_options">
+            <div class="drop_down title" id="edit_option_title">Edit</div>
+            <div class="drop_down_content">
+              <div class="drop_down_option" id="add_option">Add</div>
+            </div>
+          </div>
+
+          <div id="view_options">
+            <div class="drop_down title" id="view_option_title">View</div>
+            <div class="drop_down_content">
+              <div class="drop_down_option" id="show_properties_option">Properties</div>
+              <div class="drop_down_option" id="show_hierarcy_option">Layers</div>
+              <div class="drop_down_option" id="show_settings_option">Settings</div>
+              <div class="drop_down_option" id="show_headbar_option">Headbar</div>
+            </div>
+          </div>
+
+          <div id="help_options">
+            <div class="drop_down title" id="help_option_title">Help</div>
+            <div class="drop_down_content">
+              <div class="drop_down_desc">[S] save</div>
+              <div class="drop_down_desc">[A] add</div>
+              <div class="drop_down_desc">[P] play</div>
+              <div class="drop_down_desc">[ESC] stop</div>
+              <div class="drop_down_desc">[W] resize</div>
+              <div class="drop_down_desc">[R] rotate</div>
+              <div class="drop_down_desc">[D] duplicate</div>
+              <div class="drop_down_desc">[SPACE] hide panels</div>
+              <div class="drop_down_desc">[BACKSPACE] delete</div>
+              <div class="drop_down_desc">[ENTER] confirm exp</div>
+              <div class="drop_down_desc">[ESC] cancel exp</div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div id="run_option">
+
+          <div class="runButton" id="run_all">play</div>
+          <div class="runButton active" id="run_time">T</div>
+          <div class="runButton active" id="run_sensor">S</div>
+          <div class="runButton active" id="run_physics">P</div>
+          <div class="runButton active" id="run_data">D</div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div id="property_panel" class="panel active open">
+
+      <div class="header">
+        <div class="start">
+          <img class="drop_triangle" src="./visual_assets/triangle_menu.png">
+          <div class="panel_title">PROPERTIES</div>
+        </div>
+        <img class="grip" src="./visual_assets/grip.png">
+      </div>
+
+      <div class="content ">
+
+        <div v-bind:class="{ just_hide: !hasDimension}" class="panel_subsection">
+          <div class="panel_entry">
+            <div class="entry_name dark">{{type}}</div>
+          </div>
+        </div>
+        <div v-bind:class="{ just_hide: hasDimension}" class="panel_entry lock">
+          <div class="entry_name">nothing selected</div>
+        </div>
+
+      </br>
+
+        <div v-bind:class="{ just_hide: !hasDimension}" class="panel_section">
+          <div class="panel_subsection">
+            <div class="entry_name button nonselect" id="move_top"><div>send to the top</div></div>
+          </div>
+          <div class="panel_subsection">
+            <div class="entry_name button nonselect" id="move_bottom"><div>send to the bottom</div></div>
+          </div>
+        </div>
+
+        <div v-bind:class="{ just_hide: !hasDimension}" class="panel_section">
+          <div class="panel_title">Dimensions</div>
+
+          <div class="panel_subsection">
+            <div class="panel_entry">
+              <div class="entry_name">x :</div>
+              <input type="number" class="entry_field" v-model="x"/>
+              <div v-bind:class="{active: data_x.dataBehaviour}" class="entry_data" pointer="x"></div>
+
+            </div>
+            <div class="panel_entry">
+              <div class="entry_name">y :</div>
+              <input type="number" class="entry_field"v-model="y"/>
+              <div v-bind:class="{active: data_y.dataBehaviour}" class="entry_data" pointer="y"></div>
+            </div>
+            <div class="panel_entry">
+              <div class="entry_name">w :</div>
+              <input type="number" class="entry_field" v-model="w"/>
+              <div v-bind:class="{active: data_w.dataBehaviour}" class="entry_data" pointer="w"></div>
+            </div>
+            <div class="panel_entry" v-bind:class="{ lock: lockRatio }">
+              <div class="entry_name">h :</div>
+              <input type="number" class="entry_field" v-model="h"/>
+              <div v-bind:class="{active: data_h.dataBehaviour}" class="entry_data" pointer="h"></div>
+            </div>
+          </div>
+
+          <div class="panel_subsection">
+            <div class="panel_entry">
+              <div class="entry_name">r :</div>
+              <input type="number" class="entry_field" v-model="r"/>
+              <div v-bind:class="{active: data_r.dataBehaviour}" class="entry_data" pointer="r"></div>
+            </div>
+
+            <div class="panel_entry">
+              <div class="entry_name">lock ratio :</div>
+              <input kind="lockRatio" class="entry_field big" type="checkbox" v-model="lockRatio">
+              <div v-bind:class="{active: data_lockRatio.dataBehaviour}" class="entry_data" pointer="lockRatio"></div>
+            </div>
+            <div class="panel_entry">
+              <div class="entry_name">edge loop :</div>
+              <input kind="edgeLoop" class="entry_field big" type="checkbox" v-model="edgeLoop">
+              <div class="no_entry_data"></div>
+            </div>
+          </div>
+
+          <div class="panel_subsection">
+            <div class="panel_entry">
+              <div class="entry_name">blend modes :</div>
+              <select class="entry_field selector" v-model="blendMode">
+                <option>normal</option>
+                <option>multiply</option>
+                <option>screen</option>
+                <option>overlay</option>
+                <option>soft-light</option>
+                <option>hard- light</option>
+                <option>color-dodge</option>
+                <option>color-burn</option>
+                <option>darken</option>
+                <option>lighten</option>
+                <option>difference</option>
+                <option>exclusion</option>
+                <option>hue</option>
+                <option>saturation</option>
+                <option>luminosity</option>
+                <option>color</option>
+                <option>add</option>
+                <option>subtract</option>
+                <option>average</option>
+                <option>pin-light</option>
+                <option>negation</option>
+                <option>source-over</option>
+                <option>source-in</option>
+                <option>source-out</option>
+                <option>source-atop</option>
+                <option>destination-over</option>
+                <option>destination-in</option>
+                <option>destination-out</option>
+                <option>destination-atop</option>
+                <option>lighter</option>
+                <option>darker</option>
+                <option>copy</option>
+                <option>xor</option>
+              </select>
+              <div class="no_entry_data"></div>
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+        <div v-bind:class="{ just_hide: !hasFill && !hasStroke && !hasOpacity}" class="panel_section">
+          <div class="panel_title">Style</div>
+
+          <div v-bind:class="{ just_hide: !hasFill}" class="panel_subsection">
+            <div class="panel_entry">
+              <div class="entry_name">fill :</div>
+              <input type="color" class="entry_field" v-model="fillColor"/>
+              <div v-bind:class="{active: data_fillColor.dataBehaviour}" class="entry_data" pointer="fillColor"></div>
+            </div>
+          </div>
+
+
+          <div class="panel_subsection">
+            <div v-bind:class="{ just_hide: !hasStroke}" class="panel_entry">
+              <div class="entry_name">stroke :</div>
+              <input type="color" class="entry_field" v-model="strokeColor"/>
+              <div v-bind:class="{active: data_strokeColor.dataBehaviour}" class="entry_data" pointer="strokeColor"></div>
+            </div>
+            <div v-bind:class="{ just_hide: !hasStroke}" class="panel_entry">
+              <div class="entry_name">width :</div>
+              <input type="number" class="entry_field" v-model="strokeWidth"/>
+              <div v-bind:class="{active: data_strokeWidth.dataBehaviour}" class="entry_data" pointer="strokeWidth"></div>
+            </div>
+          </div>
+
+          <div v-bind:class="{ just_hide: !hasOpacity}" class="panel_subsection">
+            <div class="panel_entry">
+              <div class="entry_name">opacity :</div>
+              <input type="number" class="entry_field" v-model="opacity"/>
+              <div v-bind:class="{active: data_opacity.dataBehaviour}" class="entry_data" pointer="opacity"></div>
+            </div>
+            <div class="panel_entry">
+              <div class="entry_name">visible :</div>
+              <input kind="visible" class="entry_field big" type="checkbox" v-model="visible">
+              <div v-bind:class="{active: data_visible.dataBehaviour}" class="entry_data" pointer="visible"></div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div v-bind:class="{ just_hide: !hasText}" class="panel_section">
+          <div class="panel_title">Text</div>
+
+          <div class="panel_subsection">
+
+            <div class="panel_entry">
+              <div class="entry_name">family :</div>
+              <select class="entry_field selector" v-model="fontFamily">
+                <option>Baloo Tamma</option>
+                <option>Barlow</option>
+                <option>Questrial</option>
+                <option>Black Han Sans</option>
+                <option>Cardo</option>
+                <option>Chakra Petch</option>
+                <option>Chivo</option>
+                <option>Crete Round</option>
+                <option>Indie Flower</option>
+                <option>Josefin Slab</option>
+                <option>Julius Sans One</option>
+                <option>Lora</option>
+                <option>Montserrat</option>
+                <option>Nanum Gothic Coding</option>
+                <option>Oswald</option>
+                <option>Ovo</option>
+                <option>Patua One</option>
+                <option>Permanent Marker</option>
+                <option>Press Start+2P</option>
+                <option>Rasa</option>
+                <option>Roboto</option>
+              </select>
+              <div class="no_entry_data"></div>
+            </div>
+          </div>
+
+          <div class="panel_subsection">
+            <div class="panel_entry">
+              <div class="entry_name">content :</div>
+              <input type="textarea" class="entry_field long textinput" v-model="textContent"/>
+              <div v-bind:class="{active: data_textContent.dataBehaviour}" class="entry_data" pointer="textContent"></div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div v-bind:class="{just_hide:!hasImg}" class="panel_section">
+          <div class="panel_title">Image</div>
+
+          <div class="panel_subsection">
+
+            <div class="panel_entry">
+              <div class="file_search_wrapper">
+                <button class="file_search_btn">load new file</button>
+                <input type="file" class="entry_field" id="file_search" @change="processFile($event)">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="hierarcy_panel" class="panel  open">
+
+      <div class="header">
+        <div class="start">
+          <img class="drop_triangle" src="./visual_assets/triangle_menu.png">
+          <div class="panel_title">HIERARCY</div>
+        </div>
+        <img class="grip" src="./visual_assets/grip.png">
+      </div>
+
+      <div class="content close"></div>
+    </div>
+
+    <div id="settings_panel" class="panel  open">
+
+      <div class="header">
+        <div class="start">
+          <img class="drop_triangle" src="./visual_assets/triangle_menu.png">
+          <div class="panel_title">SETTINGS</div>
+        </div>
+        <img class="grip" src="./visual_assets/grip.png">
+      </div>
+
+      <div class="content">
+        <div class="panel_section">
+          <div class="panel_title">Background</div>
+
+          <div class="panel_subsection">
+            <div class="panel_entry">
+              <div class="entry_name">color :</div>
+              <input id="background_color_input" type="color" class="entry_field" v-model="background.color"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="add_panel" class="">
+      <div id="lines" class="add_section">
+        <div kind="line" class="add_option"><img id="line_straight" src="./visual_assets/ico_line.png"></div>
+        <div kind="curve" class="add_option"><img id="line_curve" src="./visual_assets/ico_curve.png"></div>
+      </div>
+      <div id="shapes" class="add_section">
+        <div kind="circle" class="add_option"><img id="shape_circle" src="./visual_assets/ico_circle.png"></div>
+        <div kind="triangle" class="add_option"><img id="shape_triangle" src="./visual_assets/ico_triangle.png"></div>
+        <div kind="square" class="add_option"><img id="shape_square" src="./visual_assets/ico_square.png"></div>
+        <div kind="pentagon" class="add_option"><img id="shape_pentagon" src="./visual_assets/ico_pentagon.png"></div>
+        <div kind="esagon" class="add_option"><img id="shape_esagon" src="./visual_assets/ico_esagon.png"></div>
+      </div>
+      <div id="images" class="add_section">
+        <div kind="raster" class="add_option"><img id="image_raster" src="./visual_assets/ico_raster.png"></div>
+        <div kind="svg" class="add_option_not"><img id="image_svg" src="./visual_assets/ico_svg.png"></div>
+      </div>
+      <div id="objects" class="add_section">
+        <div kind="obj_1"class="add_option" ><div class="addable_obj">AB</div></div>
+      </div>
+      <div id="texts">
+        <div kind="text" class="add_option"><img id="image_svg" src="./visual_assets/ico_text.png"></div>
+      </div>
+    </div>
+
+    <div id="expression_panel" class="">
+      <div class="title">expression:</div>
+      <div class="content">
+
+        <div class="row">
+          <div class="entry_name">behaviour</div>
+          <div class="entry_name long">parameters</div>
+          <div class="entry_name">input source</div>
+          <div class="entry_name">input</div>
+        </div>
+        <div class="row">
+          <select class="costum_select" v-model="dataBehaviour">
+            <option>increment</option>
+            <option>bounce</option>
+            <option>sin</option>
+            <option>cos</option>
+            <option>pulse</option>
+            <option>random</option>
+            <option>random_soft</option>
+          </select>
+          <input v-bind:placeholder='suggestion' v-bind:title='suggestion' type="textarea" class="entry_field long textinput" v-model="expression"/>
+          <select class="costum_select" v-model="dataSource">
+            <option>time</option>
+            <option>currency</option>
+            <option>meteo</option>
+          </select>
+          <select class="costum_select" v-model="dataType">
+            <!-- time -->
+            <option v-if="dataSource == 'time'">frames</option>
+            <option v-if="dataSource == 'time'">every_time</option>
+            <option v-if="dataSource == 'time'">time_from_every_time</option>
+            <!-- currency -->
+            <option v-if="dataSource == 'currency'">currency_value</option>
+            <option v-if="dataSource == 'currency'">currency_increase_daily</option>
+          </select>
+
+        </div>
+        <div class="row">
+          <div class="cancel dialog_btn">Cancel</div>
+          <div class="remove dialog_btn">Remove</div>
+          <div class="confirm dialog_btn">Confirm</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="drop_icon" class="hide"><img id="drop_img" src=""></div>
+
+
+  </body>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.min.js"></script>
+  <script type="text/javascript" src="./js/lib/paper-full.min.js"></script>
+  <script type="text/javascript" src="./js/lib/chroma.js"></script>
+
+
+  <script type="text/javascript" src="./js/constants.js"></script>
+
+  <script type="text/javascript" src="./js/scene.js"></script>
+  <script type="text/javascript" src="./js/element.js"></script>
+
+  <script type="text/javascript" src="./js/taxionomy.js"></script>
+
+  <script type="text/javascript" src="./js/global_variables.js"></script>
+  <script type="text/javascript" src="./js/app.js"></script>
+
+  <script type="text/javascript" src="./js/vue_binding.js"></script>
+
+  <script type="text/javascript" src="./js/expression_system.js"></script>
+  <script type="text/javascript" src="./js/load_and_save.js"></script>
+  <script type="text/javascript" src="./js/expression_methods.js"></script>
+
+  <script type="text/javascript" src="./js/headbar_interface.js"></script>
+  <script type="text/javascript" src="./js/panels_interface.js"></script>
+
+  <script type="text/javascript" src="./js/utility/hotkeys.js"></script>
+  <script type="text/javascript" src="./js/element_functions.js"></script>
+  <script type="text/javascript" src="./js/paper_events.js"></script>
+
+</html>
