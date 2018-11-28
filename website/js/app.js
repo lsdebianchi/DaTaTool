@@ -6,6 +6,16 @@ window.onload = function() {
 
 function propagate_settings() {
   $("canvas").css("background-color", scene_state.settings.background.color);
+  $("canvas").css(
+    "background-position",
+    scene_state.settings.background.position
+  );
+  $("canvas").css("background-size", scene_state.settings.background.size);
+  $("canvas").css("background-repeat", scene_state.settings.background.repeat);
+  $("canvas").css(
+    "background-image",
+    "url(" + scene_state.settings.background.imgPath + ")"
+  );
 }
 
 function run_scene() {

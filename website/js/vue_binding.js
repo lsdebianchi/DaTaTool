@@ -17,7 +17,15 @@ var property_bind = new Vue({
 
 var settings_bind = new Vue({
   el: "#settings_panel",
-  data: scene_state.settings
+  data: scene_state.settings,
+  methods: {
+    processFile(event) {
+      this.someData = event.target.files[0];
+      window.scene_state.settings.background.imgPath =
+        "../scenes/assets/" + this.someData.name;
+      window.propagate_settings();
+    }
+  }
 });
 
 ///////EPRESSION VUE /////////////////////////////////////////////////////////////

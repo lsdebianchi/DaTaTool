@@ -88,7 +88,7 @@ $("input").on("input", function() {
     }, 1);
   }
 });
-$(".selector").on("change", function() {
+$("#property_panel .selector").on("change", function() {
   propagate_modifications();
   setTimeout(function() {
     paper_tool.onMouseDown({
@@ -113,8 +113,12 @@ $("#move_top").click(function() {
 });
 $(".entry_data").click(function() {});
 /////////SETTINGS PANEL ////////////////////////////////////////////////////////
-
-$("#background_color_input").on("input", function() {
+$("#settings_panel .selector").on("change", function() {
+  propagate_settings();
+  console.log("sel");
+});
+$("#settings_panel input").on("input", function() {
+  console.log("prop");
   propagate_settings();
 });
 

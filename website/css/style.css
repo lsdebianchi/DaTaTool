@@ -316,7 +316,7 @@ body {
   left: -47px;
   overflow: hidden;
   display: inline-block;
-  height: 35px;
+  height: 40px;
 }
 .file_search_btn {
   color: white;
@@ -351,7 +351,14 @@ body {
 
 /*SETTINGS PANEL--------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*/
-
+#file_search_bg {
+  font-size: 23px;
+  position: relative;
+  left: 0;
+  top: -33;
+  width: 135;
+  opacity: 0;
+}
 #settings_panel .content {
   color: white;
   font-size: 20px;
@@ -518,6 +525,7 @@ body {
   color: #5068ff;
   border-color: #5068ff;
 }
+
 .costum_select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -550,6 +558,14 @@ body {
 #paper_canvas {
   width: 100vw;
   height: 100vh;
+
+  /* background-image: url("../scenes/assets/something.png"); */
+  /* center, top, left, bottom, center */
+  background-position: top;
+  /* repeat, repeat-x, repeat-y, no-repeat */
+  background-repeat: no-repeat;
+  /* auto, cover, contain */
+  background-size: auto;
 }
 #canvas_wrapper {
   background-color: black;

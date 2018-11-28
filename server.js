@@ -26,7 +26,7 @@ function sendLoadScene(req, res) {
   var data = req.params;
 
   var scene_to_load = fs.readFileSync(
-    "./website/scenes/" + data.scene_name + ".json"
+    "./website/scenes/user_scenes/" + data.scene_name + ".json"
   );
 
   //scene_to_load = JSON.parse(scene_to_load);
@@ -40,7 +40,7 @@ function saveScene(req, res) {
   var data = req.body;
 
   fs.writeFile(
-    "./website/scenes/" + data.scene_name + ".json",
+    "./website/scenes/user_scenes/" + data.scene_name + ".json",
     data.scene,
     finished
   );

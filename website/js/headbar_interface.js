@@ -1,7 +1,6 @@
 $("#scene_name")
   .children("input")
   .on("input", function() {
-    console.log($(this).val());
     current_project.name = $(this).val();
   });
 

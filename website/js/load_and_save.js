@@ -40,6 +40,15 @@ function generate_scene() {
 
   scene_state.settings.background.color =
     loading_scene_state.settings.background.color;
+  scene_state.settings.background.imgPath =
+    loading_scene_state.settings.background.imgPath;
+  scene_state.settings.background.position =
+    loading_scene_state.settings.background.position;
+  scene_state.settings.background.size =
+    loading_scene_state.settings.background.size;
+  scene_state.settings.background.repeat =
+    loading_scene_state.settings.background.repeat;
+
   scene_state.elements = [];
   scene_state.hierarcy_order = loading_scene_state.hierarcy_order;
   scene_state.objects = {};

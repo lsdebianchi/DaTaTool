@@ -52,7 +52,11 @@ var scene_state = {
 
   settings: {
     background: {
-      color: "#000000"
+      color: "#000000",
+      position: "center",
+      size: "auto",
+      repeat: "no-repeat",
+      imgPath: ""
     }
   },
 

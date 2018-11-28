@@ -347,8 +347,50 @@
             <div class="panel_entry">
               <div class="entry_name">color :</div>
               <input id="background_color_input" type="color" class="entry_field" v-model="background.color"/>
+              <div class="no_entry_data"></div>
             </div>
           </div>
+
+          <div class="panel_entry">
+            <div class="entry_name">image position :</div>
+            <select class="entry_field selector" v-model="background.position">
+              <option>center</option>
+              <option>top</option>
+              <option>left</option>
+              <option>right</option>
+              <option>bottom</option>
+            </select>
+            <div class="no_entry_data"></div>
+          </div>
+
+          <div class="panel_entry">
+            <div class="entry_name">image repeat :</div>
+            <select class="entry_field selector" v-model="background.repeat">
+              <option>no-repeat</option>
+              <option>repeat</option>
+              <option>repeat-x</option>
+              <option>repeat-y</option>
+            </select>
+            <div class="no_entry_data"></div>
+          </div>
+
+          <div class="panel_entry">
+            <div class="entry_name">image size :</div>
+            <select class="entry_field selector" v-model="background.size">
+              <option>auto</option>
+              <option>cover</option>
+              <option>contain</option>
+            </select>
+            <div class="no_entry_data"></div>
+          </div>
+
+          <div class="panel_entry">
+            <div class="file_search_wrapper">
+              <button class="file_search_btn">load new file</button>
+              <input type="file" class="entry_field" id="file_search_bg" @change="processFile($event)">
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
