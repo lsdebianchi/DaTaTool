@@ -9,7 +9,7 @@ GO TO TERMINAL FOLDER:
 
 LAUNCH THE APP:
 
-  - make sure you are in the correct terminal folder (se above)
+  - make sure you are in the correct terminal folder (see above)
 
   - type "node server.js" and press ENTER
   - go to chrome and go to "localhost:3000"
