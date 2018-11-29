@@ -4,6 +4,19 @@ window.onload = function() {
   load_paper_handlers();
 };
 
+window.onerror = function(msg, url, linenumber) {
+  var t1 = "An error occurred. You might need to reload the page";
+  var t2 =
+    "\nError message: " +
+    msg +
+    "\nURL: " +
+    url +
+    "\nLine Number: " +
+    linenumber;
+  alert(t1 + t2);
+  return true;
+};
+
 function propagate_settings() {
   $("canvas").css("background-color", scene_state.settings.background.color);
   $("canvas").css(
