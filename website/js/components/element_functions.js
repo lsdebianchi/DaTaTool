@@ -82,8 +82,8 @@ function select_element(el) {
   get_current_paper_el().selected = true;
 }
 
-function deselect_element() {
-  var p_el = get_current_paper_el();
+function deselect_element(pe) {
+  var p_el = pe ? pe : get_current_paper_el();
   if (p_el) {
     p_el._permanent_selected = false;
     p_el.selected = false;
@@ -121,6 +121,8 @@ function core_propagation(c_el, p_el) {
     if (c_el.h == undefined || c_el.h == 0) c_el.h = 1;
     if (c_el.w > 5000) c_el.w = 5000;
     if (c_el.h > 5000) c_el.h = 5000;
+    if (c_el.w < 0) c_el.w = Math.abs(c_el.w);
+    if (c_el.h < 0) c_el.h = Math.abs(c_el.h);
     c_el.r %= 360;
     if (c_el.opacity > 100) c_el.opacity = 100;
     if (c_el.opacity < 0) c_el.opacity = 0;
@@ -204,6 +206,14 @@ function propagate_current_expression() {
     current_expression.expression;
   current_element[current_expression.type].inputType =
     current_expression.inputType;
+}
+
+function deselect_all_elements() {
+  for (var i in scene_state.elements) {
+    var elem = scene_state.elements[i];
+    if (!elem) continue;
+    deselect_element(paper_elements[elem.paper_element_index]);
+  }
 }
 
 function applyEdgeLoop(e) {
