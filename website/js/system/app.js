@@ -2,6 +2,7 @@ window.onload = function() {
   paper.setup(document.getElementById("paper_canvas"));
   paper_tool = new paper.Tool();
   load_paper_handlers();
+  load_scene("test_scene");
 };
 
 window.onerror = function(msg, url, linenumber) {

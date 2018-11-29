@@ -107,9 +107,17 @@ $("#property_panel .selector").on("change", function() {
 
 $("input:text, .textinput").focusin(function() {
   PREVENT_HOTKEYS = true;
+  var attr = $(this).attr("load_log");
+  if (typeof attr !== typeof undefined && attr !== false) {
+    LOAD_LOG.focus = true;
+  }
 });
 $("input:text, .textinput").focusout(function() {
   PREVENT_HOTKEYS = false;
+  var attr = $(this).attr("load_log");
+  if (typeof attr !== typeof undefined && attr !== false) {
+    LOAD_LOG.focus = false;
+  }
 });
 $("#move_bottom").click(function() {
   get_current_paper_el().sendToBack();
@@ -121,10 +129,8 @@ $(".entry_data").click(function() {});
 /////////SETTINGS PANEL ////////////////////////////////////////////////////////
 $("#settings_panel .selector").on("change", function() {
   propagate_settings();
-  console.log("sel");
 });
 $("#settings_panel input").on("input", function() {
-  console.log("prop");
   propagate_settings();
 });
 

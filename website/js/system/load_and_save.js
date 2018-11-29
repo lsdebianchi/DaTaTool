@@ -24,6 +24,11 @@ function load_scene(name) {
 }
 
 function generate_scene() {
+  for (var i in loading_scene_state.saved_scenes_list) {
+    LOAD_LOG.saved_scenes_list.push(loading_scene_state.saved_scenes_list[i]);
+  }
+  LOAD_LOG.index = 0;
+
   for (var i in scene_state.elements) {
     var el = scene_state.elements[i];
     if (el === undefined || el === null) continue;

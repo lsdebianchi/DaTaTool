@@ -5,6 +5,27 @@ $("body").on("mousedown", function(e) {
 });
 
 $("body").on("keydown", function(e) {
+  if (e.which == 38) {
+    //ARROW UP
+    if (LOAD_LOG.focus) {
+      LOAD_LOG.index--;
+      if (LOAD_LOG.index === -1) {
+        LOAD_LOG.index = LOAD_LOG.saved_scenes_list.length - 1;
+      }
+      $("#load_log").val(LOAD_LOG.saved_scenes_list[LOAD_LOG.index]);
+      current_project.name = LOAD_LOG.saved_scenes_list[LOAD_LOG.index];
+    }
+  } else if (e.which == 40) {
+    //ARROW DOWN
+    if (LOAD_LOG.focus) {
+      LOAD_LOG.index++;
+      if (LOAD_LOG.index === LOAD_LOG.saved_scenes_list.length) {
+        LOAD_LOG.index = 0;
+      }
+      $("#load_log").val(LOAD_LOG.saved_scenes_list[LOAD_LOG.index]);
+      current_project.name = LOAD_LOG.saved_scenes_list[LOAD_LOG.index];
+    }
+  }
   if (e.which == 27) {
     //esc
     if (SCENE_RUNNING.active) {

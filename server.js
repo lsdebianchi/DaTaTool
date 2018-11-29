@@ -4,6 +4,8 @@ var bodyParser = require("body-parser");
 
 var project_name = "test_scene";
 
+getSavedFileList();
+
 var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -29,7 +31,9 @@ function sendLoadScene(req, res) {
     "./website/scenes/user_scenes/" + data.scene_name + ".json"
   );
 
-  //scene_to_load = JSON.parse(scene_to_load);
+  scene_to_load = JSON.parse(scene_to_load);
+  scene_to_load.saved_scenes_list = getSavedFileList();
+  scene_to_load = JSON.stringify(scene_to_load);
 
   res.send(scene_to_load);
 }
@@ -45,7 +49,21 @@ function saveScene(req, res) {
     finished
   );
   function finished() {
-    console.log("- file saved: " + data.scene_name);
+    //console.log("- file saved: " + data.scene_name);
     res.send({ success: true });
   }
+}
+
+function getSavedFileList() {
+  var files = [];
+  fs.readdirSync("./website/scenes/user_scenes/").forEach(file => {
+    if (
+      /([a-zA-Z0-9\s_\\.\-\(\):])+(.json)$/i.test(file) &&
+      /^((?!_LOG).)*$/gi.test(file)
+    ) {
+      file = file.slice(0, -5);
+      files.push(file);
+    }
+  });
+  return files;
 }

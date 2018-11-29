@@ -6,6 +6,11 @@ var SCENE_RUNNING = {
   active: false,
   warning: false
 };
+var LOAD_LOG = {
+  index: 0,
+  saved_scenes_list: [],
+  focus: false
+};
 var HIDE_HEADBAR = false;
 var DROP_OBJECT = {
   active: false,
