@@ -133,7 +133,7 @@ var Element = function(arg) {
   }
   if (this.type == "line" || this.type == "curve") {
     if (this.strokeWidth === undefined || this.strokeWidth <= 0)
-      this.strokeWidth = 1;
+      this.strokeWidth = 5;
     ep = new paper.Path({
       //fillColor: this.fillColor,
       strokeWidth: this.strokeWidth,

@@ -19,6 +19,7 @@ function load_scene(name) {
 
     generate_scene();
     $("#save_status").addClass("hide");
+    deselect_all_elements();
   });
 }
 

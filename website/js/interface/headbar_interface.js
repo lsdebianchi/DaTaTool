@@ -123,6 +123,6 @@ $("#headbar").hover(
 );
 
 $("#run_all").click(function() {
-  if (!SCENE_RUNNING) run_scene();
+  if (!SCENE_RUNNING.active) run_scene();
   else stop_scene();
 });

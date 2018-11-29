@@ -1,8 +1,11 @@
-var _LAST_FILLCOLOR = "#525252";
-var _LAST_STROKECOLOR = "#ffffff";
-var _LAST_STROKE_WIDTH = 1;
+var _LAST_FILLCOLOR = "#1800d7";
+var _LAST_STROKECOLOR = "#15007d";
+var _LAST_STROKE_WIDTH = 0;
 
-var SCENE_RUNNING = false;
+var SCENE_RUNNING = {
+  active: false,
+  warning: false
+};
 var HIDE_HEADBAR = false;
 var DROP_OBJECT = {
   active: false,

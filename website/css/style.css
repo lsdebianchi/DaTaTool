@@ -123,11 +123,23 @@ body {
   padding-top: 3px;
   z-index: 200;
 }
+
+@keyframes pulseating {
+  0% {
+    background-color: rgb(10, 37, 218);
+  }
+  100% {
+    background-color: rgb(106, 126, 255);
+  }
+}
 #run_all {
   width: 58px;
   font-size: 18px;
   margin-right: 15px;
   z-index: 200;
+}
+#run_all.active {
+  animation: pulseating 0.8s ease-out 0s alternate infinite none running;
 }
 
 .runButton:hover {

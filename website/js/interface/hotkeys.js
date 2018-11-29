@@ -6,21 +6,21 @@ $("body").on("mousedown", function(e) {
 
 $("body").on("keydown", function(e) {
   if (e.which == 27) {
-    if (SCENE_RUNNING) {
+    //esc
+    if (SCENE_RUNNING.active) {
       $("#run_all").removeClass("active");
       stop_scene();
     }
-  }
-  if (EXPRESSION_PANEL_OPEN) {
-    if (e.which == 27) {
-      //esc
-
+    if (EXPRESSION_PANEL_OPEN) {
       close_expression_panel();
     }
-    if (e.which == 13) {
-      //enter
-      confirm_expression();
+    if (LINEMAKING.active) {
+      close_line_making();
     }
+  }
+  if (e.which == 13) {
+    //enter
+    if (EXPRESSION_PANEL_OPEN) confirm_expression();
   }
   if (!PREVENT_HOTKEYS) {
     if (e.which == 88) {
@@ -31,7 +31,7 @@ $("body").on("keydown", function(e) {
     if (e.which == 80) {
       //p
       $("#run_all").addClass("active");
-      if (!SCENE_RUNNING) run_scene();
+      if (!SCENE_RUNNING.active) run_scene();
     }
     if (e.which == 32) {
       //spacebar

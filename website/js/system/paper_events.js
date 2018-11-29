@@ -10,14 +10,7 @@ function load_paper_handlers() {
     if (LINEMAKING.active) {
       var p_el = get_current_paper_el();
       if (p_el.lastSegment.point.getDistance(event.point) < 5) {
-        if (LINEMAKING.type == "curve") p_el.smooth();
-        LINEMAKING.active = false;
-        // current_element.w = p_el.bounds.width;
-        // current_element.h = p_el.bounds.height;
-        current_element.x = p_el.position.x;
-        current_element.y = p_el.position.y;
-        propagate_modifications();
-        $("canvas").removeClass("drawing");
+        close_line_making();
       } else p_el.add(event.point);
     } else {
       for (var i in paper.project.activeLayer.children) {
@@ -72,4 +65,13 @@ function load_paper_handlers() {
   paper_tool.onMouseUp = function(event) {
     if (path) propagate_modifications();
   };
+}
+
+function close_line_making() {
+  if (LINEMAKING.type == "curve") get_current_paper_el().smooth();
+  LINEMAKING.active = false;
+  current_element.x = get_current_paper_el().position.x;
+  current_element.y = get_current_paper_el().position.y;
+  propagate_modifications();
+  $("canvas").removeClass("drawing");
 }

@@ -32,7 +32,8 @@ function propagate_settings() {
 }
 
 function run_scene() {
-  SCENE_RUNNING = true;
+  SCENE_RUNNING.active = true;
+  SCENE_RUNNING.warning = false;
 
   save_scene(current_project.name + "_LOG");
 
@@ -60,7 +61,7 @@ function run_scene() {
 }
 
 function stop_scene() {
-  SCENE_RUNNING = false;
+  SCENE_RUNNING.active = false;
 
   runTime = {
     frames: 0

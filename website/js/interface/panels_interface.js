@@ -77,6 +77,12 @@ $("#paper_canvas").click(function(e) {
 });
 ///////////
 $("input").on("input", function() {
+  if (SCENE_RUNNING.active && !SCENE_RUNNING.warning) {
+    SCENE_RUNNING.warning = true;
+    alert(
+      "The scene is currently running.\nAll the changes you make while the scene is running will be lost and might cause bugs."
+    );
+  }
   propagate_modifications();
   if (
     $(this).attr("kind") == "visible" ||
