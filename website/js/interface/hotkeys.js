@@ -1,40 +1,3 @@
-$("#paper_canvas").mousemove(function(e) {
-  mouseX = e.pageX;
-  mouseY = e.pageY;
-
-  if (DROP_OBJECT.active) {
-    $("#drop_icon").css("left", mouseX - 15 + "px");
-    $("#drop_icon").css("top", mouseY - 15 + "px");
-  }
-
-  if (TRANSFORM.active) {
-    var t = get_current_paper_el();
-    if (TRANSFORM.type === "scale") {
-      var d = t.position.getDistance(new paper.Point(mouseX, mouseY));
-
-      var dd = d - TRANSFORM.initial_distance;
-
-      var new_w = parseInt(TRANSFORM.initial_val) + dd / 5;
-
-      current_element.w = parseInt(new_w);
-      current_element.h = parseInt(new_w * TRANSFORM.ratio);
-    }
-    if (TRANSFORM.type === "rotate") {
-      var t = get_current_paper_el();
-      if (TRANSFORM.type === "rotate") {
-        var d = t.position.getDistance(new paper.Point(mouseX, mouseY));
-
-        var dd = d - TRANSFORM.initial_distance;
-
-        var new_w = parseInt(TRANSFORM.initial_val) + dd / 2;
-
-        current_element.r = parseInt(new_w);
-      }
-    }
-    propagate_modifications();
-  }
-});
-
 $("body").on("mousedown", function(e) {
   if (TRANSFORM.active) TRANSFORM.active = false;
   $("canvas").removeClass("resizing");
@@ -132,15 +95,42 @@ $("body").on("keydown", function(e) {
       //s
       save_scene();
     }
-
-    //   setTimeout(function() {
-    //     propagate_modifications();
-    //   }, 100);
   }
 });
-//
-// $("body").on("keyup", function(e) {
-//   setTimeout(function() {
-//     propagate_modifications();
-//   }, 100);
-// });
+////////////////////////////////////////////////////////////////////////////////
+$("#paper_canvas").mousemove(function(e) {
+  mouseX = e.pageX;
+  mouseY = e.pageY;
+
+  if (DROP_OBJECT.active) {
+    $("#drop_icon").css("left", mouseX - 15 + "px");
+    $("#drop_icon").css("top", mouseY - 15 + "px");
+  }
+
+  if (TRANSFORM.active) {
+    var t = get_current_paper_el();
+    if (TRANSFORM.type === "scale") {
+      var d = t.position.getDistance(new paper.Point(mouseX, mouseY));
+
+      var dd = d - TRANSFORM.initial_distance;
+
+      var new_w = parseInt(TRANSFORM.initial_val) + dd / 5;
+
+      current_element.w = parseInt(new_w);
+      current_element.h = parseInt(new_w * TRANSFORM.ratio);
+    }
+    if (TRANSFORM.type === "rotate") {
+      var t = get_current_paper_el();
+      if (TRANSFORM.type === "rotate") {
+        var d = t.position.getDistance(new paper.Point(mouseX, mouseY));
+
+        var dd = d - TRANSFORM.initial_distance;
+
+        var new_w = parseInt(TRANSFORM.initial_val) + dd / 2;
+
+        current_element.r = parseInt(new_w);
+      }
+    }
+    propagate_modifications();
+  }
+});
