@@ -28,37 +28,45 @@ function test_expression_validity() {
   //if (e) vals = e.match(/[+-]?\d+(\.\d+)?/g);
   if (e) vals = e.split(", ");
 
-  //
-  if (current_expression.dataBehaviour == "increment") {
-    if (count(vals, 1, 2)) return true;
-    else return err2(1);
+  for (var j in vals) {
+    if (
+      (isNaN(Number(vals[j])) && !vals[j].match(/^#(?:[0-9a-fA-F]{6})$/i)) ||
+      vals[j] === "" ||
+      vals[j] === " "
+    )
+      return err0();
   }
-  if (current_expression.dataBehaviour == "bounce") {
-    if (vals.length == 2) return true;
-    else return err2(2);
-  }
-  if (current_expression.dataBehaviour == "sin") {
-    if (vals.length == 2) return true;
-    else return err2(2);
-  }
-  if (current_expression.dataBehaviour == "cos") {
-    if (vals.length == 2) return true;
-    else return err2(2);
-  }
-  if (current_expression.dataBehaviour == "pulse") {
-    if (vals.length == 5) return true;
-    else return err2(5);
-  }
-  if (current_expression.dataBehaviour == "random") {
-    if (vals.length == 3) return true;
-    else return err2(3);
-  }
-  if (current_expression.dataBehaviour == "random_soft") {
-    if (vals.length == 3) return true;
-    else return err2(3);
+
+  var test = [
+    ["increment", 1, 2],
+    ["bounce", 2],
+    ["sin", 2],
+    ["cos", 2],
+    ["pulse", 5],
+    ["random", 3],
+    ["random_soft", 3]
+  ];
+
+  for (var i in test) {
+    var name = test[i][0];
+    if (current_expression.dataBehaviour !== name) continue;
+    var min = test[i][1];
+    var max = test[i][2];
+    if (typeof max === typeof undefined) {
+      var match = min;
+      if (vals.length === match) return true;
+      else return err4(match);
+    } else {
+      if (count(vals, min, max)) return true;
+      else return err2(min);
+    }
   }
 
   return err1();
+}
+function err0() {
+  alert("One or more parameters are incorrect");
+  return false;
 }
 function err1() {
   alert("Cannot interpret expression.");
@@ -67,6 +75,14 @@ function err1() {
 function err2(a) {
   alert(
     "Cannot interpret expression parameters.\nPlease insert at least " +
+      a +
+      " parameters."
+  );
+  return false;
+}
+function err4(a) {
+  alert(
+    "Cannot interpret expression parameters.\nPlease insert a total of " +
       a +
       " parameters."
   );

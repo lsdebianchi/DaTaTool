@@ -34,6 +34,7 @@ function propagate_settings() {
 }
 
 function run_scene() {
+  deselect_all_elements();
   if (scene_state.play_setting.sensor) {
     $("#distance_meter").addClass("active");
     tracker.start();
