@@ -106,7 +106,7 @@ body {
   padding-top: 2px;
   display: flex;
   justify-content: space-around;
-  width: 200px;
+  width: 100px;
   align-items: center;
   height: 28px;
   z-index: 200;
@@ -147,6 +147,49 @@ body {
 }
 .runButton.active {
   background-color: rgb(29, 59, 255);
+}
+
+#distance_meter {
+  margin-left: 20px;
+  width: 200px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.d_line {
+  background-color: #5d5d5d;
+  height: 3px;
+  width: 200px;
+  overflow: visible;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.d_limit {
+  background-color: #5d5d5d;
+  height: 15px;
+  width: 3px;
+}
+.d_point {
+  position: relative;
+  left: 0px;
+  border-radius: 20px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: #5d5d5d;
+  background-color: #2d2d2d;
+  height: 12px;
+  width: 12px;
+}
+
+#distance_meter.active .d_line,
+#distance_meter.active .d_limit {
+  background-color: rgb(29, 59, 255);
+  border-color: rgb(29, 59, 255);
+}
+#distance_meter.active .d_point {
+  border-color: rgb(29, 59, 255);
 }
 
 /*PANELS----------------------------------------------------------------------*/
@@ -221,7 +264,7 @@ body {
   top: 50px;
   left: calc(100vw - 415px);
 }
-#hierarcy_panel {
+#hierarchy_panel {
   top: 50px;
   left: 950px;
 }
@@ -613,4 +656,12 @@ button:focus {
 }
 .just_hide {
   display: none;
+}
+
+video {
+  visibility: hidden;
+  position: fixed;
+  left: 0px;
+  top: 30px;
+  background-color: white;
 }

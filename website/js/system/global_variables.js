@@ -1,7 +1,6 @@
 var _LAST_FILLCOLOR = "#1800d7";
 var _LAST_STROKECOLOR = "#15007d";
 var _LAST_STROKE_WIDTH = 0;
-
 var SCENE_RUNNING = {
   active: false,
   warning: false
@@ -51,11 +50,7 @@ var paper_tool;
 
 var scene_state = {
   play_setting: {
-    time: true,
-    physics: true,
-    sensor: true,
-    data: true,
-    event: true
+    sensor: false
   },
 
   settings: {
@@ -72,6 +67,7 @@ var scene_state = {
 
   objects: {}
 };
+var tracker;
 
 var mouseX = 0;
 var mouseY = 0;

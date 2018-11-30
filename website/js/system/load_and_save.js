@@ -1,7 +1,7 @@
 function save_scene(name) {
   var save_name = name ? name : current_project.name;
   consolidate_lines_data();
-  consolidate_hierarcy();
+  consolidate_hierarchy();
   var fileContent = JSON.stringify(scene_state);
 
   $.post(
@@ -37,11 +37,9 @@ function generate_scene() {
   }
   paper_elements = [];
   scene_state.play_setting = {
-    time: true,
-    physics: true,
-    sensor: true,
-    data: true,
-    event: true
+    sensor: loading_scene_state.play_setting.sensor
+      ? loading_scene_state.play_setting.sensor
+      : false
   };
 
   scene_state.settings.background.color =
@@ -56,7 +54,7 @@ function generate_scene() {
     loading_scene_state.settings.background.repeat;
 
   scene_state.elements = [];
-  scene_state.hierarcy_order = loading_scene_state.hierarcy_order;
+  scene_state.hierarchy_order = loading_scene_state.hierarchy_order;
   scene_state.objects = {};
 
   for (var i in loading_scene_state.elements) {
@@ -65,8 +63,8 @@ function generate_scene() {
     create_new_element(el.type, el.x, el.y, el);
   }
 
-  for (var i in scene_state.hierarcy_order) {
-    var elem = scene_state.elements[scene_state.hierarcy_order[i]];
+  for (var i in scene_state.hierarchy_order) {
+    var elem = scene_state.elements[scene_state.hierarchy_order[i]];
     if (!elem) continue;
     var p_el = paper_elements[elem.paper_element_index];
     p_el.bringToFront();
@@ -89,13 +87,13 @@ function consolidate_lines_data() {
     }
   }
 }
-function consolidate_hierarcy() {
-  var hierarcy_order = [];
+function consolidate_hierarchy() {
+  var hierarchy_order = [];
   var al = paper.projects[0].activeLayer;
   if (!al) return;
   for (var i in al.children) {
     var p_el = al.children[i];
-    hierarcy_order.push(p_el._element.original_element_index);
+    hierarchy_order.push(p_el._element.original_element_index);
   }
-  scene_state.hierarcy_order = hierarcy_order;
+  scene_state.hierarchy_order = hierarchy_order;
 }

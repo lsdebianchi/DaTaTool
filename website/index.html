@@ -49,7 +49,7 @@
             <div class="drop_down title" id="view_option_title">View</div>
             <div class="drop_down_content">
               <div class="drop_down_option" id="show_properties_option">Properties</div>
-              <div class="drop_down_option" id="show_hierarcy_option">Layers</div>
+              <div class="drop_down_option" id="show_hierarchy_option">Layers</div>
               <div class="drop_down_option" id="show_settings_option">Settings</div>
               <div class="drop_down_option" id="show_headbar_option">Headbar</div>
             </div>
@@ -78,11 +78,19 @@
         <div id="run_option" class="nonselect">
 
           <div class="runButton" id="run_all">play</div>
-          <div class="runButton active" id="run_time">T</div>
-          <div class="runButton active" id="run_sensor">S</div>
-          <div class="runButton active" id="run_physics">P</div>
-          <div class="runButton active" id="run_data">D</div>
+          <!-- <div class="runButton active" id="run_time">T</div> -->
+          <div class="runButton" id="run_sensor">S</div>
+          <!-- <div class="runButton active" id="run_physics">P</div> -->
+          <!-- <div class="runButton active" id="run_data">D</div> -->
 
+        </div>
+
+        <div id="distance_meter">
+          <div class="d_line">
+            <div class="d_limit"></div>
+            <div id="d_meter_point" class="d_point"></div>
+            <div class="d_limit"></div>
+          </div>
         </div>
 
       </div>
@@ -313,12 +321,12 @@
       </div>
     </div>
 
-    <div id="hierarcy_panel" class="panel  open">
+    <div id="hierarchy_panel" class="panel  open">
 
       <div class="header">
         <div class="start">
           <img class="drop_triangle" src="./visual_assets/triangle_menu.png">
-          <div class="panel_title">HIERARCY</div>
+          <div class="panel_title">hierarchy</div>
         </div>
         <img class="grip" src="./visual_assets/grip.png">
       </div>
@@ -464,16 +472,21 @@
 
     <div id="drop_icon" class="hide"><img id="drop_img" src=""></div>
 
+    <video id="webcam" width="320" height="240" preload autoplay loop muted></video>
 
   </body>
 
 
 
 
-
+  <!-- LIBS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.min.js"></script>
   <script type="text/javascript" src="./js/lib/paper-full.min.js"></script>
   <script type="text/javascript" src="./js/lib/chroma.js"></script>
+
+  <script type="text/javascript" src="./js/lib/tracker/tracking.js"></script>
+  <script type="text/javascript" src="./js/lib/tracker/face-min.js"></script>
+  <!-- <script type="text/javascript" src="./js/lib/tracker/stats.min.js"></script> -->
 
   <!-- UTILITY -->
   <script type="text/javascript" src="./js/utility/constants.js"></script>
@@ -482,7 +495,7 @@
   <!-- COMPONENTS -->
   <script type="text/javascript" src="./js/components/scene.js"></script>
   <script type="text/javascript" src="./js/components/element.js"></script>
-
+  <script type="text/javascript" src="./js/components/distance_tracker.js"></script>
 
   <!-- SYSTEM -->
   <script type="text/javascript" src="./js/system/global_variables.js"></script>

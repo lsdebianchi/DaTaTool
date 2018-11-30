@@ -3,6 +3,7 @@ window.onload = function() {
   paper_tool = new paper.Tool();
   load_paper_handlers();
   load_scene("test_scene");
+  tracker = new Distance_tracker();
 };
 
 window.onerror = function(msg, url, linenumber) {
@@ -33,6 +34,10 @@ function propagate_settings() {
 }
 
 function run_scene() {
+  if (scene_state.play_setting.sensor) {
+    $("#distance_meter").addClass("active");
+    tracker.start();
+  }
   SCENE_RUNNING.active = true;
   SCENE_RUNNING.warning = false;
 
@@ -62,6 +67,8 @@ function run_scene() {
 }
 
 function stop_scene() {
+  if (scene_state.play_setting.sensor) tracker.stop();
+  $("#distance_meter").removeClass("active");
   SCENE_RUNNING.active = false;
 
   runTime = {

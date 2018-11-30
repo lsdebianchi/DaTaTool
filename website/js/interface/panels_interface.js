@@ -5,7 +5,7 @@ $(".panel").mousedown(function() {
 
 // Make the DIV element draggable:
 dragElement($("#property_panel")[0]);
-dragElement($("#hierarcy_panel")[0]);
+dragElement($("#hierarchy_panel")[0]);
 dragElement($("#settings_panel")[0]);
 
 function dragElement(elmnt) {

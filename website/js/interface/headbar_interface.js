@@ -29,8 +29,8 @@ $("#show_properties_option").click(function() {
     .parent()
     .css("background-color", _GRAY_MENU_DARK);
 });
-$("#show_hierarcy_option").click(function() {
-  $("#hierarcy_panel").toggleClass("active");
+$("#show_hierarchy_option").click(function() {
+  $("#hierarchy_panel").toggleClass("active");
   $(this)
     .parent()
     .css("display", "none");
@@ -96,6 +96,17 @@ $("#save_option").click(function() {
 
 $(".runButton").click(function() {
   $(this).toggleClass("active");
+});
+
+$("#run_sensor").click(function() {
+  if (SCENE_RUNNING.active && !SCENE_RUNNING.warning) {
+    SCENE_RUNNING.warning = true;
+    alert(
+      "The scene is currently running.\nAll the changes you make while the scene is running will be lost and might cause bugs."
+    );
+  }
+  scene_state.play_setting.sensor = !scene_state.play_setting.sensor;
+  console.log(scene_state.play_setting.sensor);
 });
 
 $(".start").click(function() {
