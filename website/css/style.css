@@ -366,27 +366,8 @@ body {
   background-color: #3d3d3d;
   cursor: not-allowed;
 }
-.file_search_wrapper {
-  position: relative;
-  left: -47px;
-  overflow: hidden;
-  display: inline-block;
-  height: 40px;
-}
-.file_search_btn {
-  color: white;
-  background-color: #5d5d5d;
-  padding: 8px 20px;
-  font-size: 15px;
-  font-weight: bold;
-}
 #file_search {
-  font-size: 23px;
-  position: relative;
-  left: 0;
-  top: -33;
-  width: 135;
-  opacity: 0;
+  width: 100%;
 }
 .entry_name.button {
   display: flex;
@@ -407,12 +388,7 @@ body {
 /*SETTINGS PANEL--------------------------------------------------------------*/
 /*----------------------------------------------------------------------------*/
 #file_search_bg {
-  font-size: 23px;
-  position: relative;
-  left: 0;
-  top: -33;
-  width: 135;
-  opacity: 0;
+  width: 100%;
 }
 #settings_panel .content {
   color: white;
