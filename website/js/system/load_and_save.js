@@ -1,3 +1,25 @@
+function clear_scene() {
+  for (var i in scene_state.elements) {
+    var el = scene_state.elements[i];
+    if (el === undefined || el === null) continue;
+    var p = paper_elements[el.paper_element_index];
+    p.remove();
+  }
+  paper_elements = [];
+
+  scene_state.settings.background.color = "#000000";
+  scene_state.settings.background.imgPath = "";
+  scene_state.settings.background.position = "center";
+  scene_state.settings.background.size = "auto";
+  scene_state.settings.background.repeat = "no-repeat";
+
+  scene_state.elements = [];
+  scene_state.hierarchy_order = [];
+  scene_state.objects = {};
+
+  propagate_settings();
+}
+
 function save_scene(name) {
   var save_name = name ? name : current_project.name;
   consolidate_lines_data();

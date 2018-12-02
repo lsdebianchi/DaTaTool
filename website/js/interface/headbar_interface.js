@@ -21,43 +21,23 @@ $("#scene_options, #edit_options, #view_options, #help_options").hover(
 
 $("#show_properties_option").click(function() {
   $("#property_panel").toggleClass("active");
-  $(this)
-    .parent()
-    .css("display", "none");
-  $(this)
-    .parent()
-    .parent()
-    .css("background-color", _GRAY_MENU_DARK);
+  close_current_drop_down_menu(this);
+
 });
 $("#show_hierarchy_option").click(function() {
   $("#hierarchy_panel").toggleClass("active");
-  $(this)
-    .parent()
-    .css("display", "none");
-  $(this)
-    .parent()
-    .parent()
-    .css("background-color", _GRAY_MENU_DARK);
+  close_current_drop_down_menu(this);
+
 });
 $("#show_settings_option").click(function() {
   $("#settings_panel").toggleClass("active");
-  $(this)
-    .parent()
-    .css("display", "none");
-  $(this)
-    .parent()
-    .parent()
-    .css("background-color", _GRAY_MENU_DARK);
+  close_current_drop_down_menu(this);
+
 });
 $("#show_headbar_option").click(function() {
   window.HIDE_HEADBAR = !window.HIDE_HEADBAR;
-  $(this)
-    .parent()
-    .css("display", "none");
-  $(this)
-    .parent()
-    .parent()
-    .css("background-color", _GRAY_MENU_DARK);
+  close_current_drop_down_menu(this);
+
 });
 $("#add_option").click(function() {
   if (!DROP_OBJECT.active) {
@@ -65,34 +45,34 @@ $("#add_option").click(function() {
     $("#add_panel").css("top", "40px");
     $("#add_panel").addClass("show");
   }
-  $(this)
-    .parent()
-    .css("display", "none");
-  $(this)
-    .parent()
-    .parent()
-    .css("background-color", _GRAY_MENU_DARK);
+  close_current_drop_down_menu(this);
+
 });
 $("#load_option").click(function() {
   load_scene();
-  $(this)
-    .parent()
-    .css("display", "none");
-  $(this)
-    .parent()
-    .parent()
-    .css("background-color", _GRAY_MENU_DARK);
+  close_current_drop_down_menu(this);
+
+});
+$("#clear_option").click(function() {
+  clear_scene();
+  close_current_drop_down_menu(this);
+
 });
 $("#save_option").click(function() {
   save_scene();
-  $(this)
+  close_current_drop_down_menu(this);
+
+});
+
+function close_current_drop_down_menu(el){
+  $(el)
     .parent()
     .css("display", "none");
-  $(this)
+  $(el)
     .parent()
     .parent()
     .css("background-color", _GRAY_MENU_DARK);
-});
+}
 
 $(".runButton").click(function() {
   $(this).toggleClass("active");
