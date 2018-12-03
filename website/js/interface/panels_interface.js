@@ -147,7 +147,9 @@ $(".entry_data").click(function() {
   open_expression_panel();
 });
 $("#exp_behaviour").on("input", function() {
-  current_expression.expression = "";
+  setTimeout(function() {
+    current_expression.expression = "";
+  }, 1);
 });
 $("#expression_panel .confirm").click(function() {
   confirm_expression();

@@ -60,14 +60,21 @@ $("body").on("keydown", function(e) {
     }
     if (e.which == 68) {
       //d
-      create_new_element(
-        current_element.type,
-        current_element.x,
-        current_element.y,
-        current_element,
-        20,
-        20
-      );
+
+      if (get_current_paper_el()) {
+        var old_el = get_current_paper_el();
+        create_new_element(
+          current_element.type,
+          current_element.x,
+          current_element.y,
+          current_element,
+          20,
+          20
+        );
+
+        old_el._permanent_selected = false;
+        old_el.selected = false;
+      }
     }
     if (e.which == 65 && !DROP_OBJECT.active) {
       //a

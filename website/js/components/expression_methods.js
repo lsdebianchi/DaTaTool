@@ -151,6 +151,7 @@ function assign_methods(elem) {
           else v.delta -= v.speed;
           if (v.delta > 1) v.state = false;
           else if (v.delta < 0) v.state = true;
+          // console.log(this.fillColor);
 
           this[v.target] = chroma.mix(v.init, v.t, v.delta).hex();
         }.bind(elem);
@@ -185,7 +186,7 @@ function assign_methods(elem) {
       else if (data.dataBehaviour == "pulse") {
         data.var.init = chroma(elem[data.var.target]);
         data.var.delta = 0;
-        data.var.target = chroma(param[0]);
+        data.var.final_color = chroma(param[0]);
         data.var.state = 0;
         data.var.counter = 0;
         data.var.state_t = [param[1], param[2], param[3], param[4]];
@@ -195,7 +196,6 @@ function assign_methods(elem) {
           if (v.counter >= v.state_t[v.state]) {
             v.state = (v.state + 1) % 4;
             v.counter = 0;
-            console.log("STATE : " + v.state);
           }
           if (v.state === 1) {
             v.delta = (v.counter + 1) / v.state_t[v.state];
@@ -203,8 +203,7 @@ function assign_methods(elem) {
             v.delta = 1 - (v.counter + 1) / v.state_t[v.state];
           }
           //console.log(chroma.mix(v.init, v.target, v.delta).hex());
-          console.log(this[v.target]);
-          this[v.target] = chroma.mix(v.init, v.target, v.delta).hex();
+          this[v.target] = chroma.mix(v.init, v.final_color, v.delta).hex();
         }.bind(elem);
       }
       //random
