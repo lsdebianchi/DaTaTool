@@ -50,9 +50,9 @@ function dragElement(elmnt) {
 ///////////ADD PANEL ///////////////////////////////////////////////////////////
 
 $(".add_option").click(function() {
-  DROP_OBJECT.active = true;
+  G.DROP_OBJECT.active = true;
   $("#drop_icon").toggleClass("hide");
-  DROP_OBJECT.type = $(this).attr("kind");
+  G.DROP_OBJECT.type = $(this).attr("kind");
   $("#drop_icon")
     .children("img")
     .attr("src", "./visual_assets/ico_" + $(this).attr("kind") + ".png");
@@ -63,22 +63,22 @@ $(".add_option").click(function() {
 
 $("#paper_canvas").click(function(e) {
   $(".textinput").blur();
-  if (DROP_OBJECT.active == true) {
-    DROP_OBJECT.active = false;
+  if (G.DROP_OBJECT.active == true && G.DROP_OBJECT.type !== "expression") {
+    G.DROP_OBJECT.active = false;
     $("#drop_icon").toggleClass("hide");
-    if (DROP_OBJECT.type == "line" || DROP_OBJECT.type == "curve") {
-      LINEMAKING.active = true;
-      if (DROP_OBJECT.type == "line") LINEMAKING.type = "line";
-      else LINEMAKING.type = "curve";
+    if (G.DROP_OBJECT.type == "line" || G.DROP_OBJECT.type == "curve") {
+      G.LINEMAKING.active = true;
+      if (G.DROP_OBJECT.type == "line") G.LINEMAKING.type = "line";
+      else G.LINEMAKING.type = "curve";
       $("canvas").toggleClass("drawing");
     }
-    create_new_element(DROP_OBJECT.type, e.pageX, e.pageY);
+    create_new_element(G.DROP_OBJECT.type, e.pageX, e.pageY);
   }
 });
 ///////////
 $("input").on("input", function() {
-  if (SCENE_RUNNING.active && !SCENE_RUNNING.warning) {
-    SCENE_RUNNING.warning = true;
+  if (G.SCENE_RUNNING.active && !G.SCENE_RUNNING.warning) {
+    G.SCENE_RUNNING.warning = true;
     alert(
       "The scene is currently running.\nAll the changes you make while the scene is running will be lost and might cause bugs."
     );
@@ -106,17 +106,17 @@ $("#property_panel .selector").on("change", function() {
 /////////PROPERTY PANEL ////////////////////////////////////////////////////////
 
 $("input:text, .textinput").focusin(function() {
-  PREVENT_HOTKEYS = true;
-  var attr = $(this).attr("load_log");
+  G.PREVENT_HOTKEYS = true;
+  var attr = $(this).attr("G.LOAD_LOG");
   if (typeof attr !== typeof undefined && attr !== false) {
-    LOAD_LOG.focus = true;
+    G.LOAD_LOG.focus = true;
   }
 });
 $("input:text, .textinput").focusout(function() {
-  PREVENT_HOTKEYS = false;
-  var attr = $(this).attr("load_log");
+  G.PREVENT_HOTKEYS = false;
+  var attr = $(this).attr("G.LOAD_LOG");
   if (typeof attr !== typeof undefined && attr !== false) {
-    LOAD_LOG.focus = false;
+    G.LOAD_LOG.focus = false;
   }
 });
 $("#move_bottom").click(function() {
@@ -144,7 +144,22 @@ $(".entry_data").click(function() {
   current_expression.dataType = current_element["data_" + d].dataType;
   current_expression.expression = current_element["data_" + d].expression;
   current_expression.inputType = current_element["data_" + d].inputType;
-  open_expression_panel();
+
+  if (G.MAIUSC && current_element["data_" + d].dataBehaviour) {
+    console.log("heyo");
+    G.DROP_EXPRESSION.active = true;
+    G.DROP_EXPRESSION.type = d;
+    G.DROP_OBJECT.active = true;
+    G.DROP_OBJECT.type = "expression";
+
+    $("#drop_icon").toggleClass("hide");
+
+    $("#drop_icon")
+      .children("img")
+      .attr("src", "./visual_assets/ico_" + G.DROP_OBJECT.type + ".png");
+    $("#drop_icon").css("left", mouseX - 15 + "px");
+    $("#drop_icon").css("top", mouseY - 15 + "px");
+  } else open_expression_panel();
 });
 $("#exp_behaviour").on("input", function() {
   setTimeout(function() {

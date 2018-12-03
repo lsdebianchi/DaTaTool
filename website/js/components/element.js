@@ -32,13 +32,13 @@ var Element = function(arg) {
   this.blendMode = arg.blendMode === undefined ? "normal" : arg.blendMode;
 
   this.fillColor =
-    arg.fillColor === undefined ? _LAST_FILLCOLOR : arg.fillColor;
+    arg.fillColor === undefined ? G._LAST_FILLCOLOR : arg.fillColor;
   this.opacity = arg.opacity === undefined ? 100 : arg.opacity;
 
   this.strokeColor =
-    arg.strokeColor === undefined ? _LAST_STROKECOLOR : arg.strokeColor;
+    arg.strokeColor === undefined ? G._LAST_STROKECOLOR : arg.strokeColor;
   this.strokeWidth =
-    arg.strokeWidth === undefined ? _LAST_STROKE_WIDTH : arg.strokeWidth;
+    arg.strokeWidth === undefined ? G._LAST_STROKE_WIDTH : arg.strokeWidth;
   if (this.type == "text") this.strokeWidth = 0;
 
   this.fontFamily = arg.fontFamily === undefined ? "Questrial" : arg.fontFamily;

@@ -39,8 +39,8 @@ function run_scene() {
     $("#distance_meter").addClass("active");
     tracker.start();
   }
-  SCENE_RUNNING.active = true;
-  SCENE_RUNNING.warning = false;
+  G.SCENE_RUNNING.active = true;
+  G.SCENE_RUNNING.warning = false;
 
   save_scene(current_project.name + "_LOG");
 
@@ -70,7 +70,7 @@ function run_scene() {
 function stop_scene() {
   if (scene_state.play_setting.sensor) tracker.stop();
   $("#distance_meter").removeClass("active");
-  SCENE_RUNNING.active = false;
+  G.SCENE_RUNNING.active = false;
 
   runTime = {
     frames: 0

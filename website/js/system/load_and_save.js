@@ -17,6 +17,7 @@ function clear_scene() {
   scene_state.hierarchy_order = [];
   scene_state.objects = {};
 
+  $("#save_status").removeClass("hide");
   propagate_settings();
 }
 
@@ -30,7 +31,7 @@ function save_scene(name, runtime_save) {
     "http://localhost:3000/save_scene/",
     { scene: fileContent, scene_name: save_name },
     function(data, status) {
-      if (!SCENE_RUNNING.active) $("#save_status").addClass("hide");
+      if (!G.SCENE_RUNNING.active) $("#save_status").addClass("hide");
     }
   );
 }
@@ -47,9 +48,9 @@ function load_scene(name) {
 
 function generate_scene() {
   for (var i in loading_scene_state.saved_scenes_list) {
-    LOAD_LOG.saved_scenes_list.push(loading_scene_state.saved_scenes_list[i]);
+    G.LOAD_LOG.saved_scenes_list.push(loading_scene_state.saved_scenes_list[i]);
   }
-  LOAD_LOG.index = 0;
+  G.LOAD_LOG.index = 0;
 
   for (var i in scene_state.elements) {
     var el = scene_state.elements[i];

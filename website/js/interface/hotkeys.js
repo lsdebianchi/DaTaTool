@@ -1,56 +1,56 @@
 $("body").on("mousedown", function(e) {
-  if (TRANSFORM.active) TRANSFORM.active = false;
+  if (G.TRANSFORM.active) G.TRANSFORM.active = false;
   $("canvas").removeClass("resizing");
   $("canvas").removeClass("rotating");
 });
 $("body").on("keyup", function(e) {
-  if (!PREVENT_HOTKEYS) {
+  if (!G.PREVENT_HOTKEYS) {
     if (e.which == 16) {
-      //maiusc
-      MAIUSC = false;
+      //G.MAIUSC
+      G.MAIUSC = false;
     }
   }
 });
 $("body").on("keydown", function(e) {
   if (e.which == 38) {
     //ARROW UP
-    if (LOAD_LOG.focus) {
-      LOAD_LOG.index--;
-      if (LOAD_LOG.index === -1) {
-        LOAD_LOG.index = LOAD_LOG.saved_scenes_list.length - 1;
+    if (G.LOAD_LOG.focus) {
+      G.LOAD_LOG.index--;
+      if (G.LOAD_LOG.index === -1) {
+        G.LOAD_LOG.index = G.LOAD_LOG.saved_scenes_list.length - 1;
       }
-      $("#load_log").val(LOAD_LOG.saved_scenes_list[LOAD_LOG.index]);
-      current_project.name = LOAD_LOG.saved_scenes_list[LOAD_LOG.index];
+      $("#G.LOAD_LOG").val(G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index]);
+      current_project.name = G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index];
     }
   } else if (e.which == 40) {
     //ARROW DOWN
-    if (LOAD_LOG.focus) {
-      LOAD_LOG.index++;
-      if (LOAD_LOG.index === LOAD_LOG.saved_scenes_list.length) {
-        LOAD_LOG.index = 0;
+    if (G.LOAD_LOG.focus) {
+      G.LOAD_LOG.index++;
+      if (G.LOAD_LOG.index === G.LOAD_LOG.saved_scenes_list.length) {
+        G.LOAD_LOG.index = 0;
       }
-      $("#load_log").val(LOAD_LOG.saved_scenes_list[LOAD_LOG.index]);
-      current_project.name = LOAD_LOG.saved_scenes_list[LOAD_LOG.index];
+      $("#G.LOAD_LOG").val(G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index]);
+      current_project.name = G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index];
     }
   }
   if (e.which == 27) {
     //esc
-    if (SCENE_RUNNING.active) {
+    if (G.SCENE_RUNNING.active) {
       $("#run_all").removeClass("active");
       stop_scene();
     }
-    if (EXPRESSION_PANEL_OPEN) {
+    if (G.EXPRESSION_PANEL_OPEN) {
       close_expression_panel();
     }
-    if (LINEMAKING.active) {
+    if (G.LINEMAKING.active) {
       close_line_making();
     }
   }
   if (e.which == 13) {
     //enter
-    if (EXPRESSION_PANEL_OPEN) confirm_expression();
+    if (G.EXPRESSION_PANEL_OPEN) confirm_expression();
   }
-  if (!PREVENT_HOTKEYS) {
+  if (!G.PREVENT_HOTKEYS) {
     /////////////////////////// LETTERS HERE
     if (e.which == 88) {
       //x
@@ -72,15 +72,15 @@ $("body").on("keydown", function(e) {
     if (e.which == 80) {
       //p
       $("#run_all").addClass("active");
-      if (!SCENE_RUNNING.active) run_scene();
+      if (!G.SCENE_RUNNING.active) run_scene();
     }
     if (e.which == 32) {
       //spacebar
       $(".panel").toggleClass("open");
     }
     if (e.which == 16) {
-      //maiusc
-      MAIUSC = true;
+      //G.MAIUSC
+      G.MAIUSC = true;
     }
     if (e.which == 68) {
       //d
@@ -98,7 +98,7 @@ $("body").on("keydown", function(e) {
         duplicate_element(current_element);
       }
     }
-    if (e.which == 65 && !DROP_OBJECT.active) {
+    if (e.which == 65 && !G.DROP_OBJECT.active) {
       //a
       $("#add_panel").toggleClass("show");
       $("#add_panel").css("left", mouseX + "px");
@@ -108,41 +108,41 @@ $("body").on("keydown", function(e) {
       //c
       $("#picker").toggleClass("active");
     }
-    if (e.which == 87 && !DROP_OBJECT.active && get_current_paper_el()) {
+    if (e.which == 87 && !G.DROP_OBJECT.active && get_current_paper_el()) {
       //w
-      TRANSFORM.active = !TRANSFORM.active;
+      G.TRANSFORM.active = !G.TRANSFORM.active;
 
       $("canvas").toggleClass("resizing");
-      if (TRANSFORM.active) {
-        TRANSFORM.type = "scale";
-        TRANSFORM.initial_pos = new paper.Point(mouseX, mouseY);
-        TRANSFORM.target_pos = new paper.Point(
+      if (G.TRANSFORM.active) {
+        G.TRANSFORM.type = "scale";
+        G.TRANSFORM.initial_pos = new paper.Point(mouseX, mouseY);
+        G.TRANSFORM.target_pos = new paper.Point(
           get_current_paper_el().position.x,
           get_current_paper_el().position.y
         );
-        TRANSFORM.initial_distance = TRANSFORM.initial_pos.getDistance(
-          TRANSFORM.target_pos
+        G.TRANSFORM.initial_distance = G.TRANSFORM.initial_pos.getDistance(
+          G.TRANSFORM.target_pos
         );
-        TRANSFORM.initial_val = current_element.w;
-        TRANSFORM.ratio = current_element.h / current_element.w;
+        G.TRANSFORM.initial_val = current_element.w;
+        G.TRANSFORM.ratio = current_element.h / current_element.w;
       }
     }
-    if (e.which == 82 && !DROP_OBJECT.active && get_current_paper_el()) {
+    if (e.which == 82 && !G.DROP_OBJECT.active && get_current_paper_el()) {
       //r
-      TRANSFORM.active = !TRANSFORM.active;
+      G.TRANSFORM.active = !G.TRANSFORM.active;
 
       $("canvas").toggleClass("rotating");
-      if (TRANSFORM.active) {
-        TRANSFORM.type = "rotate";
-        TRANSFORM.initial_pos = new paper.Point(mouseX, mouseY);
-        TRANSFORM.target_pos = new paper.Point(
+      if (G.TRANSFORM.active) {
+        G.TRANSFORM.type = "rotate";
+        G.TRANSFORM.initial_pos = new paper.Point(mouseX, mouseY);
+        G.TRANSFORM.target_pos = new paper.Point(
           get_current_paper_el().position.x,
           get_current_paper_el().position.y
         );
-        TRANSFORM.initial_distance = TRANSFORM.initial_pos.getDistance(
-          TRANSFORM.target_pos
+        G.TRANSFORM.initial_distance = G.TRANSFORM.initial_pos.getDistance(
+          G.TRANSFORM.target_pos
         );
-        TRANSFORM.initial_val = current_element.r;
+        G.TRANSFORM.initial_val = current_element.r;
       }
     }
     if (e.which == 83) {
@@ -156,31 +156,31 @@ $("#paper_canvas").mousemove(function(e) {
   mouseX = e.pageX;
   mouseY = e.pageY;
 
-  if (DROP_OBJECT.active) {
+  if (G.DROP_OBJECT.active) {
     $("#drop_icon").css("left", mouseX - 15 + "px");
     $("#drop_icon").css("top", mouseY - 15 + "px");
   }
 
-  if (TRANSFORM.active) {
+  if (G.TRANSFORM.active) {
     var t = get_current_paper_el();
-    if (TRANSFORM.type === "scale") {
+    if (G.TRANSFORM.type === "scale") {
       var d = t.position.getDistance(new paper.Point(mouseX, mouseY));
 
-      var dd = d - TRANSFORM.initial_distance;
+      var dd = d - G.TRANSFORM.initial_distance;
 
-      var new_w = parseInt(TRANSFORM.initial_val) + dd / 5;
+      var new_w = parseInt(G.TRANSFORM.initial_val) + dd / 5;
 
       current_element.w = parseInt(new_w);
-      current_element.h = parseInt(new_w * TRANSFORM.ratio);
+      current_element.h = parseInt(new_w * G.TRANSFORM.ratio);
     }
-    if (TRANSFORM.type === "rotate") {
+    if (G.TRANSFORM.type === "rotate") {
       var t = get_current_paper_el();
-      if (TRANSFORM.type === "rotate") {
+      if (G.TRANSFORM.type === "rotate") {
         var d = t.position.getDistance(new paper.Point(mouseX, mouseY));
 
-        var dd = d - TRANSFORM.initial_distance;
+        var dd = d - G.TRANSFORM.initial_distance;
 
-        var new_w = parseInt(TRANSFORM.initial_val) + dd / 2;
+        var new_w = parseInt(G.TRANSFORM.initial_val) + dd / 2;
 
         current_element.r = parseInt(new_w);
       }

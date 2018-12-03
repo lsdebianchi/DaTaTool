@@ -1,11 +1,11 @@
 function close_expression_panel() {
   $("#expression_panel").removeClass("active");
 
-  EXPRESSION_PANEL_OPEN = false;
+  G.EXPRESSION_PANEL_OPEN = false;
 }
 function open_expression_panel() {
   $("#expression_panel").addClass("active");
-  EXPRESSION_PANEL_OPEN = true;
+  G.EXPRESSION_PANEL_OPEN = true;
 }
 function confirm_expression() {
   if (test_expression_validity()) {

@@ -10,7 +10,7 @@ function load_paper_handlers() {
     $("input:text").blur();
     $("#picker").removeClass("active");
     //Line stuff
-    if (LINEMAKING.active) {
+    if (G.LINEMAKING.active) {
       var p_el = get_current_paper_el();
       if (p_el.lastSegment.point.getDistance(event.point) < 5) {
         close_line_making();
@@ -18,7 +18,7 @@ function load_paper_handlers() {
     }
     //// SELECT ITEM
     else {
-      if (!MAIUSC) {
+      if (!G.MAIUSC) {
         //CLEAR PREVIOUS SELECTION
         for (var i in paper.project.activeLayer.children) {
           paper.project.activeLayer.children[i]._permanent_selected = false;
@@ -54,6 +54,7 @@ function load_paper_handlers() {
         //current_element = path._element;
         getValues(current_element, path._element);
         current_multiselection.push(current_element.original_element_index);
+        if (G.DROP_EXPRESSION.active) paste_expression(current_element);
       }
 
       movePath = hitResult.type == "fill";
@@ -86,8 +87,8 @@ function load_paper_handlers() {
 }
 
 function close_line_making() {
-  if (LINEMAKING.type == "curve") get_current_paper_el().smooth();
-  LINEMAKING.active = false;
+  if (G.LINEMAKING.type == "curve") get_current_paper_el().smooth();
+  G.LINEMAKING.active = false;
   current_element.x = get_current_paper_el().position.x;
   current_element.y = get_current_paper_el().position.y;
   propagate_modifications();

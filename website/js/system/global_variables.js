@@ -1,40 +1,46 @@
-var _LAST_FILLCOLOR = "#1800d7";
-var _LAST_STROKECOLOR = "#15007d";
-var _LAST_STROKE_WIDTH = 0;
-var SCENE_RUNNING = {
-  active: false,
-  warning: false
+var G = {
+  _LAST_FILLCOLOR: "#1800d7",
+  _LAST_STROKECOLOR: "#15007d",
+  _LAST_STROKE_WIDTH: 0,
+  SCENE_RUNNING: {
+    active: false,
+    warning: false
+  },
+  MAIUSC: false,
+  LOAD_LOG: {
+    index: 0,
+    saved_scenes_list: [],
+    focus: false
+  },
+  HIDE_HEADBAR: false,
+  DROP_EXPRESSION: {
+    active: false,
+    type: ""
+  },
+  DROP_OBJECT: {
+    active: false,
+    type: undefined
+  },
+  TRANSFORM: {
+    active: false,
+    type: undefined,
+    initial_pos: null,
+    target_pos: null,
+    initial_val: NaN,
+    ratio: NaN,
+    initial_distance: NaN
+  },
+  LINEMAKING: {
+    active: false,
+    type: "line"
+  },
+  PREVENT_HOTKEYS: false,
+  EXPRESSION_PANEL_OPEN: false
 };
-var MAIUSC = false;
-var LOAD_LOG = {
-  index: 0,
-  saved_scenes_list: [],
-  focus: false
-};
-var HIDE_HEADBAR = false;
-var DROP_OBJECT = {
-  active: false,
-  type: undefined
-};
-var TRANSFORM = {
-  active: false,
-  type: undefined,
-  initial_pos: null,
-  target_pos: null,
-  initial_val: NaN,
-  ratio: NaN,
-  initial_distance: NaN
-};
-var LINEMAKING = {
-  active: false,
-  type: "line"
-};
+////////////////////////////////////////////////////////////////////////////////
 var runTime = {
   frames: 0
 };
-var PREVENT_HOTKEYS = false;
-var EXPRESSION_PANEL_OPEN = false;
-
 var width = window.innerWidth;
 var height = window.innerHeight;
 var current_multiselection = [];

@@ -106,6 +106,22 @@ function delete_element(p_el) {
   scene_state.elements[el.original_element_index] = undefined;
   getValues(current_element, new Element({}));
 }
+function paste_expression(elem) {
+  G.DROP_EXPRESSION.active = false;
+  elem["data_" + G.DROP_EXPRESSION.type].dataBehaviour =
+    current_expression.dataBehaviour;
+  elem["data_" + G.DROP_EXPRESSION.type].dataSource =
+    current_expression.dataSource;
+  elem["data_" + G.DROP_EXPRESSION.type].dataType = current_expression.dataType;
+  elem["data_" + G.DROP_EXPRESSION.type].expression =
+    current_expression.expression;
+  elem["data_" + G.DROP_EXPRESSION.type].inputType =
+    current_expression.inputType;
+
+  G.DROP_OBJECT.active = false;
+  $("#drop_icon").toggleClass("hide");
+}
+
 function propagate_modifications(prevent) {
   if (!prevent) $("#save_status").removeClass("hide");
 
@@ -119,9 +135,9 @@ function propagate_modifications(prevent) {
 
   core_propagation(c_el, p_el);
 
-  _LAST_FILLCOLOR = c_el.fillColor;
-  _LAST_STROKECOLOR = c_el.strokeColor;
-  _LAST_STROKE_WIDTH = c_el.strokeWidth;
+  G._LAST_FILLCOLOR = c_el.fillColor;
+  G._LAST_STROKECOLOR = c_el.strokeColor;
+  G._LAST_STROKE_WIDTH = c_el.strokeWidth;
 }
 
 function core_propagation(c_el, p_el) {

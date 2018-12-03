@@ -35,12 +35,12 @@ $("#show_settings_option").click(function() {
 
 });
 $("#show_headbar_option").click(function() {
-  window.HIDE_HEADBAR = !window.HIDE_HEADBAR;
+  window.G.HIDE_HEADBAR = !window.G.HIDE_HEADBAR;
   close_current_drop_down_menu(this);
 
 });
 $("#add_option").click(function() {
-  if (!DROP_OBJECT.active) {
+  if (!G.DROP_OBJECT.active) {
     $("#add_panel").css("left", "320px");
     $("#add_panel").css("top", "40px");
     $("#add_panel").addClass("show");
@@ -79,8 +79,8 @@ $(".runButton").click(function() {
 });
 
 $("#run_sensor").click(function() {
-  if (SCENE_RUNNING.active && !SCENE_RUNNING.warning) {
-    SCENE_RUNNING.warning = true;
+  if (G.SCENE_RUNNING.active && !G.SCENE_RUNNING.warning) {
+    G.SCENE_RUNNING.warning = true;
     alert(
       "The scene is currently running.\nAll the changes you make while the scene is running will be lost and might cause bugs."
     );
@@ -102,18 +102,18 @@ $(".start").click(function() {
 
 $("#headbar").hover(
   function() {
-    if (window.HIDE_HEADBAR) {
+    if (window.G.HIDE_HEADBAR) {
       $("#headcontent").toggleClass("hide");
     }
   },
   function() {
-    if (window.HIDE_HEADBAR) {
+    if (window.G.HIDE_HEADBAR) {
       $("#headcontent").toggleClass("hide");
     }
   }
 );
 
 $("#run_all").click(function() {
-  if (!SCENE_RUNNING.active) run_scene();
+  if (!G.SCENE_RUNNING.active) run_scene();
   else stop_scene();
 });
