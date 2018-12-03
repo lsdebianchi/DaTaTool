@@ -27,6 +27,7 @@ function assign_methods(elem) {
       //bounce
       else if (data.dataBehaviour == "bounce") {
         data.var.init = elem[data.var.target];
+        // console.log(typeof data.var.init);
         data.var.delta = 0;
         data.var.amplitude = param[0];
         data.var.speed = Math.abs(param[1]);

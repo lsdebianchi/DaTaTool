@@ -3,7 +3,14 @@ $("body").on("mousedown", function(e) {
   $("canvas").removeClass("resizing");
   $("canvas").removeClass("rotating");
 });
-
+$("body").on("keyup", function(e) {
+  if (!PREVENT_HOTKEYS) {
+    if (e.which == 16) {
+      //maiusc
+      MAIUSC = false;
+    }
+  }
+});
 $("body").on("keydown", function(e) {
   if (e.which == 38) {
     //ARROW UP
@@ -44,6 +51,7 @@ $("body").on("keydown", function(e) {
     if (EXPRESSION_PANEL_OPEN) confirm_expression();
   }
   if (!PREVENT_HOTKEYS) {
+    /////////////////////////// LETTERS HERE
     if (e.which == 88) {
       //x
       var p = get_current_paper_el();
@@ -57,6 +65,10 @@ $("body").on("keydown", function(e) {
     if (e.which == 32) {
       //spacebar
       $(".panel").toggleClass("open");
+    }
+    if (e.which == 16) {
+      //maiusc
+      MAIUSC = true;
     }
     if (e.which == 68) {
       //d

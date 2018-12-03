@@ -50,9 +50,9 @@ function run_scene() {
 
   paper.view.onFrame = function(event) {
     for (var i in scene_state.elements) {
+      if (!scene_state.elements[i]) continue;
       for (var j in attr_list) {
         var elem = scene_state.elements[i];
-        if (!elem) continue;
         var d = scene_state.elements[i]["data_" + attr_list[j]];
         if (d.method) d.method(d.var);
       }

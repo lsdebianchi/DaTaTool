@@ -5,6 +5,7 @@ var SCENE_RUNNING = {
   active: false,
   warning: false
 };
+var MAIUSC = false;
 var LOAD_LOG = {
   index: 0,
   saved_scenes_list: [],

@@ -147,7 +147,8 @@ function core_propagation(c_el, p_el) {
     p_el.strokeWidth = c_el.strokeWidth;
     p_el.content = c_el.textContent;
     p_el.fontFamily = c_el.fontFamily;
-    p_el.opacity = c_el.opacity / 100;
+    console.log(c_el.opacity);
+    p_el.opacity = Number(c_el.opacity) / 100;
     p_el.visible = c_el.visible;
   }
 }
