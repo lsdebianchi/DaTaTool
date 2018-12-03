@@ -151,7 +151,6 @@ function assign_methods(elem) {
           else v.delta -= v.speed;
           if (v.delta > 1) v.state = false;
           else if (v.delta < 0) v.state = true;
-          // console.log(this.fillColor);
 
           this[v.target] = chroma.mix(v.init, v.t, v.delta).hex();
         }.bind(elem);
@@ -202,7 +201,6 @@ function assign_methods(elem) {
           } else if (v.state === 3) {
             v.delta = 1 - (v.counter + 1) / v.state_t[v.state];
           }
-          //console.log(chroma.mix(v.init, v.target, v.delta).hex());
           this[v.target] = chroma.mix(v.init, v.final_color, v.delta).hex();
         }.bind(elem);
       }

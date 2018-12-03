@@ -6,32 +6,46 @@ var hitOptions = {
 var path;
 function load_paper_handlers() {
   paper_tool.onMouseDown = function(event) {
+    //Unfocus Stuff
     $("input:text").blur();
     $("#picker").removeClass("active");
+    //Line stuff
     if (LINEMAKING.active) {
       var p_el = get_current_paper_el();
       if (p_el.lastSegment.point.getDistance(event.point) < 5) {
         close_line_making();
       } else p_el.add(event.point);
-    } else {
-      for (var i in paper.project.activeLayer.children) {
-        paper.project.activeLayer.children[i]._permanent_selected = false;
-        paper.project.activeLayer.children[i].selected = false;
+    }
+    //// SELECT ITEM
+    else {
+      if (!MAIUSC) {
+        //CLEAR PREVIOUS SELECTION
+        for (var i in paper.project.activeLayer.children) {
+          paper.project.activeLayer.children[i]._permanent_selected = false;
+          paper.project.activeLayer.children[i].selected = false;
+        }
+        current_multiselection = [];
       }
 
       segment = path = null;
       var hitResult = paper.project.hitTest(event.point, hitOptions);
+
       if (!hitResult) {
+        //DESELECT ALL
+        for (var i in paper.project.activeLayer.children) {
+          paper.project.activeLayer.children[i]._permanent_selected = false;
+          paper.project.activeLayer.children[i].selected = false;
+        }
+        current_multiselection = [];
         deselect_element();
         return;
       }
-
-      if (event.modifiers.shift) {
-        if (hitResult.type == "segment") {
-          hitResult.segment.remove();
-        }
-        return;
-      }
+      // if (event.modifiers.shift) {
+      //   if (hitResult.type == "segment") {
+      //     hitResult.segment.remove();
+      //   }
+      //   return;
+      // }
 
       if (hitResult) {
         path = hitResult.item;
@@ -39,6 +53,7 @@ function load_paper_handlers() {
         path.selected = true;
         //current_element = path._element;
         getValues(current_element, path._element);
+        current_multiselection.push(current_element.original_element_index);
       }
 
       movePath = hitResult.type == "fill";

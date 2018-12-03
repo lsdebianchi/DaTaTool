@@ -7,8 +7,8 @@ var project_name = "test_scene";
 getSavedFileList();
 
 var app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "50mb", extended: true }));
 console.log("WEB APLICATION ONLINE");
 console.log("---");
 console.log('>>> go to "localhoast:3000" to use the application.');

@@ -37,6 +37,7 @@ var EXPRESSION_PANEL_OPEN = false;
 
 var width = window.innerWidth;
 var height = window.innerHeight;
+var current_multiselection = [];
 var current_project = new Scene({});
 var current_element = new Element({});
 var current_expression = {

@@ -71,6 +71,7 @@ function create_new_element(_type, x, y, copy, dx, dy) {
   elem.original_element_index = allocate_new_element_in_list(elem);
   select_element(elem);
   propagate_modifications();
+  return elem;
 }
 function get_current_paper_el() {
   return paper_elements[current_element.paper_element_index];
@@ -89,6 +90,14 @@ function deselect_element(pe) {
     p_el.selected = false;
   }
   getValues(current_element, new Element({}));
+}
+function duplicate_element(el) {
+  var old_el = paper_elements[el.paper_element_index];
+  var new_el = create_new_element(el.type, el.x, el.y, el, 20, 20);
+
+  old_el._permanent_selected = false;
+  old_el.selected = false;
+  return new_el;
 }
 function delete_element(p_el) {
   var el = p_el._element;

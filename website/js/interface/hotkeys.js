@@ -54,8 +54,20 @@ $("body").on("keydown", function(e) {
     /////////////////////////// LETTERS HERE
     if (e.which == 88) {
       //x
-      var p = get_current_paper_el();
-      if (p) delete_element(p);
+      if (current_multiselection.length > 1) {
+        for (var i in current_multiselection) {
+          var p =
+            paper_elements[
+              scene_state.elements[current_multiselection[i]]
+                .paper_element_index
+            ];
+          if (p) delete_element(p);
+        }
+        current_multiselection = [];
+      } else {
+        var p = get_current_paper_el();
+        if (p) delete_element(p);
+      }
     }
     if (e.which == 80) {
       //p
@@ -72,20 +84,18 @@ $("body").on("keydown", function(e) {
     }
     if (e.which == 68) {
       //d
-
-      if (get_current_paper_el()) {
-        var old_el = get_current_paper_el();
-        create_new_element(
-          current_element.type,
-          current_element.x,
-          current_element.y,
-          current_element,
-          20,
-          20
-        );
-
-        old_el._permanent_selected = false;
-        old_el.selected = false;
+      if (current_multiselection.length > 1) {
+        var new_multiselection = [];
+        for (var i in current_multiselection) {
+          var el = scene_state.elements[current_multiselection[i]];
+          if (el) {
+            var new_el = duplicate_element(el);
+            new_multiselection.push(new_el.original_element_index);
+          }
+        }
+        current_multiselection = new_multiselection.slice();
+      } else {
+        duplicate_element(current_element);
       }
     }
     if (e.which == 65 && !DROP_OBJECT.active) {
