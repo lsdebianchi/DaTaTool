@@ -35,7 +35,7 @@ body {
 #headcontent {
   background-color: #2d2d2d;
   top: 0px;
-  width: 100vw;
+  width: calc(100vw - 40px);
   overflow: hidden;
   display: flex;
   justify-content: flex-start;
