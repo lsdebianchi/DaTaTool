@@ -7,6 +7,7 @@ var path;
 function load_paper_handlers() {
   paper_tool.onMouseDown = function(event) {
     $("input:text").blur();
+    $("#picker").removeClass("active");
     if (LINEMAKING.active) {
       var p_el = get_current_paper_el();
       if (p_el.lastSegment.point.getDistance(event.point) < 5) {
@@ -24,6 +25,7 @@ function load_paper_handlers() {
         deselect_element();
         return;
       }
+
       if (event.modifiers.shift) {
         if (hitResult.type == "segment") {
           hitResult.segment.remove();
@@ -38,6 +40,7 @@ function load_paper_handlers() {
         //current_element = path._element;
         getValues(current_element, path._element);
       }
+
       movePath = hitResult.type == "fill";
       //if (movePath) paper.project.activeLayer.addChild(hitResult.item);
     }
@@ -63,7 +66,7 @@ function load_paper_handlers() {
   };
 
   paper_tool.onMouseUp = function(event) {
-    if (path) propagate_modifications();
+    if (path) propagate_modifications(true);
   };
 }
 
@@ -73,5 +76,6 @@ function close_line_making() {
   current_element.x = get_current_paper_el().position.x;
   current_element.y = get_current_paper_el().position.y;
   propagate_modifications();
+
   $("canvas").removeClass("drawing");
 }

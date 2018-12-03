@@ -67,9 +67,10 @@
               <div class="drop_down_desc">[R] rotate</div>
               <div class="drop_down_desc">[D] duplicate</div>
               <div class="drop_down_desc">[SPACE] hide panels</div>
-              <div class="drop_down_desc">[BACKSPACE] delete</div>
+              <div class="drop_down_desc">[X] delete</div>
               <div class="drop_down_desc">[ENTER] confirm exp</div>
               <div class="drop_down_desc">[ESC] cancel exp</div>
+              <div class="drop_down_desc">[C] color palette</div>
 
             </div>
           </div>
@@ -434,7 +435,7 @@
           <div class="entry_name">input</div>
         </div>
         <div class="row">
-          <select class="costum_select" v-model="dataBehaviour">
+          <select id="exp_behaviour" class="costum_select" v-model="dataBehaviour">
             <option>increment</option>
             <option>bounce</option>
             <option>sin</option>
@@ -443,7 +444,7 @@
             <option>random</option>
             <option>random_soft</option>
           </select>
-          <input v-bind:placeholder='suggestion' v-bind:title='suggestion' type="textarea" class="entry_field long textinput" v-model="expression"/>
+          <input id="exp_parameters" v-bind:placeholder='suggestion' v-bind:title='suggestion' type="textarea" class="entry_field long textinput" v-model="expression"/>
           <select class="costum_select" v-model="dataSource">
             <option>time</option>
             <option>currency</option>
@@ -470,7 +471,7 @@
     </div>
 
     <div id="drop_icon" class="hide"><img id="drop_img" src=""></div>
-
+    <div id="picker"><input class="jscolor {hash:true}"></div>
     <video id="webcam" width="320" height="240" preload autoplay loop muted></video>
 
   </body>
@@ -482,6 +483,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.7.1/pixi.min.js"></script>
   <script type="text/javascript" src="./js/lib/paper-full.min.js"></script>
   <script type="text/javascript" src="./js/lib/chroma.js"></script>
+  <script type="text/javascript" src="./js/lib/jscolor.js"></script>
 
   <script type="text/javascript" src="./js/lib/tracker/tracking.js"></script>
   <script type="text/javascript" src="./js/lib/tracker/face-min.js"></script>

@@ -146,6 +146,9 @@ $(".entry_data").click(function() {
   current_expression.inputType = current_element["data_" + d].inputType;
   open_expression_panel();
 });
+$("#exp_behaviour").on("input", function() {
+  current_expression.expression = "";
+});
 $("#expression_panel .confirm").click(function() {
   confirm_expression();
 });

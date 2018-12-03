@@ -641,3 +641,22 @@ video {
   top: 30px;
   background-color: white;
 }
+#picker {
+  background-color: #3d3d3d;
+  width: 340px;
+  height: 60px;
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3000;
+}
+#picker input {
+  font-size: 30px;
+}
+#picker.active {
+  display: flex;
+}

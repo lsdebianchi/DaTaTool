@@ -75,6 +75,10 @@ $("body").on("keydown", function(e) {
       $("#add_panel").css("left", mouseX + "px");
       $("#add_panel").css("top", mouseY + "px");
     }
+    if (e.which == 67) {
+      //c
+      $("#picker").toggleClass("active");
+    }
     if (e.which == 87 && !DROP_OBJECT.active && get_current_paper_el()) {
       //w
       TRANSFORM.active = !TRANSFORM.active;

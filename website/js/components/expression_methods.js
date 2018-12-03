@@ -8,9 +8,9 @@ function assign_methods(elem) {
     var param = data.expression.split(", "); //data.expression.match(/[+-]?\d+(\.\d+)?/g);
 
     for (var j in param) {
-      if (param[j][0] !== ":" || aram[j][0] !== "#")
-        param[j] = Number(param[j]);
-      else param[j] = param[j].substring(1);
+      if (param[j].match(/^:/) || param[j].match(/^#/))
+        param[j] = param[j].substring(1);
+      else param[j] = Number(param[j]);
     }
 
     //
@@ -130,7 +130,7 @@ function assign_methods(elem) {
       if (data.dataBehaviour == "increment") {
         data.var.speed = param[0];
         data.var.type = param[1] ? param[1] : "h";
-
+        if (data.var.type !== "h") data.var.speed /= 100;
         data.method = function(v) {
           var c = chroma(this[v.target]);
           c = c.set("hsl." + v.type, c.get("hsl." + v.type) + v.speed);
@@ -143,52 +143,49 @@ function assign_methods(elem) {
         data.var.init = chroma(elem[data.var.target]);
         data.var.delta = 0;
         data.var.t = chroma(param[0]);
-        data.var.speed = Math.abs(param[1]);
+        data.var.speed = Math.abs(param[1]) / 100;
         data.var.state = true;
-
-        console.log(data.var.t);
-        console.log(data.var.init);
 
         data.method = function(v) {
           if (v.state) v.delta += v.speed;
           else v.delta -= v.speed;
-          if (v.delta > 100 / 2) v.state = false;
+          if (v.delta > 1) v.state = false;
           else if (v.delta < 0) v.state = true;
 
           this[v.target] = chroma.mix(v.init, v.t, v.delta).hex();
         }.bind(elem);
       }
       //sin
-      else if (data.dataBehaviour == "sin") {
-        data.var.init = elem[data.var.target];
-        data.var.delta = 0;
-        data.var.amplitude = param[0];
-        data.var.speed = param[1];
-
-        data.method = function(v) {
-          this[v.target] =
-            v.init +
-            Math.sin((runTime.frames / 360) * Math.PI * v.speed) * v.amplitude;
-        }.bind(elem);
-      }
+      // else if (data.dataBehaviour == "sin") {
+      //   data.var.init = elem[data.var.target];
+      //   data.var.delta = 0;
+      //   data.var.amplitude = param[0];
+      //   data.var.speed = param[1];
+      //
+      //   data.method = function(v) {
+      //     this[v.target] =
+      //       v.init +
+      //       Math.sin((runTime.frames / 360) * Math.PI * v.speed) * v.amplitude;
+      //   }.bind(elem);
+      // }
       //cos
-      else if (data.dataBehaviour == "cos") {
-        data.var.init = elem[data.var.target];
-        data.var.delta = 0;
-        data.var.amplitude = param[0];
-        data.var.speed = param[1];
-
-        data.method = function(v) {
-          this[v.target] =
-            v.init +
-            Math.cos((runTime.frames / 360) * Math.PI * v.speed) * v.amplitude;
-        }.bind(elem);
-      }
+      // else if (data.dataBehaviour == "cos") {
+      //   data.var.init = elem[data.var.target];
+      //   data.var.delta = 0;
+      //   data.var.amplitude = param[0];
+      //   data.var.speed = param[1];
+      //
+      //   data.method = function(v) {
+      //     this[v.target] =
+      //       v.init +
+      //       Math.cos((runTime.frames / 360) * Math.PI * v.speed) * v.amplitude;
+      //   }.bind(elem);
+      // }
       //pulse
       else if (data.dataBehaviour == "pulse") {
-        data.var.init = elem[data.var.target];
+        data.var.init = chroma(elem[data.var.target]);
         data.var.delta = 0;
-        data.var.amplitude = param[0];
+        data.var.target = chroma(param[0]);
         data.var.state = 0;
         data.var.counter = 0;
         data.var.state_t = [param[1], param[2], param[3], param[4]];
@@ -198,14 +195,16 @@ function assign_methods(elem) {
           if (v.counter >= v.state_t[v.state]) {
             v.state = (v.state + 1) % 4;
             v.counter = 0;
+            console.log("STATE : " + v.state);
           }
           if (v.state === 1) {
-            v.delta = ((v.counter + 1) / v.state_t[v.state]) * v.amplitude;
+            v.delta = (v.counter + 1) / v.state_t[v.state];
           } else if (v.state === 3) {
-            v.delta = (1 - (v.counter + 1) / v.state_t[v.state]) * v.amplitude;
+            v.delta = 1 - (v.counter + 1) / v.state_t[v.state];
           }
-
-          this[v.target] = v.init + v.delta;
+          //console.log(chroma.mix(v.init, v.target, v.delta).hex());
+          console.log(this[v.target]);
+          this[v.target] = chroma.mix(v.init, v.target, v.delta).hex();
         }.bind(elem);
       }
       //random

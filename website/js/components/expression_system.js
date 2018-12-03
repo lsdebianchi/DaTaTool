@@ -30,7 +30,9 @@ function test_expression_validity() {
 
   for (var j in vals) {
     if (
-      (isNaN(Number(vals[j])) && !vals[j].match(/^#(?:[0-9a-fA-F]{6})$/i)) ||
+      (isNaN(Number(vals[j])) &&
+        !vals[j].match(/^#(?:[0-9a-fA-F]{6})$/i) &&
+        vals[j][0] !== ":") ||
       vals[j] === "" ||
       vals[j] === " "
     )

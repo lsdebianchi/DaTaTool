@@ -20,7 +20,7 @@ function clear_scene() {
   propagate_settings();
 }
 
-function save_scene(name) {
+function save_scene(name, runtime_save) {
   var save_name = name ? name : current_project.name;
   consolidate_lines_data();
   consolidate_hierarchy();
@@ -30,7 +30,7 @@ function save_scene(name) {
     "http://localhost:3000/save_scene/",
     { scene: fileContent, scene_name: save_name },
     function(data, status) {
-      $("#save_status").addClass("hide");
+      if (!SCENE_RUNNING.active) $("#save_status").addClass("hide");
     }
   );
 }
@@ -40,8 +40,8 @@ function load_scene(name) {
     loading_scene_state = JSON.parse(data);
 
     generate_scene();
-    $("#save_status").addClass("hide");
     deselect_all_elements();
+    if (/^((?!_LOG).)*$/gi.test(name)) $("#save_status").addClass("hide");
   });
 }
 

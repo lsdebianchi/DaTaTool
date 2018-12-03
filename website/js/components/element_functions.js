@@ -97,8 +97,8 @@ function delete_element(p_el) {
   scene_state.elements[el.original_element_index] = undefined;
   getValues(current_element, new Element({}));
 }
-function propagate_modifications() {
-  $("#save_status").removeClass("hide");
+function propagate_modifications(prevent) {
+  if (!prevent) $("#save_status").removeClass("hide");
 
   var base_el = scene_state.elements[current_element.original_element_index];
   if (base_el) {

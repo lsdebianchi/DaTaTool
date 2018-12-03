@@ -35,16 +35,29 @@ var expression_bind = new Vue({
   data: current_expression,
   computed: {
     suggestion: function() {
-      if (this.dataBehaviour == "increment")
-        return this.inputType != "color" ? "SPEED" : "SPEED, :[H/S/L]";
-      if (this.dataBehaviour == "bounce")
-        return this.inputType != "color" ? "AMPLITUDE, SPEED" : ":COLOR, SPEED";
-      if (this.dataBehaviour == "sin") return "AMPLITUDE, SPEED";
-      if (this.dataBehaviour == "cos") return "AMPLITUDE, SPEED";
-      if (this.dataBehaviour == "pulse")
-        return "AMPLITUDE, STAY_OFF, GO_ON, STAY_ON, GO_OF";
-      if (this.dataBehaviour == "random") return "MIN, MAX, FREQUENCY";
-      if (this.dataBehaviour == "random_soft") return "MIN, MAX, SPEED";
+      var rule = [
+        ["increment", "SPEED", "SPEED, :[h/s/l]"],
+        ["bounce", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
+        ["sin", "AMPLITUDE, SPEED", "NO-COLOR-MODE"],
+        ["cos", "AMPLITUDE, SPEED", "NO-COLOR-MODE"],
+        [
+          "pulse",
+          "AMPLITUDE, STAY_OFF, GO_ON, STAY_ON, GO_OF",
+          "#COLOR, STAY_OFF, GO_ON, STAY_ON, GO_OF"
+        ],
+        ["random", "MIN, MAX, FREQUENCY", "NO-COLOR-MODE"],
+        ["random_soft", "MIN, MAX, SPEED", "NO-COLOR-MODE"]
+      ];
+      for (var i in rule) {
+        if (this.dataBehaviour == rule[i][0]) {
+          if (
+            this.inputType == "color" &&
+            typeof rule[i][2] !== typeof undefined
+          )
+            return rule[i][2];
+          else return rule[i][1];
+        }
+      }
     }
   }
 });
