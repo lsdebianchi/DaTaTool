@@ -26,8 +26,7 @@ function assign_methods(elem) {
       }
       //bounce
       else if (data.dataBehaviour == "bounce") {
-        data.var.init = elem[data.var.target];
-        // console.log(typeof data.var.init);
+        data.var.init = Number(elem[data.var.target]);
         data.var.delta = 0;
         data.var.amplitude = param[0];
         data.var.speed = Math.abs(param[1]);
@@ -43,7 +42,7 @@ function assign_methods(elem) {
       }
       //sin
       else if (data.dataBehaviour == "sin") {
-        data.var.init = elem[data.var.target];
+        data.var.init = Number(elem[data.var.target]);
         data.var.delta = 0;
         data.var.amplitude = param[0];
         data.var.speed = param[1];
@@ -56,7 +55,7 @@ function assign_methods(elem) {
       }
       //cos
       else if (data.dataBehaviour == "cos") {
-        data.var.init = elem[data.var.target];
+        data.var.init = Number(elem[data.var.target]);
         data.var.delta = 0;
         data.var.amplitude = param[0];
         data.var.speed = param[1];
@@ -69,7 +68,7 @@ function assign_methods(elem) {
       }
       //pulse
       else if (data.dataBehaviour == "pulse") {
-        data.var.init = elem[data.var.target];
+        data.var.init = Number(elem[data.var.target]);
         data.var.delta = 0;
         data.var.amplitude = param[0];
         data.var.state = 0;

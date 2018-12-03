@@ -128,6 +128,8 @@ function core_propagation(c_el, p_el) {
     if (c_el.opacity < 0) c_el.opacity = 0;
   }
 
+  c_el.opacity = Number(c_el.opacity);
+
   if (p_el) {
     p_el.position.x = c_el.x;
     p_el.position.y = c_el.y;
@@ -147,8 +149,7 @@ function core_propagation(c_el, p_el) {
     p_el.strokeWidth = c_el.strokeWidth;
     p_el.content = c_el.textContent;
     p_el.fontFamily = c_el.fontFamily;
-    console.log(c_el.opacity);
-    p_el.opacity = Number(c_el.opacity) / 100;
+    p_el.opacity = c_el.opacity / 100;
     p_el.visible = c_el.visible;
   }
 }
