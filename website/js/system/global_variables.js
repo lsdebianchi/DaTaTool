@@ -7,6 +7,7 @@ var G = {
     warning: false
   },
   MAIUSC: false,
+  CMD: false,
   LOAD_LOG: {
     index: 0,
     saved_scenes_list: [],

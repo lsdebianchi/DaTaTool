@@ -65,14 +65,16 @@
               <div class="drop_down_desc">[ESC] stop</div>
               <div class="drop_down_desc">[W] resize</div>
               <div class="drop_down_desc">[R] rotate</div>
+              <div class="drop_down_desc">[X] delete</div>
               <div class="drop_down_desc">[D] duplicate</div>
               <div class="drop_down_desc">[SPACE] hide panels</div>
-              <div class="drop_down_desc">[X] delete</div>
               <div class="drop_down_desc">[ENTER] confirm exp</div>
               <div class="drop_down_desc">[ESC] cancel exp</div>
               <div class="drop_down_desc">[C] color palette</div>
               <div class="drop_down_desc">[SHIFT] multi select</div>
               <div class="drop_down_desc">[SHIFT + exp] copy exp</div>
+              <div class="drop_down_desc">[G] group</div>
+              <div class="drop_down_desc">[CMD + click] select group</div>
 
             </div>
           </div>
@@ -112,6 +114,7 @@
 
       <div class="content ">
 
+
         <div v-bind:class="{ just_hide: !hasDimension}" class="panel_subsection">
           <div class="panel_entry">
             <div class="entry_name dark">{{type}}</div>
@@ -124,6 +127,9 @@
       </br>
 
         <div v-bind:class="{ just_hide: !hasDimension}" class="panel_section">
+          <div v-bind:class="{ just_hide: !group_parent_index}" class="panel_subsection">
+            <div class="entry_name button nonselect" id="go_to_parent"><div>go to parent</div></div>
+          </div>
           <div class="panel_subsection">
             <div class="entry_name button nonselect" id="move_top"><div>send to the top</div></div>
           </div>
@@ -178,7 +184,7 @@
             </div>
           </div>
 
-          <div class="panel_subsection">
+          <div v-bind:class="{ just_hide: !hasImg && !hasStroke && !hasFill}" class="panel_subsection">
             <div class="panel_entry">
               <div class="entry_name">blend modes :</div>
               <select class="entry_field selector" v-model="blendMode">

@@ -39,6 +39,10 @@ function getValues(obj1, obj2) {
 
   obj1.sourceFile = obj2.sourceFile;
 
+  obj1.isGroup = obj2.isGroup;
+  obj1.group_parent_index = obj2.group_parent_index;
+  obj1.group_children_index = obj2.group_children_index;
+
   obj1.data_x = obj2.data_x;
   obj1.data_y = obj2.data_y;
   obj1.data_w = obj2.data_w;
@@ -54,7 +58,6 @@ function getValues(obj1, obj2) {
   obj1.data_sendTop = obj2.data_sendTop;
   obj1.data_sendBottom = obj2.data_sendBottom;
 }
-
 function create_new_element(_type, x, y, copy, dx, dy) {
   var elem;
   if (!copy) {
@@ -76,13 +79,11 @@ function create_new_element(_type, x, y, copy, dx, dy) {
 function get_current_paper_el() {
   return paper_elements[current_element.paper_element_index];
 }
-
 function select_element(el) {
   getValues(current_element, scene_state.elements[el.original_element_index]);
   get_current_paper_el()._permanent_selected = true;
   get_current_paper_el().selected = true;
 }
-
 function deselect_element(pe) {
   var p_el = pe ? pe : get_current_paper_el();
   if (p_el) {
@@ -92,11 +93,30 @@ function deselect_element(pe) {
   getValues(current_element, new Element({}));
 }
 function duplicate_element(el) {
-  var old_el = paper_elements[el.paper_element_index];
-  var new_el = create_new_element(el.type, el.x, el.y, el, 20, 20);
+  var new_el;
 
-  old_el._permanent_selected = false;
-  old_el.selected = false;
+  if (el.type == "group") {
+    console.log("group duplication");
+    var new_children = [];
+
+    for (let i in el.group_children_index) {
+      var old_el = scene_state.elements[el.group_children_index[i]];
+      //var old_pel = paper_elements[old_el.paper_element_index];
+      if (!old_el) continue;
+      new_children.push(
+        create_new_element(old_el.type, old_el.x, old_el.y, old_el, 20, 20)
+          .original_element_index
+      );
+    }
+    new_el = create_group(new_children);
+  } else {
+    var old_pel = paper_elements[el.paper_element_index];
+    new_el = create_new_element(el.type, el.x, el.y, el, 20, 20);
+
+    old_pel._permanent_selected = false;
+    old_pel.selected = false;
+  }
+
   return new_el;
 }
 function delete_element(p_el) {
@@ -104,7 +124,53 @@ function delete_element(p_el) {
   p_el.remove();
   paper_elements[el.paper_element_index] = undefined;
   scene_state.elements[el.original_element_index] = undefined;
+  if (el.isGroup) {
+    for (let i in el.group_children_index) {
+      var child = scene_state.elements[el.group_children_index[i]];
+      var p_child = paper_elements[child.paper_element_index];
+      delete_element(p_child);
+    }
+  }
   getValues(current_element, new Element({}));
+}
+function create_group(children) {
+  console.log(children);
+  for (let i = 0; i < children.length; i++) {
+    console.log(scene_state.elements[children[i]]);
+  }
+  var group_list = [];
+  var group_list_index = [];
+  for (let i in children) {
+    let elem = scene_state.elements[children[i]];
+    if (!elem) continue;
+    elem.group_parent_index = paper_elements.length;
+    var p_el = paper_elements[elem.paper_element_index];
+    group_list.push(p_el);
+    group_list_index.push(elem.original_element_index);
+  }
+
+  var p_group = new paper.Group({
+    children: group_list
+  });
+
+  var elem = new Element({
+    type: "group",
+    x: p_group.position.x,
+    y: p_group.position.y,
+    ep: p_group
+  });
+  elem.original_element_index = allocate_new_element_in_list(elem);
+  elem.group_children_index = group_list_index.slice();
+  select_element(elem);
+  propagate_modifications();
+  return elem;
+}
+function get_parent_group() {
+  var p = paper_elements[current_element.group_parent_index];
+  p._permanent_selected = true;
+  p.selected = true;
+
+  getValues(current_element, p._element);
 }
 function paste_expression(elem) {
   G.DROP_EXPRESSION.active = false;
@@ -121,7 +187,6 @@ function paste_expression(elem) {
   G.DROP_OBJECT.active = false;
   $("#drop_icon").toggleClass("hide");
 }
-
 function propagate_modifications(prevent) {
   if (!prevent) $("#save_status").removeClass("hide");
 
@@ -139,7 +204,6 @@ function propagate_modifications(prevent) {
   G._LAST_STROKECOLOR = c_el.strokeColor;
   G._LAST_STROKE_WIDTH = c_el.strokeWidth;
 }
-
 function core_propagation(c_el, p_el) {
   if (c_el.type) {
     if (c_el.w == undefined || c_el.w == 0) c_el.w = 1;
@@ -167,25 +231,38 @@ function core_propagation(c_el, p_el) {
     }
     paperRotate(p_el, Number(c_el.r));
 
-    p_el.blendMode = c_el.blendMode;
-    if (c_el.type != "line" && c_el.type != "curve")
-      p_el.fillColor = c_el.fillColor;
-    p_el.strokeColor = c_el.strokeColor;
-    p_el.strokeWidth = c_el.strokeWidth;
-    p_el.content = c_el.textContent;
-    p_el.fontFamily = c_el.fontFamily;
+    if (!c_el.isGroup) {
+      p_el.blendMode = c_el.blendMode;
+      if (c_el.type != "line" && c_el.type != "curve")
+        p_el.fillColor = c_el.fillColor;
+      p_el.strokeColor = c_el.strokeColor;
+      p_el.strokeWidth = c_el.strokeWidth;
+      p_el.content = c_el.textContent;
+      p_el.fontFamily = c_el.fontFamily;
+    }
     p_el.opacity = c_el.opacity / 100;
     p_el.visible = c_el.visible;
+
+    if (c_el.isGroup) {
+      for (let i in p_el.children) {
+        reverse_dimension_propagation(p_el.children[i]);
+      }
+    } else if (typeof c_el.group_parent_index !== typeof undefined) {
+      reverse_dimension_propagation(paper_elements[c_el.group_parent_index]);
+    }
   }
 }
-
+function reverse_dimension_propagation(p_el) {
+  el = p_el._element;
+  el.x = p_el.position.x;
+  el.y = p_el.position.y;
+}
 function paperResize(p, w, h) {
   p.scale(1 / p._last_resize_w, 1 / p._last_resize_h);
   p.scale(w, h);
   p._last_resize_w = w;
   p._last_resize_h = h;
 }
-
 function paperRotate(p, r) {
   p.rotate(-p._last_rotation, p.bounds.center);
   p.rotate(r, p.bounds.center);
@@ -198,10 +275,9 @@ function reload_current_img() {
   }
   propagate_modifications();
 }
-
 function allocate_new_element_in_list(elem) {
   //var found_empty_spot = false;
-  for (var i in scene_state.elements) {
+  for (let i in scene_state.elements) {
     if (scene_state.elements[i] === undefined) {
       scene_state.elements[i] = elem;
       return i;
@@ -212,7 +288,7 @@ function allocate_new_element_in_list(elem) {
 }
 function allocate_new_paper_in_list(pap) {
   //var found_empty_spot = false;
-  for (var i in paper_elements) {
+  for (let i in paper_elements) {
     if (paper_elements[i] === undefined) {
       paper_elements[i] = pap;
       return i;
@@ -221,7 +297,6 @@ function allocate_new_paper_in_list(pap) {
   paper_elements.push(pap);
   return paper_elements.length - 1;
 }
-
 function propagate_current_expression() {
   current_element[current_expression.type].dataBehaviour =
     current_expression.dataBehaviour;
@@ -234,15 +309,13 @@ function propagate_current_expression() {
   current_element[current_expression.type].inputType =
     current_expression.inputType;
 }
-
 function deselect_all_elements() {
-  for (var i in scene_state.elements) {
+  for (let i in scene_state.elements) {
     var elem = scene_state.elements[i];
     if (!elem) continue;
     deselect_element(paper_elements[elem.paper_element_index]);
   }
 }
-
 function applyEdgeLoop(e) {
   var ew = e._paper_elem.bounds.width;
   var eh = e._paper_elem.bounds.height;

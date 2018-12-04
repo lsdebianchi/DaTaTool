@@ -1,13 +1,13 @@
 function assign_methods(elem) {
   elem._paper_elem = paper_elements[elem.paper_element_index];
 
-  for (var i in attr_list) {
+  for (let i in attr_list) {
     var data = elem["data_" + attr_list[i]];
     data.method = undefined;
     data.var = { target: attr_list[i] };
     var param = data.expression.split(", "); //data.expression.match(/[+-]?\d+(\.\d+)?/g);
 
-    for (var j in param) {
+    for (let j in param) {
       if (param[j].match(/^:/) || param[j].match(/^#/))
         param[j] = param[j].substring(1);
       else param[j] = Number(param[j]);

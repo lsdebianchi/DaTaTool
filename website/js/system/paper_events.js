@@ -20,7 +20,7 @@ function load_paper_handlers() {
     else {
       if (!G.MAIUSC) {
         //CLEAR PREVIOUS SELECTION
-        for (var i in paper.project.activeLayer.children) {
+        for (let i in paper.project.activeLayer.children) {
           paper.project.activeLayer.children[i]._permanent_selected = false;
           paper.project.activeLayer.children[i].selected = false;
         }
@@ -32,7 +32,7 @@ function load_paper_handlers() {
 
       if (!hitResult) {
         //DESELECT ALL
-        for (var i in paper.project.activeLayer.children) {
+        for (let i in paper.project.activeLayer.children) {
           paper.project.activeLayer.children[i]._permanent_selected = false;
           paper.project.activeLayer.children[i].selected = false;
         }
@@ -49,10 +49,12 @@ function load_paper_handlers() {
 
       if (hitResult) {
         path = hitResult.item;
-        path._permanent_selected = true;
-        path.selected = true;
-        //current_element = path._element;
+
         getValues(current_element, path._element);
+        get_current_paper_el()._permanent_selected = true;
+        get_current_paper_el().selected = true;
+        if (G.CMD && get_current_paper_el()._element.group_parent_index)
+          get_parent_group();
         current_multiselection.push(current_element.original_element_index);
         if (G.DROP_EXPRESSION.active) paste_expression(current_element);
       }
@@ -64,18 +66,33 @@ function load_paper_handlers() {
 
   paper_tool.onMouseMove = function(event) {
     //paper.project.activeLayer.selected = false;
-    for (var i in paper.project.activeLayer.children) {
-      if (!paper.project.activeLayer.children[i]._permanent_selected) {
+    for (let i in paper.project.activeLayer.children) {
+      if (!paper.project.activeLayer.children[i]._permanent_selected)
         paper.project.activeLayer.children[i].selected = false;
-      }
+
+      // var p_el = paper.project.activeLayer.children[i];
+      // if (p_el.children) {
+      //   for (let j in p_el.children) {
+      //     if (!p_el.children[j]._permanent_selected)
+      //       p_el.children[j].selected = false;
+      //   }
+      // } else {
+      //   if (!p_el._permanent_selected) p_el.selected = false;
+      // }
     }
     if (event.item) event.item.selected = true;
   };
 
   paper_tool.onMouseDrag = function(event) {
     if (path) {
-      current_element.x = parseInt(path._element.x) + event.delta.x;
-      current_element.y = parseInt(path._element.y) + event.delta.y;
+      current_element.x =
+        parseInt(
+          scene_state.elements[current_element.original_element_index].x
+        ) + event.delta.x;
+      current_element.y =
+        parseInt(
+          scene_state.elements[current_element.original_element_index].y
+        ) + event.delta.y;
 
       propagate_modifications();
     }

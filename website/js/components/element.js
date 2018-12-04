@@ -57,7 +57,12 @@ var Element = function(arg) {
       ? "./scenes/assets/something.png"
       : arg.sourceFile;
 
-  var ep;
+  this.isGroup = this.type === "group" ? true : false;
+  this.group_parent_index = undefined;
+  this.group_children_index = [];
+
+  var ep = arg.ep ? arg.ep : undefined;
+
   if (this.type == "circle") {
     ep = new paper.Path.Circle({
       center: [this.x, this.y],
@@ -142,7 +147,7 @@ var Element = function(arg) {
     if (arg.lineData) {
       console.log("reconstruction");
       console.log(arg.lineData);
-      for (var i = 0; i < arg.lineData.length; i++) {
+      for (let i = 0; i < arg.lineData.length; i++) {
         var p = arg.lineData[i];
         ep.add(new paper.Point(p[0], p[1]));
         if (this.type == "curve") {
@@ -152,6 +157,8 @@ var Element = function(arg) {
       ep.strokeWidth = this.strokeWidth;
     } else ep.add(new paper.Point(this.x, this.y));
   }
+
+  //assign general ep variables
   if (ep) {
     ep._element = this;
     this.paper_element_index = allocate_new_paper_in_list(ep);
@@ -162,7 +169,8 @@ var Element = function(arg) {
     ep._last_resize_h = 10;
   }
 
-  for (var j in attr_list) {
+  //generate data_ object/parameters
+  for (let j in attr_list) {
     var name = "data_" + attr_list[j];
     if (arg[name] === undefined) {
       this[name] = {

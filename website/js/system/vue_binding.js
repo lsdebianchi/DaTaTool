@@ -48,7 +48,7 @@ var expression_bind = new Vue({
         ["random", "MIN, MAX, FREQUENCY", "NO-COLOR-MODE"],
         ["random_soft", "MIN, MAX, SPEED", "NO-COLOR-MODE"]
       ];
-      for (var i in rule) {
+      for (let i in rule) {
         if (this.dataBehaviour == rule[i][0]) {
           if (
             this.inputType == "color" &&

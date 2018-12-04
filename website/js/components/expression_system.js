@@ -28,7 +28,7 @@ function test_expression_validity() {
   //if (e) vals = e.match(/[+-]?\d+(\.\d+)?/g);
   if (e) vals = e.split(", ");
 
-  for (var j in vals) {
+  for (let j in vals) {
     if (
       (isNaN(Number(vals[j])) &&
         !vals[j].match(/^#(?:[0-9a-fA-F]{6})$/i) &&
@@ -49,7 +49,7 @@ function test_expression_validity() {
     ["random_soft", 3]
   ];
 
-  for (var i in test) {
+  for (let i in test) {
     var name = test[i][0];
     if (current_expression.dataBehaviour !== name) continue;
     var min = test[i][1];

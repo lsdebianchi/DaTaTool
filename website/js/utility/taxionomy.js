@@ -37,6 +37,14 @@ function hasElement(type, test) {
     if (test == "text") return false;
     if (test == "opacity") return true;
   }
+  if (type == "group") {
+    if (test == "dimension") return true;
+    if (test == "stroke") return false;
+    if (test == "fill") return false;
+    if (test == "img") return false;
+    if (test == "text") return false;
+    if (test == "opacity") return true;
+  }
 }
 
 function input_type(attr_name) {

@@ -44,14 +44,14 @@ function run_scene() {
 
   save_scene(current_project.name + "_LOG");
 
-  for (var i in scene_state.elements) {
+  for (let i in scene_state.elements) {
     if (scene_state.elements[i]) assign_methods(scene_state.elements[i]);
   }
 
   paper.view.onFrame = function(event) {
-    for (var i in scene_state.elements) {
+    for (let i in scene_state.elements) {
       if (!scene_state.elements[i]) continue;
-      for (var j in attr_list) {
+      for (let j in attr_list) {
         var elem = scene_state.elements[i];
         var d = scene_state.elements[i]["data_" + attr_list[j]];
         if (d.method) d.method(d.var);

@@ -1,5 +1,5 @@
 function clear_scene() {
-  for (var i in scene_state.elements) {
+  for (let i in scene_state.elements) {
     var el = scene_state.elements[i];
     if (el === undefined || el === null) continue;
     var p = paper_elements[el.paper_element_index];
@@ -47,15 +47,15 @@ function load_scene(name) {
 }
 
 function generate_scene() {
-  for (var i in loading_scene_state.saved_scenes_list) {
+  for (let i in loading_scene_state.saved_scenes_list) {
     G.LOAD_LOG.saved_scenes_list.push(loading_scene_state.saved_scenes_list[i]);
   }
   G.LOAD_LOG.index = 0;
 
-  for (var i in scene_state.elements) {
-    var el = scene_state.elements[i];
+  for (let i in scene_state.elements) {
+    let el = scene_state.elements[i];
     if (el === undefined || el === null) continue;
-    var p = paper_elements[el.paper_element_index];
+    let p = paper_elements[el.paper_element_index];
     p.remove();
   }
   paper_elements = [];
@@ -80,30 +80,53 @@ function generate_scene() {
   scene_state.hierarchy_order = loading_scene_state.hierarchy_order;
   scene_state.objects = {};
 
-  for (var i in loading_scene_state.elements) {
-    var el = loading_scene_state.elements[i];
+  var grouping_list = [];
+
+  for (let i in loading_scene_state.elements) {
+    let el = loading_scene_state.elements[i];
     if (el === undefined || el === null) continue;
-    create_new_element(el.type, el.x, el.y, el);
+    if (el.type !== "group") create_new_element(el.type, el.x, el.y, el);
+    else grouping_list.push(el);
   }
 
-  for (var i in scene_state.hierarchy_order) {
+  for (let i in grouping_list) {
+    let gl = grouping_list[i];
+    var group = create_group(gl.group_children_index);
+  }
+
+  for (let i in scene_state.hierarchy_order) {
     var elem = scene_state.elements[scene_state.hierarchy_order[i]];
     if (!elem) continue;
     var p_el = paper_elements[elem.paper_element_index];
     p_el.bringToFront();
   }
+
+  //REBUILD group children index
+  for (let i in scene_state.elements) {
+    let elem = scene_state.elements[i];
+    if (elem && elem.type == "group") {
+      let p_group = paper_elements[elem.paper_element_index];
+      let elem_children_index = [];
+      for (let j in p_group.children) {
+        let child = p_group.children[j];
+        child._element.group_parent_index = elem.original_element_index;
+        elem_children_index.push(child._element.paper_element_index);
+      }
+      elem.group_children_index = elem_children_index.splice();
+    }
+  }
   propagate_settings();
 }
 
 function consolidate_lines_data() {
-  for (var i in scene_state.elements) {
+  for (let i in scene_state.elements) {
     var el = scene_state.elements[i];
     if (!el) continue;
     if (el.type != "line" && el.type != "curve") continue;
 
     var p_el = paper_elements[el.paper_element_index];
     el.lineData = [];
-    for (var j = 0; j < p_el.segments.length; j++) {
+    for (let j = 0; j < p_el.segments.length; j++) {
       var pos = p_el.segments[j].point;
 
       el.lineData.push([pos.x, pos.y]);
@@ -114,7 +137,7 @@ function consolidate_hierarchy() {
   var hierarchy_order = [];
   var al = paper.projects[0].activeLayer;
   if (!al) return;
-  for (var i in al.children) {
+  for (let i in al.children) {
     var p_el = al.children[i];
     hierarchy_order.push(p_el._element.original_element_index);
   }

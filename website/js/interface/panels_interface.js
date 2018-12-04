@@ -133,6 +133,9 @@ $("#settings_panel .selector").on("change", function() {
 $("#settings_panel input").on("input", function() {
   propagate_settings();
 });
+$("#go_to_parent").click(function() {
+  get_parent_group();
+});
 
 /////////EXPRESSION PANEL ////////////////////////////////////////////////////////
 
