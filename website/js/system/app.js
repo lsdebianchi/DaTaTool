@@ -63,7 +63,9 @@ function run_scene() {
         scene_state.elements[i]._paper_elem
       );
     }
-    runTime.frames++;
+
+    runTimeInput.frames++;
+    runTimeInput.distance = tracker.value;
   };
 }
 
@@ -72,9 +74,11 @@ function stop_scene() {
   $("#distance_meter").removeClass("active");
   G.SCENE_RUNNING.active = false;
 
-  runTime = {
-    frames: 0
+  runTimeInput = {
+    frames: 0,
+    distance: 50
   };
+
   load_scene(current_project.name + "_LOG");
   paper.view.onFrame = function(event) {};
 }

@@ -23,6 +23,14 @@ function remove_expression() {
 }
 
 function test_expression_validity() {
+  /// !!! EXCEPTION
+  if (
+    current_expression.dataBehaviour == "raw" &&
+    current_expression.expression == ""
+  ) {
+    current_expression.expression = "1, 0";
+  }
+  ///
   if (!current_expression.dataBehaviour || !current_expression.dataType)
     return err5();
   var e = current_expression.expression;
@@ -42,6 +50,10 @@ function test_expression_validity() {
   }
 
   var test = [
+    ["raw", 0, 2],
+    ["clamp", 2, 3],
+    ["map", 4],
+    ["trigger", 2, 3],
     ["increment", 1, 2],
     ["bounce", 2],
     ["sin", 2],

@@ -41,8 +41,8 @@ var expression_bind = new Vue({
   computed: {
     suggestion: function() {
       var rule = [
-        ["raw", "SCALE, OFFSET", "-"],
-        ["clamp", "MIN, MAX, SCALE", "-"],
+        ["raw", "(SCALE), (OFFSET)", "-"],
+        ["clamp", "MIN, MAX, (SCALE)", "-"],
         ["map", "MIN_in, MAX_in, MIN_out, MAX_out", "-"],
         ["trigger", "TRESHOLD, VALUE, :[>/</=]", "-"],
         ["increment", "SPEED", "SPEED, :[h/s/l]"],

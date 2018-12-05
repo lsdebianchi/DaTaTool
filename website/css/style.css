@@ -440,7 +440,8 @@ body {
 .add_option_not img {
   width: 30px;
 }
-.add_option div {
+.add_option div,
+.add_option_not div {
   width: 30px;
   height: 30px;
   font-size: 15px;

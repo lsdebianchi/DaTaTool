@@ -51,5 +51,8 @@ Distance_tracker.prototype = {
 };
 
 function map_val(val, a1, a2, b1, b2) {
-  return ((val - a1) / (a2 - a1)) * (b2 - b1) + b1;
+  var v = ((val - a1) / (a2 - a1)) * (b2 - b1) + b1;
+  if (v < b1) v = b1;
+  if (v > b2) v = b2;
+  return v;
 }

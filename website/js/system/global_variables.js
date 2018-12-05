@@ -40,8 +40,9 @@ var G = {
   EXPRESSION_PANEL_OPEN: false
 };
 ////////////////////////////////////////////////////////////////////////////////
-var runTime = {
-  frames: 0
+var runTimeInput = {
+  frames: 0,
+  distance: 50
 };
 var width = window.innerWidth;
 var height = window.innerHeight;

@@ -425,7 +425,7 @@
         <div kind="svg" class="add_option_not"><img id="image_svg" src="./visual_assets/ico_svg.png"></div>
       </div>
       <div id="objects" class="add_section">
-        <div kind="obj_1"class="add_option" ><div class="addable_obj">AB</div></div>
+        <div kind="obj_1"class="add_option_not" ><div class="addable_obj">AB</div></div>
       </div>
       <div id="texts">
         <div kind="text" class="add_option"><img id="image_svg" src="./visual_assets/ico_text.png"></div>
@@ -448,13 +448,13 @@
             <option>clamp</option>
             <option>map</option>
             <option>trigger</option>
-            <option>increment</option>
-            <option>bounce</option>
-            <option>sin</option>
-            <option>cos</option>
+            <option v-if="inputType!='checkbox'">increment</option>
+            <option v-if="inputType!='checkbox'">bounce</option>
+            <option v-if="inputType!='color'">sin</option>
+            <option v-if="inputType!='color'">cos</option>
             <option>pulse</option>
-            <option>random</option>
-            <option>random_soft</option>
+            <option v-if="inputType!='checkbox' && inputType!='color'">random</option>
+            <option v-if="inputType!='checkbox' && inputType!='color'">random_soft</option>
           </select>
           <input id="exp_parameters" v-bind:placeholder='suggestion' v-bind:title='suggestion' type="textarea" class="entry_field long textinput" v-model="expression"/>
           <select class="costum_select" @change="clearType()" v-model="dataSource">

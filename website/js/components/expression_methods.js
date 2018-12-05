@@ -14,8 +14,46 @@ function assign_methods(elem) {
     }
 
     //
+
+    //
     //////////////////////////////////////////////////////////////////////////////////NUMBERS
     if (data.inputType == "number") {
+      //raw
+      if (data.dataBehaviour == "raw") {
+        data.var.input = data.dataType;
+        data.var.scale = param[0] ? param[0] : 1;
+        data.var.offset = param[1] ? param[1] : 0;
+
+        data.method = function(v) {
+          var INPUT = runTimeInput[v.input];
+
+          this[v.target] = INPUT * v.scale + v.offset;
+        }.bind(elem);
+      }
+      //clamp
+      if (data.dataBehaviour == "clamp") {
+        data.var.speed = param[0];
+
+        data.method = function(v) {
+          this[v.target] += v.speed;
+        }.bind(elem);
+      }
+      //map
+      if (data.dataBehaviour == "map") {
+        data.var.speed = param[0];
+
+        data.method = function(v) {
+          this[v.target] += v.speed;
+        }.bind(elem);
+      }
+      //trigger
+      if (data.dataBehaviour == "trigger") {
+        data.var.speed = param[0];
+
+        data.method = function(v) {
+          this[v.target] += v.speed;
+        }.bind(elem);
+      }
       //increment
       if (data.dataBehaviour == "increment") {
         data.var.speed = param[0];
@@ -50,7 +88,8 @@ function assign_methods(elem) {
         data.method = function(v) {
           this[v.target] =
             v.init +
-            Math.sin((runTime.frames / 360) * Math.PI * v.speed) * v.amplitude;
+            Math.sin((runTimeInput.frames / 360) * Math.PI * v.speed) *
+              v.amplitude;
         }.bind(elem);
       }
       //cos
@@ -63,7 +102,8 @@ function assign_methods(elem) {
         data.method = function(v) {
           this[v.target] =
             v.init +
-            Math.cos((runTime.frames / 360) * Math.PI * v.speed) * v.amplitude;
+            Math.cos((runTimeInput.frames / 360) * Math.PI * v.speed) *
+              v.amplitude;
         }.bind(elem);
       }
       //pulse
@@ -165,7 +205,7 @@ function assign_methods(elem) {
       //   data.method = function(v) {
       //     this[v.target] =
       //       v.init +
-      //       Math.sin((runTime.frames / 360) * Math.PI * v.speed) * v.amplitude;
+      //       Math.sin((runTimeInput.frames / 360) * Math.PI * v.speed) * v.amplitude;
       //   }.bind(elem);
       // }
       //cos
@@ -178,7 +218,7 @@ function assign_methods(elem) {
       //   data.method = function(v) {
       //     this[v.target] =
       //       v.init +
-      //       Math.cos((runTime.frames / 360) * Math.PI * v.speed) * v.amplitude;
+      //       Math.cos((runTimeInput.frames / 360) * Math.PI * v.speed) * v.amplitude;
       //   }.bind(elem);
       // }
       //pulse
