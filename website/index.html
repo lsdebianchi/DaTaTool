@@ -444,6 +444,10 @@
         </div>
         <div class="row">
           <select id="exp_behaviour" class="costum_select" v-model="dataBehaviour">
+            <option>raw</option>
+            <option>clamp</option>
+            <option>map</option>
+            <option>trigger</option>
             <option>increment</option>
             <option>bounce</option>
             <option>sin</option>
@@ -453,26 +457,28 @@
             <option>random_soft</option>
           </select>
           <input id="exp_parameters" v-bind:placeholder='suggestion' v-bind:title='suggestion' type="textarea" class="entry_field long textinput" v-model="expression"/>
-          <select class="costum_select" v-model="dataSource">
+          <select class="costum_select" @change="clearType()" v-model="dataSource">
             <option>time</option>
-            <option>currency</option>
+            <option>sensor</option>
             <option>meteo</option>
           </select>
           <select class="costum_select" v-model="dataType">
             <!-- time -->
             <option v-if="dataSource == 'time'">frames</option>
-            <option v-if="dataSource == 'time'">every_time</option>
-            <option v-if="dataSource == 'time'">time_from_every_time</option>
             <!-- currency -->
-            <option v-if="dataSource == 'currency'">currency_value</option>
-            <option v-if="dataSource == 'currency'">currency_increase_daily</option>
+            <option v-if="dataSource == 'sensor'">distance</option>
           </select>
 
         </div>
         <div class="row">
-          <div class="cancel dialog_btn">Cancel</div>
-          <div class="remove dialog_btn">Remove</div>
-          <div class="confirm dialog_btn">Confirm</div>
+          <div class="description">{{ descriptionCompA }} <br /><br />  {{ descriptionCompB }}</div>
+        </div>
+        <div class="row" style="justify-content: flex-end">
+          <div class="controls">
+            <div class="cancel dialog_btn">Cancel</div>
+            <div class="remove dialog_btn">Remove</div>
+            <div class="confirm dialog_btn">Confirm</div>
+          </div>
         </div>
 
       </div>

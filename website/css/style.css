@@ -477,7 +477,7 @@ body {
   padding: 10px;
   background-color: #3d3d3d;
   width: 700px;
-  height: 150px;
+  height: 245px;
   position: absolute;
   top: 20%;
   left: 50%;
@@ -498,7 +498,8 @@ body {
 }
 #expression_panel .content {
   width: 100%;
-  height: 120px;
+  height: 220px;
+  padding-bottom: 5px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -529,10 +530,10 @@ body {
   cursor: pointer;
   border-style: solid;
   border-width: 2px;
-  font-size: 15px;
+  font-size: 20px;
   padding: 5px;
-  width: 60px;
-  height: 15px;
+  width: 79px;
+  height: 22px;
   margin-top: 20px;
   text-align: center;
 }
@@ -540,17 +541,14 @@ body {
   color: #1d3bff;
   border-color: #1d3bff;
   transition: 0.3s;
-  margin-left: 20px;
 }
 #expression_panel .remove {
   color: #5d5d5d;
   border-color: #5d5d5d;
-  margin-left: 20px;
 }
 #expression_panel .cancel {
   color: #5d5d5d;
   border-color: #5d5d5d;
-  margin-left: 460px;
 }
 #expression_panel .confirm:hover {
   color: #5068ff;
@@ -581,6 +579,21 @@ body {
 }
 .costum_select::-ms-expand {
   display: none;
+}
+.description {
+  color: #5d5d5d;
+  font-size: 17px;
+  padding-top: 10px;
+  width: 690px;
+  height: 100px;
+  overflow-y: scroll;
+}
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 300px;
+  height: 40px;
 }
 
 /*VARIOUS---------------------------------------------------------------------*/

@@ -33,9 +33,18 @@ var settings_bind = new Vue({
 var expression_bind = new Vue({
   el: "#expression_panel",
   data: current_expression,
+  methods: {
+    clearType() {
+      this.dataType = undefined;
+    }
+  },
   computed: {
     suggestion: function() {
       var rule = [
+        ["raw", "SCALE, OFFSET", "-"],
+        ["clamp", "MIN, MAX, SCALE", "-"],
+        ["map", "MIN_in, MAX_in, MIN_out, MAX_out", "-"],
+        ["trigger", "TRESHOLD, VALUE, :[>/</=]", "-"],
         ["increment", "SPEED", "SPEED, :[h/s/l]"],
         ["bounce", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
         ["sin", "AMPLITUDE, SPEED", "NO-COLOR-MODE"],
@@ -58,6 +67,76 @@ var expression_bind = new Vue({
           else return rule[i][1];
         }
       }
+    },
+    descriptionCompA: function() {
+      var behaviours = [
+        [
+          "raw",
+          "RAW: Takes the input source value as it is. SCALE and OFFSET are optional, they multiply or add some value to the input."
+        ],
+        [
+          "clamp",
+          "CLAMP: Same as 'raw' but prevent the input to go below MINor above MAX. SCALE its optional."
+        ],
+        [
+          "map",
+          "MAP: Remap the input so that its minimum correspond to MIN_out and its maximum to MAX_out. MIN_in and MAX_in are the minumum and maximum of the input (example: for the distance sensor they are 0 and 100)."
+        ],
+        [
+          "trigger",
+          "TRIGGER: When the input reach a certain TRESHOLD it assign VALUE. For checkBoxes the value can be 0 or 1."
+        ],
+        ["increment", "INCREMENT: It keeps adding the input."],
+        [
+          "bounce",
+          "BOUNCE: Keeps moving between the current state and an AMPLITUDE/#COLOR with a certain SPEED. The input modulate the speed."
+        ],
+        ["sin", "SIN: Same as 'bounce' but in a softer way."],
+        ["cos", "COS: same as 'sin' but with a different phase"],
+        [
+          "pulse",
+          "PULSE: Keeps moving between the current state and an AMPLITUDE/#COLOR following the given timings."
+        ],
+        [
+          "random",
+          "Return a value between MIN and MAX every FREQUENCY. It ignores the input."
+        ],
+        [
+          "random_soft",
+          "Keeps adding a value between MIN and MAX. It ignores the input."
+        ]
+      ];
+      var t = "";
+      for (let i in behaviours) {
+        if (this.dataBehaviour == behaviours[i][0]) {
+          t += behaviours[i][1];
+          break;
+        }
+      }
+      if (t === "") t = "-";
+      return t;
+    },
+    descriptionCompB: function() {
+      var inputs = [
+        [
+          "frames",
+          "FRAMES: Start from 0 and increase constantly through time. It's around 60 " +
+            "frame per second, depending on the coumputer performance. Its the simplest input for all the behaviours."
+        ],
+        [
+          "distance",
+          "DISTANCE: Give values between 0 and 100, where 0 is maximum close and 100 is maximum far."
+        ]
+      ];
+      var t = "";
+      for (let i in inputs) {
+        if (this.dataType == inputs[i][0]) {
+          t += inputs[i][1];
+          break;
+        }
+      }
+      if (t === "") t = "-";
+      return t;
     }
   }
 });

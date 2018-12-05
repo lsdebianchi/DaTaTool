@@ -110,7 +110,6 @@ $("body").on("keydown", function(e) {
     //d
     if (e.which == 68) {
       if (current_multiselection.length > 1) {
-        console.log("multi");
         var new_multiselection = [];
         for (let i in current_multiselection) {
           var el = scene_state.elements[current_multiselection[i]];

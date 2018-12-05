@@ -23,6 +23,8 @@ function remove_expression() {
 }
 
 function test_expression_validity() {
+  if (!current_expression.dataBehaviour || !current_expression.dataType)
+    return err5();
   var e = current_expression.expression;
   var vals = [];
   //if (e) vals = e.match(/[+-]?\d+(\.\d+)?/g);
@@ -88,6 +90,10 @@ function err4(a) {
       a +
       " parameters."
   );
+  return false;
+}
+function err5() {
+  alert("Choose a value for BEHAVIOUR and INPUT.");
   return false;
 }
 function err3() {

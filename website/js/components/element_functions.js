@@ -72,7 +72,6 @@ function create_new_element(_type, x, y, copy, dx, dy) {
     elem.y = Number(elem.y) + (dy ? dy : 0);
   }
   elem.original_element_index = allocate_new_element_in_list(elem);
-  console.log("creation");
   select_element(elem);
   propagate_modifications();
   return elem;
@@ -99,7 +98,6 @@ function duplicate_element(_el) {
 
   var new_el;
   if (el.type == "group") {
-    console.log("duplication group");
     var new_children = [];
 
     var old_el_to_copy = [];
@@ -121,7 +119,6 @@ function duplicate_element(_el) {
     new_el = create_group(new_children, el);
   } else {
     el = _el;
-    console.log("duplication");
     var old_pel = paper_elements[el.paper_element_index];
     new_el = create_new_element(el.type, el.x, el.y, el, 20, 20);
 
@@ -182,7 +179,6 @@ function create_group(children, copy) {
     var child = scene_state.elements[elem.group_children_index[i]];
     child.group_parent_index = elem.original_element_index;
   }
-  console.log("creation");
   select_element(elem);
   propagate_modifications();
   return elem;
@@ -273,7 +269,6 @@ function core_propagation(c_el, p_el) {
         reverse_dimension_propagation(p_el.children[i]);
       }
     } else if (typeof c_el.group_parent_index !== typeof undefined) {
-      console.log("rp father");
       reverse_dimension_propagation(
         paper_elements[
           scene_state.elements[c_el.group_parent_index].paper_element_index
@@ -284,9 +279,6 @@ function core_propagation(c_el, p_el) {
 }
 function reverse_dimension_propagation(p_el) {
   el = p_el._element;
-  console.log(">>> " + el.type);
-  console.log("has     (" + el.x + ", " + el.y + ")");
-  console.log("recives (" + p_el.position.x + ", " + p_el.position.y + ")");
   el.x = p_el.position.x;
   el.y = p_el.position.y;
 }

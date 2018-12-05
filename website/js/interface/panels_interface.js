@@ -149,7 +149,6 @@ $(".entry_data").click(function() {
   current_expression.inputType = current_element["data_" + d].inputType;
 
   if (G.MAIUSC && current_element["data_" + d].dataBehaviour) {
-    console.log("heyo");
     G.DROP_EXPRESSION.active = true;
     G.DROP_EXPRESSION.type = d;
     G.DROP_OBJECT.active = true;

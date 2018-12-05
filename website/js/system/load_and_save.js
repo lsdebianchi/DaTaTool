@@ -102,7 +102,6 @@ function generate_scene() {
       var c = create_group(el.group_children_index, el);
       // var cp = paper_elements[c.paper_element_index];
       //
-      // console.log("prepare overlckik");
       // var cc = scene_state.elements[c.group_children_index[0]];
       // var ccp = paper_elements[cc.paper_element_index];
       // core_propagation(cc, ccp);
@@ -114,12 +113,9 @@ function generate_scene() {
 
   // for (let i in grouping_list) {
   //   let gl = grouping_list[i];
-  //   console.log(gl.group_children_index);
   //   var group = create_group(gl.group_children_index, gl);
   //   // for (let j in gl.group_children_index) {
   //   //   var child = scene_state.elements[gl.group_children_index[j]];
-  //   //   console.log(child.type + ": ");
-  //   //   console.log(child.x + " | " + child.y);
   //   // }
   // }
 
@@ -147,7 +143,6 @@ function generate_scene() {
 
   propagate_settings();
   // setTimeout(function() {
-  //   console.log("TT");
   //
   //   for (var i in scene_state.elements) {
   //     var elem = scene_state.elements[i];
@@ -155,7 +150,6 @@ function generate_scene() {
   //     var p_el = paper_elements[elem.paper_element_index];
   //     core_propagation(elem, p_el);
   //   }
-  //   console.log("TT");
   // }, 10);
 }
 
