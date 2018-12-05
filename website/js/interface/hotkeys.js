@@ -135,7 +135,12 @@ $("body").on("keydown", function(e) {
       $("#picker").toggleClass("active");
     }
     //w
-    if (e.which == 87 && !G.DROP_OBJECT.active && get_current_paper_el()) {
+    if (
+      e.which == 87 &&
+      !G.DROP_OBJECT.active &&
+      get_current_paper_el() &&
+      !current_element.isGroup
+    ) {
       G.TRANSFORM.active = !G.TRANSFORM.active;
 
       $("canvas").toggleClass("resizing");
@@ -154,7 +159,12 @@ $("body").on("keydown", function(e) {
       }
     }
     //r
-    if (e.which == 82 && !G.DROP_OBJECT.active && get_current_paper_el()) {
+    if (
+      e.which == 82 &&
+      !G.DROP_OBJECT.active &&
+      get_current_paper_el() &&
+      !current_element.isGroup
+    ) {
       G.TRANSFORM.active = !G.TRANSFORM.active;
 
       $("canvas").toggleClass("rotating");

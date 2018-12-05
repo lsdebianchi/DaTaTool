@@ -43,6 +43,7 @@ function save_scene(name, runtime_save) {
   );
 }
 function load_scene(name) {
+  G.LOADING = true;
   var save_name = name ? name : current_project.name;
   $.get("http://localhost:3000/load_scene/" + save_name, function(data) {
     loading_scene_state = JSON.parse(data);
@@ -50,6 +51,7 @@ function load_scene(name) {
     generate_scene();
     deselect_all_elements();
     if (/^((?!_LOG).)*$/gi.test(name)) $("#save_status").addClass("hide");
+    G.LOADING = false;
   });
 }
 
@@ -89,18 +91,24 @@ function generate_scene() {
 
   var grouping_list = [];
 
-  console.log(loading_scene_state.elements);
   for (let i in loading_scene_state.elements) {
     let el = loading_scene_state.elements[i];
     if (typeof el === typeof undefined || el === null) {
-      console.log("null!");
       scene_state.elements.push(null);
       continue;
     }
     if (el.type !== "group") create_new_element(el.type, el.x, el.y, el);
     else {
-      console.log(el.group_children_index);
-      create_group(el.group_children_index, el);
+      var c = create_group(el.group_children_index, el);
+      // var cp = paper_elements[c.paper_element_index];
+      //
+      // console.log("prepare overlckik");
+      // var cc = scene_state.elements[c.group_children_index[0]];
+      // var ccp = paper_elements[cc.paper_element_index];
+      // core_propagation(cc, ccp);
+      //
+      // core_propagation(c, cp);
+      // core_propagation(cc, ccp);
     }
   }
 
@@ -136,7 +144,19 @@ function generate_scene() {
   //     elem.group_children_index = elem_children_index.slice();
   //   }
   // }
+
   propagate_settings();
+  // setTimeout(function() {
+  //   console.log("TT");
+  //
+  //   for (var i in scene_state.elements) {
+  //     var elem = scene_state.elements[i];
+  //     if (!elem) continue;
+  //     var p_el = paper_elements[elem.paper_element_index];
+  //     core_propagation(elem, p_el);
+  //   }
+  //   console.log("TT");
+  // }, 10);
 }
 
 function consolidate_lines_data() {

@@ -6,6 +6,7 @@ var G = {
     active: false,
     warning: false
   },
+  LOADING: false,
   MAIUSC: false,
   CMD: false,
   LOAD_LOG: {

@@ -145,7 +145,8 @@ var Element = function(arg, _children) {
   if (this.type == "raster") {
     ep = new paper.Raster({
       position: [this.x, this.y],
-      source: this.sourceFile
+      source: this.sourceFile,
+      size: G.LOADING ? [] : undefined
     });
   }
   //group special

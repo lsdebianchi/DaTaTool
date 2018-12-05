@@ -49,7 +49,6 @@ function load_paper_handlers() {
 
       if (hitResult) {
         path = hitResult.item;
-
         getValues(current_element, path._element);
         get_current_paper_el()._permanent_selected = true;
         get_current_paper_el().selected = true;
