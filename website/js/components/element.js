@@ -1,4 +1,4 @@
-var Element = function(arg) {
+var Element = function(arg, _children) {
   this.type = arg.type === undefined ? undefined : arg.type;
 
   this.selected = arg.selected === undefined ? false : arg.selected;
@@ -59,9 +59,21 @@ var Element = function(arg) {
 
   this.isGroup = this.type === "group" ? true : false;
   this.group_parent_index = undefined;
-  this.group_children_index = [];
+  this.group_children_index = undefined;
 
-  var ep = arg.ep ? arg.ep : undefined;
+  var name = this.type + ": ";
+  if (_children) {
+    this.group_children_index = _children.slice();
+  } else if (
+    arg.group_children_index &&
+    arg.group_children_index.length !== 0
+  ) {
+    this.group_children_index = arg.group_children_index.slice();
+  } else {
+    this.group_children_index = [];
+  }
+
+  var ep; // = arg.ep ? arg.ep : undefined;
 
   if (this.type == "circle") {
     ep = new paper.Path.Circle({
@@ -136,6 +148,22 @@ var Element = function(arg) {
       source: this.sourceFile
     });
   }
+  //group special
+  let group_list = [];
+
+  if (this.type == "group") {
+    for (let i in this.group_children_index) {
+      let elem = scene_state.elements[this.group_children_index[i]];
+      if (!elem) continue;
+      var p_el = paper_elements[elem.paper_element_index];
+      group_list.push(p_el);
+    }
+    ep = new paper.Group({
+      children: group_list
+    });
+    this.x = ep.position.x;
+    this.y = ep.position.y;
+  }
   if (this.type == "line" || this.type == "curve") {
     if (this.strokeWidth === undefined || this.strokeWidth <= 0)
       this.strokeWidth = 5;
@@ -169,6 +197,18 @@ var Element = function(arg) {
     ep._last_resize_h = 10;
   }
 
+  if (this.type == "group") {
+    // if (this.lockRatio) {
+    //   paperResize(ep, Number(this.w), Number(this.w) * this.ratio);
+    //   this.h = (Number(this.w) * this.ratio).toFixed(5);
+    // } else {
+    //   paperResize(ep, Number(this.w), Number(this.h));
+    //   this.ratio = Number(this.h) / Number(this.w);
+    // }
+    // paperRotate(ep, Number(this.r));
+    //
+    //ep.addChildren(group_list);
+  }
   //generate data_ object/parameters
   for (let j in attr_list) {
     var name = "data_" + attr_list[j];

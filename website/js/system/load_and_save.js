@@ -24,8 +24,15 @@ function clear_scene() {
 function save_scene(name, runtime_save) {
   var save_name = name ? name : current_project.name;
   consolidate_lines_data();
-  consolidate_hierarchy();
+  //consolidate_hierarchy();
+  //consolidate_group_children_coordinates();
+
   var fileContent = JSON.stringify(scene_state);
+  fileContent = JSON.parse(fileContent);
+
+  clear_unused_data_parameters(fileContent);
+
+  fileContent = JSON.stringify(fileContent);
 
   $.post(
     "http://localhost:3000/save_scene/",
@@ -82,17 +89,31 @@ function generate_scene() {
 
   var grouping_list = [];
 
+  console.log(loading_scene_state.elements);
   for (let i in loading_scene_state.elements) {
     let el = loading_scene_state.elements[i];
-    if (el === undefined || el === null) continue;
+    if (typeof el === typeof undefined || el === null) {
+      console.log("null!");
+      scene_state.elements.push(null);
+      continue;
+    }
     if (el.type !== "group") create_new_element(el.type, el.x, el.y, el);
-    else grouping_list.push(el);
+    else {
+      console.log(el.group_children_index);
+      create_group(el.group_children_index, el);
+    }
   }
 
-  for (let i in grouping_list) {
-    let gl = grouping_list[i];
-    var group = create_group(gl.group_children_index);
-  }
+  // for (let i in grouping_list) {
+  //   let gl = grouping_list[i];
+  //   console.log(gl.group_children_index);
+  //   var group = create_group(gl.group_children_index, gl);
+  //   // for (let j in gl.group_children_index) {
+  //   //   var child = scene_state.elements[gl.group_children_index[j]];
+  //   //   console.log(child.type + ": ");
+  //   //   console.log(child.x + " | " + child.y);
+  //   // }
+  // }
 
   for (let i in scene_state.hierarchy_order) {
     var elem = scene_state.elements[scene_state.hierarchy_order[i]];
@@ -102,19 +123,19 @@ function generate_scene() {
   }
 
   //REBUILD group children index
-  for (let i in scene_state.elements) {
-    let elem = scene_state.elements[i];
-    if (elem && elem.type == "group") {
-      let p_group = paper_elements[elem.paper_element_index];
-      let elem_children_index = [];
-      for (let j in p_group.children) {
-        let child = p_group.children[j];
-        child._element.group_parent_index = elem.original_element_index;
-        elem_children_index.push(child._element.paper_element_index);
-      }
-      elem.group_children_index = elem_children_index.splice();
-    }
-  }
+  // for (let i in scene_state.elements) {
+  //   let elem = scene_state.elements[i];
+  //   if (elem && elem.type == "group") {
+  //     let p_group = paper_elements[elem.paper_element_index];
+  //     let elem_children_index = [];
+  //     for (let j in p_group.children) {
+  //       let child = p_group.children[j];
+  //       child._element.group_parent_index = elem.original_element_index;
+  //       elem_children_index.push(child._element.paper_element_index);
+  //     }
+  //     elem.group_children_index = elem_children_index.slice();
+  //   }
+  // }
   propagate_settings();
 }
 
@@ -142,4 +163,32 @@ function consolidate_hierarchy() {
     hierarchy_order.push(p_el._element.original_element_index);
   }
   scene_state.hierarchy_order = hierarchy_order;
+}
+function clear_unused_data_parameters(fileContent) {
+  for (let i in fileContent.elements) {
+    let elem = fileContent.elements[i];
+    if (!elem) continue;
+    for (let j in attr_list) {
+      if (elem["data_" + attr_list[j]].expression === "") {
+        elem["data_" + attr_list[j]] = undefined;
+      }
+    }
+  }
+}
+function consolidate_group_children_coordinates() {
+  for (let i in scene_state.elements) {
+    var elem = scene_state.elements[i];
+    if (!elem) continue;
+    var parent = scene_state.elements[elem.group_parent_index];
+    if (parent) {
+      var p_el = paper_elements[elem.paper_element_index];
+      var parent_p_el = paper_elements[parent.paper_element_index];
+
+      var newPoint = p_el.position;
+      // var newPoint = p_el.localToGlobal(p_el.position);
+
+      elem.x = newPoint.x;
+      elem.y = newPoint.y;
+    }
+  }
 }

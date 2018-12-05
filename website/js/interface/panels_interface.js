@@ -107,7 +107,7 @@ $("#property_panel .selector").on("change", function() {
 
 $("input:text, .textinput").focusin(function() {
   G.PREVENT_HOTKEYS = true;
-  var attr = $(this).attr("G.LOAD_LOG");
+  var attr = $(this).attr("load_log");
   if (typeof attr !== typeof undefined && attr !== false) {
     G.LOAD_LOG.focus = true;
   }

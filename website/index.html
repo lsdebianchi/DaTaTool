@@ -25,7 +25,7 @@
         <div id="save_status" class="hide"></div>
 
         <div id="scene_name">
-          <input id="G.LOAD_LOG" G.LOAD_LOG type="text" value="test_scene"></input>
+          <input id="load_log" load_log type="text" value="test_scene"></input>
         </div>
 
         <div id="menu_options">
@@ -130,10 +130,10 @@
           <div v-bind:class="{ just_hide: !group_parent_index}" class="panel_subsection">
             <div class="entry_name button nonselect" id="go_to_parent"><div>go to parent</div></div>
           </div>
-          <div class="panel_subsection">
+          <div v-bind:class="{ just_hide: group_parent_index}" class="panel_subsection">
             <div class="entry_name button nonselect" id="move_top"><div>send to the top</div></div>
           </div>
-          <div class="panel_subsection">
+          <div v-bind:class="{ just_hide: group_parent_index}" class="panel_subsection">
             <div class="entry_name button nonselect" id="move_bottom"><div>send to the bottom</div></div>
           </div>
         </div>
@@ -153,12 +153,12 @@
               <input type="number" class="entry_field"v-model="y"/>
               <div v-bind:class="{active: data_y.dataBehaviour}" class="entry_data" pointer="y"></div>
             </div>
-            <div class="panel_entry">
+            <div class="panel_entry" v-bind:class="{ just_hide: isGroup}">
               <div class="entry_name">w :</div>
               <input type="number" class="entry_field" v-model="w"/>
               <div v-bind:class="{active: data_w.dataBehaviour}" class="entry_data" pointer="w"></div>
             </div>
-            <div class="panel_entry" v-bind:class="{ lock: lockRatio }">
+            <div class="panel_entry" v-bind:class="{ lock: lockRatio, just_hide: isGroup }">
               <div class="entry_name">h :</div>
               <input type="number" class="entry_field" v-model="h"/>
               <div v-bind:class="{active: data_h.dataBehaviour}" class="entry_data" pointer="h"></div>
@@ -166,13 +166,13 @@
           </div>
 
           <div class="panel_subsection">
-            <div class="panel_entry">
+            <div class="panel_entry" v-bind:class="{ just_hide: isGroup}">
               <div class="entry_name">r :</div>
               <input type="number" class="entry_field" v-model="r"/>
               <div v-bind:class="{active: data_r.dataBehaviour}" class="entry_data" pointer="r"></div>
             </div>
 
-            <div class="panel_entry">
+            <div class="panel_entry" v-bind:class="{ just_hide: isGroup}">
               <div class="entry_name">lock ratio :</div>
               <input kind="lockRatio" class="entry_field big" type="checkbox" v-model="lockRatio">
               <div v-bind:class="{active: data_lockRatio.dataBehaviour}" class="entry_data" pointer="lockRatio"></div>

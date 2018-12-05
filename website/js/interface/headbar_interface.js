@@ -22,22 +22,18 @@ $("#scene_options, #edit_options, #view_options, #help_options").hover(
 $("#show_properties_option").click(function() {
   $("#property_panel").toggleClass("active");
   close_current_drop_down_menu(this);
-
 });
 $("#show_hierarchy_option").click(function() {
   $("#hierarchy_panel").toggleClass("active");
   close_current_drop_down_menu(this);
-
 });
 $("#show_settings_option").click(function() {
   $("#settings_panel").toggleClass("active");
   close_current_drop_down_menu(this);
-
 });
 $("#show_headbar_option").click(function() {
   window.G.HIDE_HEADBAR = !window.G.HIDE_HEADBAR;
   close_current_drop_down_menu(this);
-
 });
 $("#add_option").click(function() {
   if (!G.DROP_OBJECT.active) {
@@ -46,25 +42,21 @@ $("#add_option").click(function() {
     $("#add_panel").addClass("show");
   }
   close_current_drop_down_menu(this);
-
 });
 $("#load_option").click(function() {
   load_scene();
   close_current_drop_down_menu(this);
-
 });
 $("#clear_option").click(function() {
   clear_scene();
   close_current_drop_down_menu(this);
-
 });
 $("#save_option").click(function() {
   save_scene();
   close_current_drop_down_menu(this);
-
 });
 
-function close_current_drop_down_menu(el){
+function close_current_drop_down_menu(el) {
   $(el)
     .parent()
     .css("display", "none");
@@ -103,12 +95,12 @@ $(".start").click(function() {
 $("#headbar").hover(
   function() {
     if (window.G.HIDE_HEADBAR) {
-      $("#headcontent").toggleClass("hide");
+      $("#headcontent").removeClass("hide");
     }
   },
   function() {
     if (window.G.HIDE_HEADBAR) {
-      $("#headcontent").toggleClass("hide");
+      $("#headcontent").addClass("hide");
     }
   }
 );

@@ -68,8 +68,8 @@ function create_new_element(_type, x, y, copy, dx, dy) {
     });
   } else {
     elem = new Element(copy);
-    elem.x += dx ? dx : 0;
-    elem.y += dy ? dy : 0;
+    elem.x = Number(elem.x) + (dx ? dx : 0);
+    elem.y = Number(elem.y) + (dy ? dy : 0);
   }
   elem.original_element_index = allocate_new_element_in_list(elem);
   select_element(elem);
@@ -92,24 +92,35 @@ function deselect_element(pe) {
   }
   getValues(current_element, new Element({}));
 }
-function duplicate_element(el) {
-  var new_el;
+function duplicate_element(_el) {
+  var el = new Element({});
+  getValues(el, current_element);
 
+  var new_el;
   if (el.type == "group") {
-    console.log("group duplication");
+    console.log("duplication group");
     var new_children = [];
 
+    var old_el_to_copy = [];
     for (let i in el.group_children_index) {
-      var old_el = scene_state.elements[el.group_children_index[i]];
-      //var old_pel = paper_elements[old_el.paper_element_index];
-      if (!old_el) continue;
+      old_el_to_copy.push(scene_state.elements[el.group_children_index[i]]);
+    }
+    for (let i in old_el_to_copy) {
       new_children.push(
-        create_new_element(old_el.type, old_el.x, old_el.y, old_el, 20, 20)
-          .original_element_index
+        create_new_element(
+          old_el_to_copy[i].type,
+          old_el_to_copy[i].x,
+          old_el_to_copy[i].y,
+          old_el_to_copy[i],
+          20,
+          20
+        ).original_element_index
       );
     }
-    new_el = create_group(new_children);
+    new_el = create_group(new_children, el);
   } else {
+    el = _el;
+    console.log("duplication");
     var old_pel = paper_elements[el.paper_element_index];
     new_el = create_new_element(el.type, el.x, el.y, el, 20, 20);
 
@@ -121,7 +132,26 @@ function duplicate_element(el) {
 }
 function delete_element(p_el) {
   var el = p_el._element;
+
+  //Get parent group if only child
+  if (el.group_parent_index) {
+    let parent = scene_state.elements[el.group_parent_index];
+    if (parent && parent.group_children_index.length == 1) {
+      p_el = paper_elements[parent.paper_element_index];
+      el = parent;
+    }
+  }
+
   p_el.remove();
+
+  //remove itself from parent list
+  let parent = scene_state.elements[el.group_parent_index];
+  if (parent) {
+    let index = parent.group_children_index.indexOf(
+      p_el._element.original_element_index
+    );
+    parent.group_children_index.splice(index, 1);
+  }
   paper_elements[el.paper_element_index] = undefined;
   scene_state.elements[el.original_element_index] = undefined;
   if (el.isGroup) {
@@ -133,43 +163,39 @@ function delete_element(p_el) {
   }
   getValues(current_element, new Element({}));
 }
-function create_group(children) {
-  console.log(children);
-  for (let i = 0; i < children.length; i++) {
-    console.log(scene_state.elements[children[i]]);
-  }
-  var group_list = [];
-  var group_list_index = [];
-  for (let i in children) {
-    let elem = scene_state.elements[children[i]];
-    if (!elem) continue;
-    elem.group_parent_index = paper_elements.length;
-    var p_el = paper_elements[elem.paper_element_index];
-    group_list.push(p_el);
-    group_list_index.push(elem.original_element_index);
+function create_group(children, copy) {
+  var elem;
+  if (copy) {
+    elem = new Element(copy, children);
+  } else {
+    elem = new Element(
+      {
+        type: "group"
+      },
+      children
+    );
   }
 
-  var p_group = new paper.Group({
-    children: group_list
-  });
-
-  var elem = new Element({
-    type: "group",
-    x: p_group.position.x,
-    y: p_group.position.y,
-    ep: p_group
-  });
   elem.original_element_index = allocate_new_element_in_list(elem);
-  elem.group_children_index = group_list_index.slice();
+  console.log("children for");
+  console.log(elem.group_children_index);
+  console.log(scene_state.elements);
+  for (var i in elem.group_children_index) {
+    var child = scene_state.elements[elem.group_children_index[i]];
+    child.group_parent_index = elem.original_element_index;
+  }
   select_element(elem);
   propagate_modifications();
   return elem;
 }
 function get_parent_group() {
-  var p = paper_elements[current_element.group_parent_index];
+  var p =
+    paper_elements[
+      scene_state.elements[current_element.group_parent_index]
+        .paper_element_index
+    ];
   p._permanent_selected = true;
   p.selected = true;
-
   getValues(current_element, p._element);
 }
 function paste_expression(elem) {
@@ -286,6 +312,15 @@ function allocate_new_element_in_list(elem) {
   scene_state.elements.push(elem);
   return scene_state.elements.length - 1;
 }
+function find_free_index_in_element_list(elem) {
+  //var found_empty_spot = false;
+  for (let i in scene_state.elements) {
+    if (scene_state.elements[i] === undefined) {
+      return i;
+    }
+  }
+  return scene_state.elements.length - 1;
+}
 function allocate_new_paper_in_list(pap) {
   //var found_empty_spot = false;
   for (let i in paper_elements) {
@@ -295,6 +330,15 @@ function allocate_new_paper_in_list(pap) {
     }
   }
   paper_elements.push(pap);
+  return paper_elements.length - 1;
+}
+function find_free_index_in_paper_list(pap) {
+  //var found_empty_spot = false;
+  for (let i in paper_elements) {
+    if (paper_elements[i] === undefined) {
+      return i;
+    }
+  }
   return paper_elements.length - 1;
 }
 function propagate_current_expression() {

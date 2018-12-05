@@ -23,7 +23,7 @@ $("body").on("keydown", function(e) {
       if (G.LOAD_LOG.index === -1) {
         G.LOAD_LOG.index = G.LOAD_LOG.saved_scenes_list.length - 1;
       }
-      $("#G.LOAD_LOG").val(G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index]);
+      $("#load_log").val(G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index]);
       current_project.name = G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index];
     }
   }
@@ -34,7 +34,7 @@ $("body").on("keydown", function(e) {
       if (G.LOAD_LOG.index === G.LOAD_LOG.saved_scenes_list.length) {
         G.LOAD_LOG.index = 0;
       }
-      $("#G.LOAD_LOG").val(G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index]);
+      $("#load_log").val(G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index]);
       current_project.name = G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index];
     }
   }
@@ -67,6 +67,7 @@ $("body").on("keydown", function(e) {
       }
       if (current_multiselection.length > 1) {
         create_group(current_multiselection);
+        current_multiselection = [];
       }
     }
     //x
@@ -93,6 +94,9 @@ $("body").on("keydown", function(e) {
     }
     //spacebar
     if (e.which == 32) {
+      $("#headcontent").toggleClass("hide");
+      window.G.HIDE_HEADBAR = !window.G.HIDE_HEADBAR;
+
       $(".panel").toggleClass("open");
     }
     //G.MAIUSC
@@ -106,6 +110,7 @@ $("body").on("keydown", function(e) {
     //d
     if (e.which == 68) {
       if (current_multiselection.length > 1) {
+        console.log("multi");
         var new_multiselection = [];
         for (let i in current_multiselection) {
           var el = scene_state.elements[current_multiselection[i]];
