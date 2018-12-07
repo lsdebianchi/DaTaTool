@@ -31,6 +31,7 @@ function save_scene(name, runtime_save) {
   fileContent = JSON.parse(fileContent);
 
   clear_unused_data_parameters(fileContent);
+  add_screen_info(fileContent);
 
   fileContent = JSON.stringify(fileContent);
 
@@ -46,16 +47,16 @@ function load_scene(name) {
   G.LOADING = true;
   var save_name = name ? name : current_project.name;
   $.get("http://localhost:3000/load_scene/" + save_name, function(data) {
-    loading_scene_state = JSON.parse(data);
-
-    generate_scene();
+    var loading_scene_state = JSON.parse(data);
+    console.log(loading_scene_state);
+    generate_scene(loading_scene_state);
     deselect_all_elements();
     if (/^((?!_LOG).)*$/gi.test(name)) $("#save_status").addClass("hide");
     G.LOADING = false;
   });
 }
 
-function generate_scene() {
+function generate_scene(loading_scene_state) {
   for (let i in loading_scene_state.saved_scenes_list) {
     G.LOAD_LOG.saved_scenes_list.push(loading_scene_state.saved_scenes_list[i]);
   }
@@ -191,6 +192,10 @@ function clear_unused_data_parameters(fileContent) {
       }
     }
   }
+}
+function add_screen_info(fileContent) {
+  fileContent.settings.screen_width = $("canvas").width();
+  fileContent.settings.screen_height = $("canvas").height();
 }
 function consolidate_group_children_coordinates() {
   for (let i in scene_state.elements) {
