@@ -62,7 +62,7 @@ function test_expression_validity() {
     ["cos", 2],
     ["pulse", 5],
     ["pulse_trigger", 6],
-    ["random", 3],
+    ["random", 1, 3],
     ["random_soft", 3]
   ];
 

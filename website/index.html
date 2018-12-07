@@ -450,11 +450,11 @@
             <option>trigger</option>
             <option v-if="valueType!='checkbox'">increment</option>
             <option v-if="valueType!='checkbox'">bounce</option>
-            <option v-if="valueType!='color'">sin</option>
-            <option v-if="valueType!='color'">cos</option>
+            <option v-if="valueType!='checkbox'">sin</option>
+            <option v-if="valueType!='checkbox'">cos</option>
             <option>pulse</option>
             <option>pulse_trigger</option>
-            <option v-if="valueType!='checkbox' && valueType!='color'">random</option>
+            <option v-if="valueType!='checkbox'">random</option>
             <option v-if="valueType!='checkbox' && valueType!='color' && valueType!='text'">random_soft</option>
           </select>
           <input id="exp_parameters" v-bind:placeholder='suggestion' v-bind:title='suggestion' type="textarea" class="entry_field long textinput" v-model="expression"/>

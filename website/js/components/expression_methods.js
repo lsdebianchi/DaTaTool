@@ -369,36 +369,44 @@ function assign_methods(elem) {
           this[v.target] = chroma.mix(v.init, v.t, v.delta).hex();
         }.bind(elem);
       }
-      //sin///////////////////////////////////////NO
+      //sin
       else if (data.dataBehaviour == "sin") {
-        data.var.init = elem[data.var.target];
+        if (data.var.input == "frames") data.var.input = "neutral";
+
+        data.var.init = chroma(elem[data.var.target]);
         data.var.delta = 0;
-        data.var.amplitude = param[0];
+        data.var.increment = 0;
+        data.var.t = param[0];
         data.var.speed = param[1];
 
         data.method = function(v) {
-          this[v.target] =
-            v.init +
-            Math.sin((runTimeInput.frames / 360) * Math.PI * v.speed) *
-              v.amplitude;
+          var INPUT = runTimeInput[v.input];
+          v.increment += INPUT * v.speed;
+
+          v.delta = Math.sin((v.increment / 360) * Math.PI) + 1;
+
+          this[v.target] = chroma.mix(v.init, v.t, v.delta / 2).hex();
         }.bind(elem);
       }
-      ////////////////////////////////////////////NO
-      //cos///////////////////////////////////////NO
+      //cos
       else if (data.dataBehaviour == "cos") {
-        data.var.init = elem[data.var.target];
+        if (data.var.input == "frames") data.var.input = "neutral";
+
+        data.var.init = chroma(elem[data.var.target]);
         data.var.delta = 0;
-        data.var.amplitude = param[0];
+        data.var.increment = 0;
+        data.var.t = param[0];
         data.var.speed = param[1];
 
         data.method = function(v) {
-          this[v.target] =
-            v.init +
-            Math.cos((runTimeInput.frames / 360) * Math.PI * v.speed) *
-              v.amplitude;
+          var INPUT = runTimeInput[v.input];
+          v.increment += INPUT * v.speed;
+
+          v.delta = Math.cos((v.increment / 360) * Math.PI) + 1;
+
+          this[v.target] = chroma.mix(v.init, v.t, v.delta / 2).hex();
         }.bind(elem);
       }
-      ////////////////////////////////////////////NO
       //pulse
       else if (data.dataBehaviour == "pulse") {
         if (data.var.input == "frames") data.var.input = "neutral";
@@ -480,18 +488,17 @@ function assign_methods(elem) {
       //random
       else if (data.dataBehaviour == "random") {
         if (data.var.input == "frames") data.var.input = "neutral";
-        data.var.min = param[0];
-        data.var.max = param[1];
-        data.var.freq = param[2];
-        data.var.count = param[2];
+        data.var.freq = param[0];
+        data.var.count = param[0];
 
         data.method = function(v) {
-          var INPUT = runTimeInput[v.input];
+          //var INPUT = runTimeInput[v.input];
 
           v.count--;
           if (v.count <= 0) {
             v.count = v.freq;
-            this[v.target] = Math.random() * (v.max - v.min) + v.min;
+            this[v.target] =
+              "#" + Math.floor(Math.random() * 16777215).toString(16);
           }
         }.bind(elem);
       }

@@ -47,8 +47,8 @@ var expression_bind = new Vue({
         ["trigger", "TRESHOLD, VALUE, :[>/</=]"],
         ["increment", "SPEED", "SPEED, :[h/s/l]"],
         ["bounce", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
-        ["sin", "AMPLITUDE, SPEED", "NO-COLOR-MODE"],
-        ["cos", "AMPLITUDE, SPEED", "NO-COLOR-MODE"],
+        ["sin", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
+        ["cos", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
         [
           "pulse",
           "AMPLITUDE, STAY_OFF, GO_ON, STAY_ON, GO_OF",
@@ -59,8 +59,8 @@ var expression_bind = new Vue({
           "AMPLITUDE, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>]",
           "#COLOR, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>]"
         ],
-        ["random", "MIN, MAX, FREQUENCY", "NO-COLOR-MODE"],
-        ["random_soft", "MIN, MAX, SPEED", "NO-COLOR-MODE"]
+        ["random", "MIN, MAX, FREQUENCY", "FREQUENCY"],
+        ["random_soft", "MIN, MAX, SPEED", "-"]
       ];
       for (let i in rule) {
         if (this.dataBehaviour == rule[i][0]) {
