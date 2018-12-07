@@ -133,8 +133,34 @@ var expression_bind = new Vue({
             "frame per second, depending on the coumputer performance. Its the simplest input for all the behaviours."
         ],
         [
+          "seconds",
+          "SECONDS: increase of 1 every second since the scene played."
+        ],
+        [
+          "minutes",
+          "MINUTES: increase of 1 every minute since the scene played."
+        ],
+        ["hours", "HOURS: increase of 1 every hours since the scene played."],
+        [
+          "current_seconds",
+          "CURRENT SECONDS: the seconds of the current time."
+        ],
+        [
+          "current_minutes",
+          "CURRENT MINUTES: the minutes of the current time."
+        ],
+        ["current_hours", "CURRENT HOURS: the hours of the current time."],
+        [
           "distance",
           "DISTANCE: Give values between 0 and 200, where 0 is maximum close and 200 is maximum far."
+        ],
+        [
+          "detection",
+          "DETECTION: Give 1 when a person is recognized by the camera, otherwise gives 0."
+        ],
+        [
+          "detection_count",
+          "DETECTION COUNT: Counts the number of times the camera recognize someone."
         ]
       ];
       var t = "";

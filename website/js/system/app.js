@@ -19,7 +19,6 @@ window.onerror = function(msg, url, linenumber) {
   alert(t1 + t2);
   return true;
 };
-
 function propagate_settings() {
   $("canvas").css("background-color", scene_state.settings.background.color);
   $("canvas").css(
@@ -49,6 +48,10 @@ function run_scene() {
     if (scene_state.elements[i]) assign_methods(scene_state.elements[i]);
   }
 
+  /////START dataSets
+
+  dataSets.time = new Date().getTime();
+
   paper.view.onFrame = function(event) {
     for (let i in scene_state.elements) {
       if (!scene_state.elements[i]) continue;
@@ -66,8 +69,25 @@ function run_scene() {
       );
     }
 
+    //// tick datasets
+    var delta_time = new Date().getTime() - dataSets.time;
+    runTimeInput.hours = Math.floor(
+      (delta_time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    runTimeInput.minutes = Math.floor(
+      (delta_time % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    runTimeInput.seconds = Math.floor((delta_time % (1000 * 60)) / 1000);
+    runTimeInput.current_seconds = new Date().getSeconds();
+    runTimeInput.current_minutes = new Date().getMinutes();
+    runTimeInput.current_hours = new Date().getHours();
     runTimeInput.frames++;
     runTimeInput.distance = tracker.value;
+
+    runTimeInput.detection = tracker.detected;
+    runTimeInput.detection_count +=
+      tracker.detected && !tracker.was_detected ? 1 : 0;
+    //////////
   };
 }
 
@@ -79,7 +99,15 @@ function stop_scene() {
   runTimeInput = {
     frames: 0,
     distance: 50,
-    neutral: 1
+    detection: 0,
+    detection_count: 0,
+    neutral: 1,
+    seconds: 0,
+    minutes: 0,
+    hours: 0,
+    current_seconds: 0,
+    current_minutes: 0,
+    current_hours: 0
   };
 
   load_scene(current_project.name + "_LOG");

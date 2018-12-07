@@ -43,7 +43,18 @@ var G = {
 var runTimeInput = {
   frames: 0,
   distance: 50,
-  neutral: 1
+  detection: 0,
+  detection_count: 0,
+  neutral: 1,
+  seconds: 0,
+  minutes: 0,
+  hours: 0,
+  current_seconds: 0,
+  current_minutes: 0,
+  current_hours: 0
+};
+var dataSets = {
+  time: null
 };
 var first_load = true;
 var width = window.innerWidth;

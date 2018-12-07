@@ -461,13 +461,20 @@
           <select class="costum_select" @change="clearType()" v-model="dataSource">
             <option>time</option>
             <option>sensor</option>
-            <option>meteo</option>
           </select>
           <select class="costum_select" v-model="dataType">
             <!-- time -->
             <option v-if="dataSource == 'time'">frames</option>
+            <option v-if="dataSource == 'time'">seconds</option>
+            <option v-if="dataSource == 'time'">minutes</option>
+            <option v-if="dataSource == 'time'">hours</option>
+            <option v-if="dataSource == 'time'">current_seconds</option>
+            <option v-if="dataSource == 'time'">current_minutes</option>
+            <option v-if="dataSource == 'time'">current_hours</option>
             <!-- currency -->
             <option v-if="dataSource == 'sensor'">distance</option>
+            <option v-if="dataSource == 'sensor'">detection</option>
+            <option v-if="dataSource == 'sensor'">detection_count</option>
           </select>
 
         </div>

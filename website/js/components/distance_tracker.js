@@ -2,6 +2,8 @@ var Distance_tracker = function() {
   this.active = false;
   this.meter = document.getElementById("d_meter_point");
   this.value = 50;
+  this.detected = 0;
+  this.was_detected = 0;
   this.cal_close = 400;
   this.cal_far = 100;
   this.tracker = new tracking.ObjectTracker("face");
@@ -12,9 +14,12 @@ var Distance_tracker = function() {
   this.tracker.on(
     "track",
     function(event) {
+      this.was_detected = this.detected;
+
       var rect = event.data[0];
 
       if (rect) {
+        this.detected = 1;
         var new_val = map_val(
           rect.width + rect.height,
           this.cal_close,
@@ -25,6 +30,8 @@ var Distance_tracker = function() {
 
         this.value += (new_val - this.value) * 0.1;
         this.update_meter();
+      } else {
+        this.detected = 0;
       }
     }.bind(this)
   );
