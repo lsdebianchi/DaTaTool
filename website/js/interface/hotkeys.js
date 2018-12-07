@@ -109,6 +109,7 @@ $("body").on("keydown", function(e) {
     }
     //d
     if (e.which == 68) {
+      if (current_element.type == undefined) return;
       if (current_multiselection.length > 1) {
         var new_multiselection = [];
         for (let i in current_multiselection) {

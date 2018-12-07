@@ -202,8 +202,8 @@ function paste_expression(elem) {
   elem["data_" + G.DROP_EXPRESSION.type].dataType = current_expression.dataType;
   elem["data_" + G.DROP_EXPRESSION.type].expression =
     current_expression.expression;
-  elem["data_" + G.DROP_EXPRESSION.type].inputType =
-    current_expression.inputType;
+  elem["data_" + G.DROP_EXPRESSION.type].valueType =
+    current_expression.valueType;
 
   G.DROP_OBJECT.active = false;
   $("#drop_icon").toggleClass("hide");
@@ -349,8 +349,8 @@ function propagate_current_expression() {
     current_expression.dataType;
   current_element[current_expression.type].expression =
     current_expression.expression;
-  current_element[current_expression.type].inputType =
-    current_expression.inputType;
+  current_element[current_expression.type].valueType =
+    current_expression.valueType;
 }
 function deselect_all_elements() {
   for (let i in scene_state.elements) {

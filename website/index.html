@@ -445,16 +445,17 @@
         <div class="row">
           <select id="exp_behaviour" class="costum_select" v-model="dataBehaviour">
             <option>raw</option>
-            <option>clamp</option>
-            <option>map</option>
+            <option v-if="valueType!='color'">clamp</option>
+            <option v-if="valueType!='color'">map</option>
             <option>trigger</option>
-            <option v-if="inputType!='checkbox'">increment</option>
-            <option v-if="inputType!='checkbox'">bounce</option>
-            <option v-if="inputType!='color'">sin</option>
-            <option v-if="inputType!='color'">cos</option>
+            <option v-if="valueType!='checkbox'">increment</option>
+            <option v-if="valueType!='checkbox'">bounce</option>
+            <option v-if="valueType!='color'">sin</option>
+            <option v-if="valueType!='color'">cos</option>
             <option>pulse</option>
-            <option v-if="inputType!='checkbox' && inputType!='color'">random</option>
-            <option v-if="inputType!='checkbox' && inputType!='color'">random_soft</option>
+            <option>pulse_trigger</option>
+            <option v-if="valueType!='checkbox' && valueType!='color'">random</option>
+            <option v-if="valueType!='checkbox' && valueType!='color' && valueType!='text'">random_soft</option>
           </select>
           <input id="exp_parameters" v-bind:placeholder='suggestion' v-bind:title='suggestion' type="textarea" class="entry_field long textinput" v-model="expression"/>
           <select class="costum_select" @change="clearType()" v-model="dataSource">

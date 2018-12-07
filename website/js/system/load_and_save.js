@@ -74,6 +74,9 @@ function generate_scene() {
       : false
   };
 
+  if (scene_state.play_setting.sensor) $("#run_sensor").addClass("active");
+  else $("#run_sensor").removeClass("active");
+
   scene_state.settings.background.color =
     loading_scene_state.settings.background.color;
   scene_state.settings.background.imgPath =

@@ -42,7 +42,8 @@ var G = {
 ////////////////////////////////////////////////////////////////////////////////
 var runTimeInput = {
   frames: 0,
-  distance: 50
+  distance: 50,
+  neutral: 1
 };
 var width = window.innerWidth;
 var height = window.innerHeight;
@@ -54,7 +55,7 @@ var current_expression = {
   dataSource: "time",
   dataType: "frames",
   expression: "",
-  inputType: ""
+  valueType: ""
 };
 var paper_elements = [];
 var paper_tool;

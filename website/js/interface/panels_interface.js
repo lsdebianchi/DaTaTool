@@ -146,7 +146,7 @@ $(".entry_data").click(function() {
   current_expression.dataSource = current_element["data_" + d].dataSource;
   current_expression.dataType = current_element["data_" + d].dataType;
   current_expression.expression = current_element["data_" + d].expression;
-  current_expression.inputType = current_element["data_" + d].inputType;
+  current_expression.valueType = current_element["data_" + d].valueType;
 
   if (G.MAIUSC && current_element["data_" + d].dataBehaviour) {
     G.DROP_EXPRESSION.active = true;

@@ -219,11 +219,11 @@ var Element = function(arg, _children) {
         dataSource: "time",
         dataType: "frames",
         expression: "",
-        inputType: input_type(attr_list[j])
+        valueType: input_type(attr_list[j])
       };
     } else {
       this[name] = {};
-      this[name].inputType = input_type(attr_list[j]);
+      this[name].valueType = input_type(attr_list[j]);
       this[name].dataBehaviour = arg[name].dataBehaviour;
       this[name].dataSource = arg[name].dataSource;
       this[name].dataType = arg[name].dataType;

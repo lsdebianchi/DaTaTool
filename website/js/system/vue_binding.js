@@ -44,7 +44,7 @@ var expression_bind = new Vue({
         ["raw", "(SCALE), (OFFSET)", "-"],
         ["clamp", "MIN, MAX, (SCALE)", "-"],
         ["map", "MIN_in, MAX_in, MIN_out, MAX_out", "-"],
-        ["trigger", "TRESHOLD, VALUE, :[>/</=]", "-"],
+        ["trigger", "TRESHOLD, VALUE, :[>/</=]"],
         ["increment", "SPEED", "SPEED, :[h/s/l]"],
         ["bounce", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
         ["sin", "AMPLITUDE, SPEED", "NO-COLOR-MODE"],
@@ -54,13 +54,18 @@ var expression_bind = new Vue({
           "AMPLITUDE, STAY_OFF, GO_ON, STAY_ON, GO_OF",
           "#COLOR, STAY_OFF, GO_ON, STAY_ON, GO_OF"
         ],
+        [
+          "pulse_trigger",
+          "AMPLITUDE, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>]",
+          "#COLOR, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>]"
+        ],
         ["random", "MIN, MAX, FREQUENCY", "NO-COLOR-MODE"],
         ["random_soft", "MIN, MAX, SPEED", "NO-COLOR-MODE"]
       ];
       for (let i in rule) {
         if (this.dataBehaviour == rule[i][0]) {
           if (
-            this.inputType == "color" &&
+            this.valueType == "color" &&
             typeof rule[i][2] !== typeof undefined
           )
             return rule[i][2];
@@ -95,7 +100,11 @@ var expression_bind = new Vue({
         ["cos", "COS: same as 'sin' but with a different phase"],
         [
           "pulse",
-          "PULSE: Keeps moving between the current state and an AMPLITUDE/#COLOR following the given timings."
+          "PULSE: Keeps moving between the current state and an AMPLITUDE/#COLOR following the given timings. It ignores the input."
+        ],
+        [
+          "pulse_trigger",
+          "PULSE_TRIGGER: Every time the input meet a condition it trigger a pulse. The condition are !(change of input) =(meet threshold) >(go above treshold) <(go below treshold)."
         ],
         [
           "random",
@@ -125,7 +134,7 @@ var expression_bind = new Vue({
         ],
         [
           "distance",
-          "DISTANCE: Give values between 0 and 100, where 0 is maximum close and 100 is maximum far."
+          "DISTANCE: Give values between 0 and 200, where 0 is maximum close and 200 is maximum far."
         ]
       ];
       var t = "";

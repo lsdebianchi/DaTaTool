@@ -39,6 +39,8 @@ function test_expression_validity() {
   if (e) vals = e.split(", ");
 
   for (let j in vals) {
+    if (vals[j] === "W") vals[j] = $("canvas").width() + "";
+    if (vals[j] === "H") vals[j] = $("canvas").height() + "";
     if (
       (isNaN(Number(vals[j])) &&
         !vals[j].match(/^#(?:[0-9a-fA-F]{6})$/i) &&
@@ -59,6 +61,7 @@ function test_expression_validity() {
     ["sin", 2],
     ["cos", 2],
     ["pulse", 5],
+    ["pulse_trigger", 6],
     ["random", 3],
     ["random_soft", 3]
   ];

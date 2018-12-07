@@ -54,7 +54,8 @@ function run_scene() {
       for (let j in attr_list) {
         var elem = scene_state.elements[i];
         var d = scene_state.elements[i]["data_" + attr_list[j]];
-        if (d.method) d.method(d.var);
+
+        if (typeof d.method !== typeof undefined) d.method(d.var);
       }
       if (scene_state.elements[i].edgeLoop)
         applyEdgeLoop(scene_state.elements[i]);
@@ -76,7 +77,8 @@ function stop_scene() {
 
   runTimeInput = {
     frames: 0,
-    distance: 50
+    distance: 50,
+    neutral: 1
   };
 
   load_scene(current_project.name + "_LOG");
