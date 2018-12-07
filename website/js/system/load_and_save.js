@@ -24,7 +24,7 @@ function clear_scene() {
 function save_scene(name, runtime_save) {
   var save_name = name ? name : current_project.name;
   consolidate_lines_data();
-  //consolidate_hierarchy();
+  consolidate_hierarchy();
   //consolidate_group_children_coordinates();
 
   var fileContent = JSON.stringify(scene_state);
@@ -173,7 +173,7 @@ function consolidate_lines_data() {
 }
 function consolidate_hierarchy() {
   var hierarchy_order = [];
-  var al = paper.projects[0].activeLayer;
+  var al = paper.project.layers[0];
   if (!al) return;
   for (let i in al.children) {
     var p_el = al.children[i];
