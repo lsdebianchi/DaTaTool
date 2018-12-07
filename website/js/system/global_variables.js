@@ -45,6 +45,7 @@ var runTimeInput = {
   distance: 50,
   neutral: 1
 };
+var first_load = true;
 var width = window.innerWidth;
 var height = window.innerHeight;
 var current_multiselection = [];

@@ -48,7 +48,6 @@ function load_scene(name) {
   var save_name = name ? name : current_project.name;
   $.get("http://localhost:3000/load_scene/" + save_name, function(data) {
     var loading_scene_state = JSON.parse(data);
-    console.log(loading_scene_state);
     generate_scene(loading_scene_state);
     deselect_all_elements();
     if (/^((?!_LOG).)*$/gi.test(name)) $("#save_status").addClass("hide");
@@ -57,6 +56,7 @@ function load_scene(name) {
 }
 
 function generate_scene(loading_scene_state) {
+  G.LOAD_LOG.saved_scenes_list = [];
   for (let i in loading_scene_state.saved_scenes_list) {
     G.LOAD_LOG.saved_scenes_list.push(loading_scene_state.saved_scenes_list[i]);
   }

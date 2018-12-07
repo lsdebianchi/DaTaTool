@@ -3,6 +3,7 @@ window.onload = function() {
   paper_tool = new paper.Tool();
   load_paper_handlers();
   load_scene("test_scene");
+  first_load = false;
   tracker = new Distance_tracker();
 };
 
