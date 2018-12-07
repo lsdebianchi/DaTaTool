@@ -131,7 +131,7 @@ $("body").on("keydown", function(e) {
       $("#add_panel").css("top", mouseY + "px");
     }
     //c
-    if (e.which == 67) {
+    if (e.which == 67 && !G.CMD) {
       $("#picker").toggleClass("active");
     }
     //w
