@@ -170,7 +170,6 @@ var Element = function(arg, _children) {
   if (this.type == "line" || this.type == "curve") {
     if (this.strokeWidth === undefined || this.strokeWidth <= 0)
       this.strokeWidth = 5;
-    console.log(arg.fillColor);
     ep = new paper.Path({
       //fillColor: arg.fillColor ? this.fillColor : undefined,
       strokeWidth: this.strokeWidth,
