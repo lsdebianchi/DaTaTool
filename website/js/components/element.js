@@ -180,13 +180,14 @@ var Element = function(arg, _children) {
       for (let i = 0; i < arg.lineData.length; i++) {
         var p = arg.lineData[i];
         ep.add(new paper.Point(p[0], p[1]));
+        if (this.closedLine) ep.closePath();
+
         if (this.type == "curve") {
           ep.smooth();
         }
       }
       ep.strokeWidth = this.strokeWidth;
     } else ep.add(new paper.Point(this.x, this.y));
-    if (this.closedLine) ep.closePath();
   }
 
   //assign general ep variables
