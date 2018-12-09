@@ -2,7 +2,7 @@ function hasElement(type, test) {
   if (type == "line" || type == "curve") {
     if (test == "dimension") return true;
     if (test == "stroke") return true;
-    if (test == "fill") return false;
+    if (test == "fill") return true;
     if (test == "img") return false;
     if (test == "text") return false;
     if (test == "opacity") return true;

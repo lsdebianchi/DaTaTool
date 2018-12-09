@@ -158,6 +158,21 @@ $("body").on("keydown", function(e) {
         G.TRANSFORM.ratio = current_element.h / current_element.w;
       }
     }
+    //f
+    if (e.which == 70 && get_current_paper_el() && !current_element.isGroup) {
+      if (current_element.type == "line" || current_element.type == "curve") {
+        if (current_element.fillLine) {
+          current_element.fillColor = undefined;
+          current_element.fillLine = false;
+          get_current_paper_el().fillColor = undefined;
+          propagate_modifications();
+        } else {
+          current_element.fillLine = true;
+          current_element.fillColor = G._LAST_FILLCOLOR;
+          propagate_modifications();
+        }
+      }
+    }
     //r
     if (
       e.which == 82 &&

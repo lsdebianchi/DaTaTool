@@ -53,6 +53,8 @@ $(".add_option").click(function() {
   G.DROP_OBJECT.active = true;
   $("#drop_icon").toggleClass("hide");
   G.DROP_OBJECT.type = $(this).attr("kind");
+  if (G.DROP_OBJECT.type == "line" || G.DROP_OBJECT.type == "curve")
+    G.LINEMAKING.active = true;
   $("#drop_icon")
     .children("img")
     .attr("src", "./visual_assets/ico_" + $(this).attr("kind") + ".png");
@@ -67,7 +69,6 @@ $("#paper_canvas").click(function(e) {
     G.DROP_OBJECT.active = false;
     $("#drop_icon").toggleClass("hide");
     if (G.DROP_OBJECT.type == "line" || G.DROP_OBJECT.type == "curve") {
-      G.LINEMAKING.active = true;
       if (G.DROP_OBJECT.type == "line") G.LINEMAKING.type = "line";
       else G.LINEMAKING.type = "curve";
       $("canvas").toggleClass("drawing");

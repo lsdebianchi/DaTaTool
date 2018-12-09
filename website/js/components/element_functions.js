@@ -22,6 +22,8 @@ function getValues(obj1, obj2) {
   //
   obj1.blendMode = obj2.blendMode;
 
+  obj1.closedLine = obj2.closedLine;
+  obj1.fillLine = obj2.fillLine;
   obj1.fillColor = obj2.fillColor;
   obj1.strokeColor = obj2.strokeColor;
   obj1.opacity = obj2.opacity;
@@ -254,7 +256,7 @@ function core_propagation(c_el, p_el) {
 
     if (!c_el.isGroup) {
       p_el.blendMode = c_el.blendMode;
-      if (c_el.type != "line" && c_el.type != "curve")
+      if ((c_el.type != "line" && c_el.type != "curve") || c_el.fillLine)
         p_el.fillColor = c_el.fillColor;
       p_el.strokeColor = c_el.strokeColor;
       p_el.strokeWidth = c_el.strokeWidth;

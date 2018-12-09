@@ -31,6 +31,8 @@ var Element = function(arg, _children) {
   this.edgeLoop = arg.edgeLoop === undefined ? false : arg.edgeLoop;
   this.blendMode = arg.blendMode === undefined ? "normal" : arg.blendMode;
 
+  this.fillLine = arg.fillLine ? arg.fillLine : false;
+  this.closedLine = arg.closedLine ? arg.closedLine : false;
   this.fillColor =
     arg.fillColor === undefined ? G._LAST_FILLCOLOR : arg.fillColor;
   this.opacity = arg.opacity === undefined ? 100 : arg.opacity;
@@ -168,14 +170,13 @@ var Element = function(arg, _children) {
   if (this.type == "line" || this.type == "curve") {
     if (this.strokeWidth === undefined || this.strokeWidth <= 0)
       this.strokeWidth = 5;
+    console.log(arg.fillColor);
     ep = new paper.Path({
-      //fillColor: this.fillColor,
+      //fillColor: arg.fillColor ? this.fillColor : undefined,
       strokeWidth: this.strokeWidth,
       strokeColor: this.strokeColor
     });
     if (arg.lineData) {
-      console.log("reconstruction");
-      console.log(arg.lineData);
       for (let i = 0; i < arg.lineData.length; i++) {
         var p = arg.lineData[i];
         ep.add(new paper.Point(p[0], p[1]));
@@ -185,6 +186,7 @@ var Element = function(arg, _children) {
       }
       ep.strokeWidth = this.strokeWidth;
     } else ep.add(new paper.Point(this.x, this.y));
+    if (this.closedLine) ep.closePath();
   }
 
   //assign general ep variables

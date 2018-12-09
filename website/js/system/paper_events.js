@@ -12,8 +12,13 @@ function load_paper_handlers() {
     //Line stuff
     if (G.LINEMAKING.active) {
       var p_el = get_current_paper_el();
+      if (!p_el) return;
       if (p_el.lastSegment.point.getDistance(event.point) < 5) {
         close_line_making();
+      } else if (p_el.firstSegment.point.getDistance(event.point) < 5) {
+        p_el.closePath();
+        close_line_making();
+        p_el._element.closedLine = true;
       } else p_el.add(event.point);
     }
     //// SELECT ITEM
