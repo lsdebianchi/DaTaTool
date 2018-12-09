@@ -69,6 +69,8 @@ function create_new_element(_type, x, y, copy, dx, dy) {
       y: y
     });
   } else {
+    if (copy.type == "curve" || copy.type == "line")
+      consolidate_lines_data(copy);
     elem = new Element(copy);
     elem.x = Number(elem.x) + (dx ? dx : 0);
     elem.y = Number(elem.y) + (dy ? dy : 0);

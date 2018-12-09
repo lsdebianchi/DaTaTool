@@ -13,9 +13,9 @@ function load_paper_handlers() {
     if (G.LINEMAKING.active) {
       var p_el = get_current_paper_el();
       if (!p_el) return;
-      if (p_el.lastSegment.point.getDistance(event.point) < 5) {
+      if (p_el.lastSegment.point.getDistance(event.point) < 10) {
         close_line_making();
-      } else if (p_el.firstSegment.point.getDistance(event.point) < 5) {
+      } else if (p_el.firstSegment.point.getDistance(event.point) < 10) {
         p_el.closePath();
         close_line_making();
         p_el._element.closedLine = true;

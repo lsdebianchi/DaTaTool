@@ -23,7 +23,7 @@ function clear_scene() {
 
 function save_scene(name, runtime_save) {
   var save_name = name ? name : current_project.name;
-  consolidate_lines_data();
+  consolidate_all_lines_data();
   consolidate_hierarchy();
   //consolidate_group_children_coordinates();
 
@@ -156,20 +156,22 @@ function generate_scene(loading_scene_state) {
   //   }
   // }, 10);
 }
-
-function consolidate_lines_data() {
+function consolidate_all_lines_data() {
   for (let i in scene_state.elements) {
     var el = scene_state.elements[i];
     if (!el) continue;
     if (el.type != "line" && el.type != "curve") continue;
+    consolidate_lines_data(el);
+  }
+}
+function consolidate_lines_data(el) {
+  var p_el = paper_elements[el.paper_element_index];
+  if (!p_el) return;
+  el.lineData = [];
+  for (let j = 0; j < p_el.segments.length; j++) {
+    var pos = p_el.segments[j].point;
 
-    var p_el = paper_elements[el.paper_element_index];
-    el.lineData = [];
-    for (let j = 0; j < p_el.segments.length; j++) {
-      var pos = p_el.segments[j].point;
-
-      el.lineData.push([pos.x, pos.y]);
-    }
+    el.lineData.push([pos.x, pos.y]);
   }
 }
 function consolidate_hierarchy() {

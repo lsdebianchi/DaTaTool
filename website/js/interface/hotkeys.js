@@ -121,7 +121,8 @@ $("body").on("keydown", function(e) {
         }
         current_multiselection = new_multiselection.slice();
       } else {
-        duplicate_element(current_element);
+        var t = duplicate_element(current_element);
+        console.log(t);
       }
     }
     //a
