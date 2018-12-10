@@ -187,6 +187,11 @@ var Element = function(arg, _children) {
       }
       ep.strokeWidth = this.strokeWidth;
     } else ep.add(new paper.Point(this.x, this.y));
+
+    this.h = 10;
+    this.w = 10;
+    this.r = 0;
+    this.lockRatio = false;
   }
 
   //assign general ep variables
