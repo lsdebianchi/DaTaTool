@@ -242,7 +242,11 @@ function assign_methods(elem) {
           var INPUT = runTimeInput[v.input];
           if (!v.going) {
             var result = false;
-            if (v.check == 0) if (INPUT == v.last_input) result = true;
+            if (v.check == 0)
+              if (INPUT != v.last_input) {
+                result = true;
+                v.last_input = INPUT;
+              }
             if (v.check == 1) if (INPUT == v.tresh) result = true;
             if (v.check == 2) if (INPUT > v.tresh) result = true;
             if (v.check == 3) if (INPUT < v.tresh) result = true;
@@ -552,7 +556,11 @@ function assign_methods(elem) {
           var INPUT = runTimeInput[v.input];
           if (!v.going) {
             var result = false;
-            if (v.check == 0) if (INPUT == v.last_input) result = true;
+            if (v.check == 0)
+              if (INPUT == v.last_input) {
+                result = true;
+                v.last_input = INPUT;
+              }
             if (v.check == 1) if (INPUT == v.tresh) result = true;
             if (v.check == 2) if (INPUT > v.tresh) result = true;
             if (v.check == 3) if (INPUT < v.tresh) result = true;
