@@ -446,9 +446,10 @@
         <div class="row">
           <select id="exp_behaviour" class="costum_select" v-model="dataBehaviour">
             <option>raw</option>
-            <option v-if="valueType!='color'">clamp</option>
-            <option v-if="valueType!='color'">map</option>
+            <option v-if="valueType!='color' && valueType!='checkbox'">clamp</option>
+            <option v-if="valueType!='color' && valueType!='checkbox'">map</option>
             <option>trigger</option>
+            <option v-if="valueType!='checkbox'">trigger_soft</option>
             <option v-if="valueType!='checkbox'">increment</option>
             <option v-if="valueType!='checkbox'">bounce</option>
             <option v-if="valueType!='checkbox'">sin</option>

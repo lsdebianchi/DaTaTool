@@ -80,6 +80,60 @@ function assign_methods(elem) {
           this[v.target] = test ? v.value : v.init;
         }.bind(elem);
       }
+      //trigger_soft
+      if (data.dataBehaviour == "trigger_soft") {
+        data.var.init = Number(elem[data.var.target]);
+        data.var.tresh = param[0];
+        data.var.value = param[1];
+        data.var.time_in = param[2];
+        data.var.time_out = param[3];
+        data.var.check = 0;
+        data.var.delta = 0;
+        data.var.temp_val = 0;
+        data.var.counter = 0;
+        data.var.state = 0; // 0 low, 1 go up, 2 high, 3 go down
+        data.var.difference = data.var.value - data.var.init;
+        if (param[4] == "<") data.var.check = 1;
+        if (param[4] == ">") data.var.check = 2;
+
+        if (param[5] == "i") data.var.difference = data.var.value;
+
+        console.log(param[4]);
+        data.method = function(v) {
+          var INPUT = runTimeInput[v.input];
+
+          if (v.state == 0 || v.state == 2) {
+            var test = false;
+            if (v.check == 0) if (INPUT == v.tresh) test = true;
+            if (v.check == 1) if (INPUT < v.tresh) test = true;
+            if (v.check == 2) if (INPUT > v.tresh) test = true;
+            if (test && v.state == 0) {
+              v.delta = v.difference / v.time_in;
+              v.counter = v.time_in;
+              v.state = 1;
+            } else if (!test && v.state == 2) {
+              v.delta = -v.difference / v.time_out;
+              v.counter = v.time_out;
+              v.state = 3;
+            }
+          }
+
+          if (v.state == 1 || v.state == 3) {
+            v.temp_val += v.delta;
+            v.counter--;
+            if (v.counter <= 0) {
+              if (v.state == 1) {
+                v.state = 2;
+                v.temp_val = v.difference;
+              } else if (v.state == 3) {
+                v.state = 0;
+                v.temp_val = 0;
+              }
+            }
+          }
+          this[v.target] = v.init + v.temp_val;
+        }.bind(elem);
+      }
       //increment
       if (data.dataBehaviour == "increment") {
         if (data.var.input == "frames") data.var.input = "neutral";

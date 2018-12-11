@@ -56,6 +56,7 @@ function test_expression_validity() {
     ["clamp", 2, 3],
     ["map", 4],
     ["trigger", 2, 3],
+    ["trigger_soft", 5, 6],
     ["increment", 1, 2],
     ["bounce", 2],
     ["sin", 2],

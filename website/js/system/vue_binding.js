@@ -44,7 +44,12 @@ var expression_bind = new Vue({
         ["raw", "(SCALE), (OFFSET)", "-"],
         ["clamp", "MIN, MAX, (SCALE)", "-"],
         ["map", "MIN_in, MAX_in, MIN_out, MAX_out", "-"],
-        ["trigger", "TRESHOLD, VALUE, :[>/</=]"],
+        ["trigger", "TRESHOLD, VALUE, :[>/</=]", "TRESHOLD, #COLOR, :[>/</=]"],
+        [
+          "trigger_soft",
+          "TRESHOLD, VALUE, TIME_in, TIME_out, :[>/</=]",
+          "TRESHOLD, #COLOR, TIME_in, TIME_out, :[>/</=]"
+        ],
         ["increment", "SPEED", "SPEED, :[h/s/l]"],
         ["bounce", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
         ["sin", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
@@ -56,8 +61,8 @@ var expression_bind = new Vue({
         ],
         [
           "pulse_trigger",
-          "AMPLITUDE, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>]",
-          "#COLOR, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>]"
+          "AMPLITUDE, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>], (:i)",
+          "#COLOR, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>], (:i)"
         ],
         ["random", "MIN, MAX, FREQUENCY", "FREQUENCY"],
         ["random_soft", "MIN, MAX, SPEED", "-"]
@@ -90,6 +95,10 @@ var expression_bind = new Vue({
         [
           "trigger",
           "TRIGGER: When the input reach a certain TRESHOLD it assign VALUE. For checkBoxes the value can be 0 or 1."
+        ],
+        [
+          "trigger_soft",
+          "TRIGGER SOFT: Same as trigger but the change is not immediate but it takes TIME_in and TIME_out to occur. Adding :i as the last paramiter make sure the value is incremental to the initial one and not absolute."
         ],
         ["increment", "INCREMENT: It keeps adding the input."],
         [
