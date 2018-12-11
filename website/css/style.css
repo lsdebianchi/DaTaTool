@@ -97,11 +97,15 @@ body {
 .drop_down_desc {
   padding-left: 5px;
   padding-top: 4px;
-  width: 320px;
+  width: 420px;
   height: 28px;
   background-color: #2d2d2d;
   z-index: 200;
 }
+.drop_down_desc a {
+  color: #797979;
+}
+
 #run_option {
   margin-left: 100px;
   padding-top: 2px;
