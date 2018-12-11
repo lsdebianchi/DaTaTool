@@ -72,8 +72,22 @@ function create_new_element(_type, x, y, copy, dx, dy) {
     if (copy.type == "curve" || copy.type == "line")
       consolidate_lines_data(copy);
     elem = new Element(copy);
-    elem.x = Number(elem.x) + (dx ? dx : 0);
-    elem.y = Number(elem.y) + (dy ? dy : 0);
+    elem.x = Number(elem.x) + Number(G.INCREMENTALS.x);
+    elem.y = Number(elem.y) + Number(G.INCREMENTALS.y);
+    elem.w = Number(elem.w) + Number(G.INCREMENTALS.w);
+    elem.h = Number(elem.h) + Number(G.INCREMENTALS.h);
+    elem.r = Number(elem.r) + Number(G.INCREMENTALS.r);
+    elem.opacity = Number(elem.opacity) + Number(G.INCREMENTALS.opacity);
+    elem.strokeWidth = Number(elem.strokeWidth) + Number(G.INCREMENTALS.width);
+    var col = chroma(elem.fillColor);
+    col = col.set("hsl.h", col.get("hsl.h") + Number(G.INCREMENTALS.hue));
+    col = col.set(
+      "hsl.s",
+      col.get("hsl.s") + Number(G.INCREMENTALS.saturation)
+    );
+    col = col.set("hsl.l", col.get("hsl.l") + Number(G.INCREMENTALS.lightness));
+
+    elem.fillColor = col.hex();
   }
   elem.original_element_index = allocate_new_element_in_list(elem);
   select_element(elem);

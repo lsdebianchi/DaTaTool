@@ -68,6 +68,10 @@
               <div class="drop_down_desc">[F] fill/unfill path</div>
               <div class="drop_down_desc">[X] delete</div>
               <div class="drop_down_desc">[D] duplicate</div>
+              <div class="drop_down_desc">[H] algin hrizontally</div>
+              <div class="drop_down_desc">[SHIFT + H] distribute hrizontally</div>
+              <div class="drop_down_desc">[V] algin vertically</div>
+              <div class="drop_down_desc">[SHIFT + V] distribute vertically</div>
               <div class="drop_down_desc">[SPACE] hide panels</div>
               <div class="drop_down_desc">[ENTER] confirm exp</div>
               <div class="drop_down_desc">[ESC] cancel exp</div>
@@ -76,6 +80,7 @@
               <div class="drop_down_desc">[SHIFT + exp] copy exp</div>
               <div class="drop_down_desc">[G] group elements</div>
               <div class="drop_down_desc">[CMD+Click] select group</div>
+
 
             </div>
           </div>
@@ -356,7 +361,7 @@
       </div>
 
       <div class="content">
-        <div class="panel_section">
+        <div id="main_settings" class="panel_section">
           <div class="panel_title">Background</div>
 
           <div class="panel_subsection">
@@ -402,10 +407,66 @@
           </br>
           <div class="panel_entry">
               <input type="file" class="entry_field" id="file_search_bg" @change="processFile($event)">
-            </div>
+          </div>
+        </div>
+
+        <div id="incrementals_panel" class="panel_section">
+          <div class="panel_title">Incrementals</div>
+
+          <div class="panel_entry">
+            <div class="entry_name">x :</div>
+            <input type="number" class="entry_field" v-model="x"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">y :</div>
+            <input type="number" class="entry_field" v-model="y"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">w :</div>
+            <input type="number" class="entry_field" v-model="w"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">h :</div>
+            <input type="number" class="entry_field" v-model="h"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">r :</div>
+            <input type="number" class="entry_field" v-model="r"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">width :</div>
+            <input type="number" class="entry_field" v-model="width"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">hue :</div>
+            <input type="number" class="entry_field" v-model="hue"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">lightness :</div>
+            <input type="number" class="entry_field" v-model="lightness"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">saturation :</div>
+            <input type="number" class="entry_field" v-model="saturation"/>
+            <div class="no_entry_data"></div>
+          </div>
+          <div class="panel_entry">
+            <div class="entry_name">opacity :</div>
+            <input type="number" class="entry_field" v-model="opacity"/>
+            <div class="no_entry_data"></div>
           </div>
 
+
         </div>
+
       </div>
     </div>
 

@@ -1,4 +1,16 @@
 var G = {
+  INCREMENTALS: {
+    x: 20,
+    y: 20,
+    w: 0,
+    h: 0,
+    r: 0,
+    hue: 0,
+    width: 0,
+    saturation: 0,
+    lightness: 0,
+    opacity: 0
+  },
   _LAST_FILLCOLOR: "#1800d7",
   _LAST_STROKECOLOR: "#15007d",
   _LAST_STROKE_WIDTH: 0,

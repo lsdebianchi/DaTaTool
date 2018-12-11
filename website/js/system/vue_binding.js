@@ -16,7 +16,7 @@ var property_bind = new Vue({
 ///////SETTING VUE /////////////////////////////////////////////////////////////
 
 var settings_bind = new Vue({
-  el: "#settings_panel",
+  el: "#main_settings",
   data: scene_state.settings,
   methods: {
     processFile(event) {
@@ -26,6 +26,12 @@ var settings_bind = new Vue({
       window.propagate_settings();
     }
   }
+});
+///////INCREMENTALS VUE /////////////////////////////////////////////////////////////
+
+var settings_bind = new Vue({
+  el: "#incrementals_panel",
+  data: G.INCREMENTALS
 });
 
 ///////EPRESSION VUE /////////////////////////////////////////////////////////////

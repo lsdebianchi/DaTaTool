@@ -92,6 +92,94 @@ $("body").on("keydown", function(e) {
       $("#run_all").addClass("active");
       if (!G.SCENE_RUNNING.active) run_scene();
     }
+    //h
+    if (e.which == 72 && !G.MAIUSC) {
+      if (current_multiselection.length > 1) {
+        for (let i in current_multiselection) {
+          var el = scene_state.elements[current_multiselection[i]];
+          if (el) {
+            el.y = current_element.y;
+            core_propagation(el, paper_elements[el.paper_element_index]);
+          }
+        }
+      }
+    }
+    //h
+    if (e.which == 72 && G.MAIUSC) {
+      if (current_multiselection.length > 1) {
+        var x_ordered_list = [];
+        for (let i in current_multiselection) {
+          var el = scene_state.elements[current_multiselection[i]];
+          if (el) {
+            if (x_ordered_list.length == 0) x_ordered_list.push(el);
+            else {
+              var placed = false;
+              for (let j in x_ordered_list) {
+                if (el.x < x_ordered_list[j].x) {
+                  x_ordered_list.splice(j, 0, el);
+                  placed = true;
+                  break;
+                }
+              }
+              if (!placed) x_ordered_list.push(el);
+            }
+          }
+        }
+        var min = x_ordered_list[0].x;
+        var max = x_ordered_list[x_ordered_list.length - 1].x;
+        var dd = max - min;
+        var d = dd / (x_ordered_list.length - 1);
+        for (let i in x_ordered_list) {
+          var el = x_ordered_list[i];
+          el.x = min + i * d;
+          core_propagation(el, paper_elements[el.paper_element_index]);
+        }
+      }
+    }
+    //v
+    if (e.which == 86 && !G.MAIUSC) {
+      if (current_multiselection.length > 1) {
+        for (let i in current_multiselection) {
+          var el = scene_state.elements[current_multiselection[i]];
+          if (el) {
+            el.x = current_element.x;
+            core_propagation(el, paper_elements[el.paper_element_index]);
+          }
+        }
+      }
+    }
+    //h
+    if (e.which == 86 && G.MAIUSC) {
+      if (current_multiselection.length > 1) {
+        var y_ordered_list = [];
+        for (let i in current_multiselection) {
+          var el = scene_state.elements[current_multiselection[i]];
+          if (el) {
+            if (y_ordered_list.length == 0) y_ordered_list.push(el);
+            else {
+              var placed = false;
+              for (let j in y_ordered_list) {
+                if (el.y < y_ordered_list[j].y) {
+                  y_ordered_list.splice(j, 0, el);
+                  placed = true;
+                  break;
+                }
+              }
+              if (!placed) y_ordered_list.push(el);
+            }
+          }
+        }
+        var min = y_ordered_list[0].y;
+        var max = y_ordered_list[y_ordered_list.length - 1].y;
+        var dd = max - min;
+        var d = dd / (y_ordered_list.length - 1);
+        for (let i in y_ordered_list) {
+          var el = y_ordered_list[i];
+          el.y = min + i * d;
+          core_propagation(el, paper_elements[el.paper_element_index]);
+        }
+      }
+    }
     //spacebar
     if (e.which == 32) {
       $("#headcontent").toggleClass("hide");
@@ -122,7 +210,6 @@ $("body").on("keydown", function(e) {
         current_multiselection = new_multiselection.slice();
       } else {
         var t = duplicate_element(current_element);
-        console.log(t);
       }
     }
     //a
