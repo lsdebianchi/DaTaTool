@@ -47,8 +47,8 @@ var expression_bind = new Vue({
         ["trigger", "TRESHOLD, VALUE, :[>/</=]", "TRESHOLD, #COLOR, :[>/</=]"],
         [
           "trigger_soft",
-          "TRESHOLD, VALUE, TIME_in, TIME_out, :[>/</=]",
-          "TRESHOLD, #COLOR, TIME_in, TIME_out, :[>/</=]"
+          "TRESHOLD, VALUE, TIME_in, TIME_out, :[>/</=], (:i)",
+          "TRESHOLD, hue_VALUE, TIME_in, TIME_out, :[>/</=], (:i)"
         ],
         ["increment", "SPEED", "SPEED, :[h/s/l]"],
         ["bounce", "AMPLITUDE, SPEED", "#COLOR, SPEED"],
@@ -61,8 +61,8 @@ var expression_bind = new Vue({
         ],
         [
           "pulse_trigger",
-          "AMPLITUDE, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>], (:i)",
-          "#COLOR, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>], (:i)"
+          "AMPLITUDE, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>]",
+          "#COLOR, GO_ON, STAY_ON, GO_OF, TRESHOLD, :[!/=/</>]"
         ],
         ["random", "MIN, MAX, FREQUENCY", "FREQUENCY"],
         ["random_soft", "MIN, MAX, SPEED", "-"]
