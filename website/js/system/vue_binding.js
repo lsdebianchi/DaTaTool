@@ -176,6 +176,46 @@ var expression_bind = new Vue({
         [
           "detection_count",
           "DETECTION COUNT: Counts the number of times the camera recognize someone."
+        ],
+        [
+          "meteo_decription",
+          "METEO DESCRIPTION: Couple of words that describe the current meteo."
+        ],
+        ["temperature", "TEMPERATURE: The current temperature in cesius."],
+        ["pressure", "PRESSURE: The current pressure in hPa (hecto-pascal)."],
+        ["humidity", "HUMIDITY: The current humidity percent (100% = rain)."],
+        [
+          "precipitation",
+          "PRECIPITATION: The current mm of rain per hour that is falling."
+        ],
+        ["precipitation_kind", "PRECIPITATION KIND: rain/snow/nothing."],
+        [
+          "snow_centimeter",
+          "SNOW CENTIMETER: The current cm of snow that have fallen."
+        ],
+        [
+          "precipitation_forecast",
+          "PRECIPITATION FORECAST: How many hours until the next expected precipitation."
+        ],
+        [
+          "clouds_coverage",
+          "CLOUDS COVERAGE: Percentage of the sky covered in clouds."
+        ],
+        ["wind_speed", "WIND SPEED: Current wind speed in meters per second."],
+        [
+          "wind_direction",
+          "WIND DIRECTION: A 360° angle that rapresent the wind direction."
+        ],
+        ["sunset", "SUNSET: Time of sunset in hours."],
+        ["sunrise", "SUNRISE: Time of sunrise in hours."],
+        [
+          "sun_height",
+          "SUN HEIGHT: Tell on a scale from 0 to 100 if the sun is at its lowes or at his highest of the day."
+        ],
+        ["moon_phase", "MOON PHASE: What percentage of the moon is visible."],
+        [
+          "moon_phase_description",
+          "MOON PHASE DESCRIPTION: The name of the moon phase."
         ]
       ];
       var t = "";

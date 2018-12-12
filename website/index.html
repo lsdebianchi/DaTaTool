@@ -529,6 +529,10 @@
           <select class="costum_select" @change="clearType()" v-model="dataSource">
             <option>time</option>
             <option>sensor</option>
+            <option>meteo</option>
+            <option>nature</option>
+            <option>home</option>
+            <option>sport</option>
           </select>
           <select class="costum_select" v-model="dataType">
             <!-- time -->
@@ -539,10 +543,40 @@
             <option v-if="dataSource == 'time'">current_seconds</option>
             <option v-if="dataSource == 'time'">current_minutes</option>
             <option v-if="dataSource == 'time'">current_hours</option>
-            <!-- currency -->
+            <!-- sensor -->
             <option v-if="dataSource == 'sensor'">distance</option>
             <option v-if="dataSource == 'sensor'">detection</option>
             <option v-if="dataSource == 'sensor'">detection_count</option>
+            <!-- meteo -->
+            <option v-if="dataSource == 'meteo'">meteo_decription</option>
+            <option v-if="dataSource == 'meteo'">temperature</option>
+            <option v-if="dataSource == 'meteo'">pressure</option>
+            <option v-if="dataSource == 'meteo'">humidity</option>
+            <option v-if="dataSource == 'meteo'">precipitation</option>
+            <option v-if="dataSource == 'meteo'">precipitation_kind</option>
+            <option v-if="dataSource == 'meteo'">snow_centimeter</option>
+            <option v-if="dataSource == 'meteo'">precipitation_forecast</option>
+            <option v-if="dataSource == 'meteo'">clouds_coverage</option>
+            <option v-if="dataSource == 'meteo'">wind_speed</option>
+            <option v-if="dataSource == 'meteo'">wind_direction</option>
+            <option v-if="dataSource == 'meteo'">sunset</option>
+            <option v-if="dataSource == 'meteo'">sunrise</option>
+            <option v-if="dataSource == 'meteo'">sun_height</option>
+            <option v-if="dataSource == 'meteo'">moon_phase</option>
+            <option v-if="dataSource == 'meteo'">moon_phase_description</option>
+            <!-- nature -->
+            <option v-if="dataSource == 'nature'">quake_detection</option>
+            <option v-if="dataSource == 'nature'">last_quake_intensity</option>
+            <option v-if="dataSource == 'nature'">wave_height</option>
+            <!-- home -->
+            <option v-if="dataSource == 'home'">current_consumption</option>
+            <option v-if="dataSource == 'home'">daily_consumption</option>
+            <option v-if="dataSource == 'home'">current_country_average</option>
+            <!-- sport -->
+            <option v-if="dataSource == 'sport'">run_today</option>
+            <option v-if="dataSource == 'sport'">average_daily_run</option>
+            <option v-if="dataSource == 'sport'">run_this_week</option>
+            <option v-if="dataSource == 'sport'">average_weekly_run</option>
           </select>
 
         </div>
@@ -587,6 +621,7 @@
   <script type="text/javascript" src="./js/components/scene.js"></script>
   <script type="text/javascript" src="./js/components/element.js"></script>
   <script type="text/javascript" src="./js/components/distance_tracker.js"></script>
+  <script type="text/javascript" src="./js/components/datasets.js"></script>
 
   <!-- SYSTEM -->
   <script type="text/javascript" src="./js/system/global_variables.js"></script>

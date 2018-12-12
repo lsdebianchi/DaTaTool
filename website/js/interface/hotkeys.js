@@ -218,6 +218,10 @@ $("body").on("keydown", function(e) {
       $("#add_panel").css("left", mouseX + "px");
       $("#add_panel").css("top", mouseY + "px");
     }
+    //m
+    if (e.which == 77) {
+      datas.new_meteo();
+    }
     //c
     if (e.which == 67 && !G.CMD) {
       $("#picker").toggleClass("active");

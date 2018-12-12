@@ -63,7 +63,34 @@ var runTimeInput = {
   hours: 0,
   current_seconds: 0,
   current_minutes: 0,
-  current_hours: 0
+  current_hours: 0,
+  meteo_decription: "",
+  temperature: 0,
+  pressure: 0,
+  humidity: 0,
+  precipitation: 0,
+  precipitation_kind: "",
+  snow_centimeter: 0,
+  precipitation_forecast: 0,
+  clouds_coverage: 0,
+  wind_speed: 0,
+  wind_direction: 0,
+  sunset: 0,
+  sunrise: 0,
+  sun_height: 0,
+  moon_phase: 0,
+  moon_phase_description: "",
+  quake_count: 0,
+  last_quake_intensity: 0,
+  wave_frequency: 0,
+  wave_heigth: 0,
+  current_consumption: 0,
+  daily_consumption: 0,
+  current_country_average: 0,
+  run_today: 0,
+  average_daily_run: 0,
+  run_this_week: 0,
+  average_weekly_run: 0
 };
 var dataSets = {
   time: null
@@ -104,6 +131,7 @@ var scene_state = {
   objects: {}
 };
 var tracker;
+var datas;
 
 var mouseX = 0;
 var mouseY = 0;

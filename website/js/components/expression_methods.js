@@ -635,11 +635,13 @@ function assign_methods(elem) {
       if (data.dataBehaviour == "raw") {
         data.var.scale = param[0] ? param[0] : 1;
         data.var.offset = param[1] ? param[1] : 0;
-
         data.method = function(v) {
           var INPUT = runTimeInput[v.input];
-          if (typeof INPUT == "number") INPUT = format(INPUT);
-          this[v.target] = INPUT * v.scale + v.offset + "";
+          if (typeof INPUT == "number") {
+            INPUT = format(INPUT);
+            INPUT = INPUT * v.scale + v.offset + "";
+          }
+          this[v.target] = INPUT;
         }.bind(elem);
       }
       //clamp
