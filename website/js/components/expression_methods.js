@@ -141,7 +141,8 @@ function assign_methods(elem) {
 
         data.method = function(v) {
           var INPUT = runTimeInput[v.input];
-          this[v.target] += INPUT * v.speed;
+          console.log(this[v.target]);
+          this[v.target] = Number(this[v.target]) + INPUT * v.speed;
         }.bind(elem);
       }
       //bounce
@@ -399,7 +400,6 @@ function assign_methods(elem) {
 
         if (param[5] == "i") data.var.difference = data.var.value;
 
-        console.log(param[4]);
         data.method = function(v) {
           var INPUT = runTimeInput[v.input];
 

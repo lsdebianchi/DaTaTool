@@ -193,6 +193,10 @@ var Datasets = function() {
 
   this.quake_count = 0;
   this.last_quake_intensity = 0;
+  this.quake_t_v = [25, 45];
+  this.quake_i_v = [4, 10];
+  this.next_quake = variation(this.quake_t_v) * 60;
+
   this.wave_heigth = 0;
   this.wave_frequency = 0;
 
@@ -240,7 +244,13 @@ Datasets.prototype = {
     this.return_all_value();
   },
 
-  tick: function() {},
+  tick: function() {
+    if (this.next_quake == 0) {
+      this.quake_count++;
+      this.next_quake = variation(this.quake_t_v) * 60;
+      this.last_quake_intensity = variation(this.quake_i_v);
+    } else this.next_quake--;
+  },
 
   return_all_value: function() {
     var prop = [
@@ -280,7 +290,9 @@ function rnd_elem_pndered(array) {
   }
   return i;
 }
-
+function variation_f(op) {
+  return Math.random() * (op[1] - op[0]) + op[0];
+}
 function variation(op) {
   return Math.floor(Math.random() * (op[1] - op[0])) + op[0];
 }
