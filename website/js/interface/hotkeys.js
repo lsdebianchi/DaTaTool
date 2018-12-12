@@ -70,6 +70,36 @@ $("body").on("keydown", function(e) {
         current_multiselection = [];
       }
     }
+    //SHIFT + LEFT
+    if (G.MAIUSC && e.which == 39) {
+      if (G.SCENE_RUNNING) stop_scene(true);
+      G.LOAD_LOG.index++;
+      if (G.LOAD_LOG.index === G.LOAD_LOG.saved_scenes_list.length) {
+        G.LOAD_LOG.index = 0;
+      }
+      $("#load_log").val(G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index]);
+      current_project.name = G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index];
+      load_scene(current_project.name, true);
+      setTimeout(function() {
+        run_scene();
+      }, 100);
+      console.log(G.LOAD_LOG.index);
+    }
+    //SHIFT + RIGHT
+    if (G.MAIUSC && e.which == 37) {
+      if (G.SCENE_RUNNING) stop_scene(true);
+      G.LOAD_LOG.index--;
+      if (G.LOAD_LOG.index === -1) {
+        G.LOAD_LOG.index = G.LOAD_LOG.saved_scenes_list.length - 1;
+      }
+      $("#load_log").val(G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index]);
+      current_project.name = G.LOAD_LOG.saved_scenes_list[G.LOAD_LOG.index];
+      load_scene(current_project.name, true);
+      setTimeout(function() {
+        run_scene();
+      }, 100);
+      console.log(G.LOAD_LOG.index);
+    }
     //x
     if (e.which == 88) {
       if (current_multiselection.length > 1) {

@@ -35,7 +35,7 @@ function propagate_settings() {
   );
 }
 
-function run_scene() {
+function run_scene(preventListUpdate) {
   deselect_all_elements();
   if (scene_state.play_setting.sensor) {
     $("#distance_meter").addClass("active");
@@ -94,7 +94,7 @@ function run_scene() {
   };
 }
 
-function stop_scene() {
+function stop_scene(preventListUpdate) {
   if (scene_state.play_setting.sensor) tracker.stop();
   $("#distance_meter").removeClass("active");
   G.SCENE_RUNNING.active = false;
@@ -140,6 +140,6 @@ function stop_scene() {
     // average_weekly_run: 0
   };
 
-  load_scene(current_project.name + "_LOG");
+  load_scene(current_project.name + "_LOG", preventListUpdate);
   paper.view.onFrame = function(event) {};
 }

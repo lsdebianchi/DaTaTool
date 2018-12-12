@@ -43,24 +43,29 @@ function save_scene(name, runtime_save) {
     }
   );
 }
-function load_scene(name) {
+function load_scene(name, preventListUpdate) {
   G.LOADING = true;
   var save_name = name ? name : current_project.name;
   $.get("http://localhost:3000/load_scene/" + save_name, function(data) {
     var loading_scene_state = JSON.parse(data);
-    generate_scene(loading_scene_state);
+    generate_scene(loading_scene_state, preventListUpdate);
     deselect_all_elements();
     if (/^((?!_LOG).)*$/gi.test(name)) $("#save_status").addClass("hide");
     G.LOADING = false;
   });
 }
 
-function generate_scene(loading_scene_state) {
-  G.LOAD_LOG.saved_scenes_list = [];
-  for (let i in loading_scene_state.saved_scenes_list) {
-    G.LOAD_LOG.saved_scenes_list.push(loading_scene_state.saved_scenes_list[i]);
+function generate_scene(loading_scene_state, preventListUpdate) {
+  if (!preventListUpdate) {
+    console.log("listed");
+    G.LOAD_LOG.saved_scenes_list = [];
+    for (let i in loading_scene_state.saved_scenes_list) {
+      G.LOAD_LOG.saved_scenes_list.push(
+        loading_scene_state.saved_scenes_list[i]
+      );
+    }
+    G.LOAD_LOG.index = 0;
   }
-  G.LOAD_LOG.index = 0;
 
   for (let i in scene_state.elements) {
     let el = scene_state.elements[i];
