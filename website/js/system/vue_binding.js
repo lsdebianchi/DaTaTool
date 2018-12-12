@@ -205,6 +205,10 @@ var expression_bind = new Vue({
           "meteo_decription",
           "METEO DESCRIPTION: Couple of words that describe the current meteo."
         ],
+        [
+          "meteo_index",
+          "METEO INDEX: Numbers from 0 upwards that represent all the possible meteo state."
+        ],
         ["temperature", "TEMPERATURE: The current temperature in cesius."],
         ["pressure", "PRESSURE: The current pressure in hPa (hecto-pascal)."],
         ["humidity", "HUMIDITY: The current humidity percent (100% = rain)."],

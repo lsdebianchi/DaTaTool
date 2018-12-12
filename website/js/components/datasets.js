@@ -158,6 +158,7 @@ var Datasets = function() {
 
   this.ms = undefined;
   this.meteo_decription = undefined;
+  this.meteo_index = undefined;
   this.temperature = undefined;
 
   this.pressure = undefined;
@@ -216,6 +217,7 @@ Datasets.prototype = {
     var s;
     this.ms = s = rnd_elem_pndered(this.mo);
     this.meteo_decription = this.mo[s].name;
+    this.meteo_index = s;
     this.temperature = variation(this.mo[s].temp_v);
     this.pressure = variation(this.mo[s].press_v);
     this.humidity = variation(this.mo[s].humid_v);
@@ -242,7 +244,7 @@ Datasets.prototype = {
     this.wind_speed = variation_f(this.mo[s].wind_v, 1);
     this.wind_direction = Math.floor(Math.random() * 360);
 
-    this.wave_heigth = variation_f([2, 7]);
+    this.wave_height = variation_f([2, 7]);
     this.wave_frequency = variation([12, 20]);
 
     this.return_all_value();
@@ -273,6 +275,7 @@ Datasets.prototype = {
   return_all_value: function() {
     var prop = [
       "meteo_decription",
+      "meteo_index",
       "temperature",
       "pressure",
       "humidity",

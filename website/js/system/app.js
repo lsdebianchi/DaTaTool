@@ -114,6 +114,7 @@ function stop_scene(preventListUpdate) {
     current_minutes: 0,
     current_hours: 0,
     meteo_decription: "",
+    meteo_index: 0,
     temperature: 0,
     pressure: 0,
     humidity: 0,
