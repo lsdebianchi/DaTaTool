@@ -83,14 +83,14 @@ var runTimeInput = {
   quake_count: 0,
   last_quake_intensity: 0,
   wave_frequency: 0,
-  wave_height: 0,
-  current_consumption: 0,
-  daily_consumption: 0,
-  current_country_average: 0,
-  run_today: 0,
-  average_daily_run: 0,
-  run_this_week: 0,
-  average_weekly_run: 0
+  wave_height: 0
+  // current_consumption: 0,
+  // daily_consumption: 0,
+  // current_country_average: 0,
+  // run_today: 0,
+  // average_daily_run: 0,
+  // run_this_week: 0,
+  // average_weekly_run: 0
 };
 var dataSets = {
   time: null
