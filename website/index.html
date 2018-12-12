@@ -76,9 +76,13 @@
               <div class="drop_down_desc">[SHIFT + V]                  <a>vertically distribution</a></div>
               <div class="drop_down_desc"><a>------------------</a></div>
               <div class="drop_down_desc">[F]                          <a>fill/unfill path</a></div>
+              <div class="drop_down_desc">[M]                          <a>regenerate meteo data</a></div>
               <div class="drop_down_desc"><a>------------------</a></div>
               <div class="drop_down_desc">[G]                          <a>group elements</a></div>
               <div class="drop_down_desc">[CMD + CLICK]                <a>select group</a></div>
+              <div class="drop_down_desc"><a>------------------</a></div>
+              <div class="drop_down_desc">[SHIFT + LEFT/RIGHT]        <a>browse projects</a></div>
+              <div class="drop_down_desc">[UP/DOWN]                   <a>(on project name) browse saved projects</a></div>
               <div class="drop_down_desc"><a>------------------</a></div>
               <div class="drop_down_desc">[SPACE]                      <a>hide panels</a></div>
               <div class="drop_down_desc">[C]                          <a>color palette</a></div>
@@ -366,6 +370,7 @@
       </div>
 
       <div class="content">
+
         <div id="main_settings" class="panel_section">
           <div class="panel_title">Background</div>
 
@@ -470,6 +475,14 @@
           </div>
 
 
+        </div>
+
+        <div id="responsive_reload" class="panel_subsection">
+          <div class="panel_entry">
+            <div class="entry_name">responsive reload :</div>
+            <input kind="visible" class="entry_field big" type="checkbox" v-model="active" v-on:change="updateCookie()">
+            <div class="no_entry_data"></div>
+          </div>
         </div>
 
       </div>

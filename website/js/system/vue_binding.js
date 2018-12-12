@@ -29,13 +29,37 @@ var settings_bind = new Vue({
 });
 ///////INCREMENTALS VUE /////////////////////////////////////////////////////////////
 
-var settings_bind = new Vue({
+var incrementals_bind = new Vue({
   el: "#incrementals_panel",
   data: G.INCREMENTALS
 });
+///////RESPONSIVE RELOAD VUE /////////////////////////////////////////////////////////////
 
+var rr_bind = new Vue({
+  el: "#responsive_reload",
+  data: RESPONSIVE_RELOAD,
+  methods: {
+    updateCookie: function() {
+      document.cookie = "" + this.active;
+    }
+  }
+});
 ///////EPRESSION VUE /////////////////////////////////////////////////////////////
-
+var responsive_parameters = {
+  raw: [0, 1],
+  clamp: [1, 1, 1],
+  map: [0, 0, 1, 1],
+  trigger: [0, [1, 0], 0],
+  trigger_soft: [0, [1, 0], 0, 0, 0, 0],
+  increment: [0, 0],
+  bounce: [[1, 0], 0],
+  sin: [[1, 0], 0],
+  cos: [[1, 0], 0],
+  pulse: [[1, 0], 0, 0, 0, 0],
+  pulse_trigger: [[1, 0], 0, 0, 0, 0, 0],
+  random: [[1, 0]],
+  random_soft: [0, 0, 0]
+};
 var expression_bind = new Vue({
   el: "#expression_panel",
   data: current_expression,

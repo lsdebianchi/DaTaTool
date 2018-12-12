@@ -110,7 +110,8 @@ var current_expression = {
 };
 var paper_elements = [];
 var paper_tool;
-
+var RIO = 1;
+var RESPONSIVE_RELOAD = { active: false };
 var scene_state = {
   play_setting: {
     sensor: false

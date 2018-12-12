@@ -1,4 +1,6 @@
 window.onload = function() {
+  RESPONSIVE_RELOAD.active = document.cookie === "true" ? true : false;
+  console.log(document.cookie);
   paper.setup(document.getElementById("paper_canvas"));
   paper_tool = new paper.Tool();
   load_paper_handlers();

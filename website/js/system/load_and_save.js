@@ -56,8 +56,10 @@ function load_scene(name, preventListUpdate) {
 }
 
 function generate_scene(loading_scene_state, preventListUpdate) {
+  // width = window.innerWidth;
+  // height = window.innerHeight;
+
   if (!preventListUpdate) {
-    console.log("listed");
     G.LOAD_LOG.saved_scenes_list = [];
     for (let i in loading_scene_state.saved_scenes_list) {
       G.LOAD_LOG.saved_scenes_list.push(
@@ -83,6 +85,12 @@ function generate_scene(loading_scene_state, preventListUpdate) {
   if (scene_state.play_setting.sensor) $("#run_sensor").addClass("active");
   else $("#run_sensor").removeClass("active");
 
+  scene_state.settings.screen_width = loading_scene_state.settings.screen_width;
+  scene_state.settings.screen_height =
+    loading_scene_state.settings.screen_height;
+
+  RIO = width / scene_state.settings.screen_width;
+  console.log(RIO);
   scene_state.settings.background.color =
     loading_scene_state.settings.background.color;
   scene_state.settings.background.imgPath =
@@ -100,12 +108,61 @@ function generate_scene(loading_scene_state, preventListUpdate) {
 
   var grouping_list = [];
 
+  console.log("---------------");
+  console.log("---------------");
+  console.log("NEW RIO:");
+  console.log(RIO);
+  console.log("---------------");
+  console.log("---------------");
+
   for (let i in loading_scene_state.elements) {
     let el = loading_scene_state.elements[i];
     if (typeof el === typeof undefined || el === null) {
       scene_state.elements.push(null);
       continue;
     }
+    if (RESPONSIVE_RELOAD.active) {
+      el.x *= RIO;
+      el.y *= RIO;
+      el.w *= RIO;
+      el.h *= RIO;
+      el.strokeWidth *= RIO;
+
+      for (let k in attr_list) {
+        let key = "data_" + attr_list[k];
+        if (!el[key]) continue;
+        let data = el[key];
+        let e = data.expression;
+        var param = e.split(", ");
+        var new_e = "";
+
+        var situation = data.valueType == "color" ? 1 : 0;
+        var scalable_list = responsive_parameters[data.dataBehaviour];
+        console.log(data.dataBehaviour + ": [" + e + "]");
+        for (var index = 0; index < param.length; index++) {
+          var val = param[index];
+          if (!isNaN(Number(val))) {
+            var isScalable = scalable_list[index];
+            if (isScalable instanceof Array) isScalable = isScalable[situation];
+            if (isScalable) {
+              console.log(index + ": scaled (" + val + ")");
+              val = Number(val);
+              val *= RIO;
+            } else {
+              console.log(index + ": unscaled (" + val + ")");
+            }
+          } else {
+            console.log(index + ": not a number (" + val + ")");
+          }
+          // val = val.toFixed()
+          new_e += val + ", ";
+        }
+        new_e = new_e.slice(0, -2);
+        el[key].expression = new_e;
+        console.log("R -> [" + el[key].expression + "]");
+      }
+    }
+
     if (el.type !== "group") create_new_element(el.type, el.x, el.y, el);
     else {
       var c = create_group(el.group_children_index, el);
