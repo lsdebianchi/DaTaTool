@@ -72,7 +72,7 @@ function run_scene() {
     }
 
     //// tick datasets
-    //datas.tick();
+    datas.tick();
     var delta_time = new Date().getTime() - dataSets.time;
     runTimeInput.hours = Math.floor(
       (delta_time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -129,7 +129,7 @@ function stop_scene() {
     moon_phase_description: "",
     quake_count: 0,
     last_quake_intensity: 0,
-    wave_heigth: 0,
+    wave_height: 0,
     wave_frequency: 0,
     current_consumption: 0,
     daily_consumption: 0,

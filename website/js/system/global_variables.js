@@ -83,7 +83,7 @@ var runTimeInput = {
   quake_count: 0,
   last_quake_intensity: 0,
   wave_frequency: 0,
-  wave_heigth: 0,
+  wave_height: 0,
   current_consumption: 0,
   daily_consumption: 0,
   current_country_average: 0,

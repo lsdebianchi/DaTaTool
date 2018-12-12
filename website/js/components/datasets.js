@@ -170,6 +170,7 @@ var Datasets = function() {
   this.clouds_coverage = undefined;
   this.wind_speed = undefined;
   this.wind_direction = undefined;
+  this.wind_timer = 10 * 60;
 
   var hours = new Date().getHours();
   var sunrise = 8;
@@ -186,7 +187,7 @@ var Datasets = function() {
 
   this.sunrise = sunrise;
   this.sunset = sunset;
-  this.sun_height = sun_height;
+  this.sun_height = sun_height.toFixed(2);
 
   this.moon_phase = 16;
   this.moon_phase_description = "waxing crescent";
@@ -194,11 +195,11 @@ var Datasets = function() {
   this.quake_count = 0;
   this.last_quake_intensity = 0;
   this.quake_t_v = [25, 45];
-  this.quake_i_v = [4, 10];
+  this.quake_i_v = [3, 5];
   this.next_quake = variation(this.quake_t_v) * 60;
 
-  this.wave_heigth = 0;
-  this.wave_frequency = 0;
+  this.wave_height = variation_f([2, 7]);
+  this.wave_frequency = variation([12, 20]);
 
   this.current_consumption = 0;
   this.daily_consumption = 0;
@@ -232,24 +233,41 @@ Datasets.prototype = {
       this.precipitation_kind = "rain";
     else this.precipitation_kind = " ";
     this.snow_centimeter =
-      this.precipitation_kind == "snow" ? variation(this.mo[s].temp_v) : 0;
+      this.precipitation_kind == "snow" ? variation(this.mo[s].precip_v) : 0;
     this.precipitation =
       this.precipitation_kind != "snow" ? variation(this.mo[s].precip_v) : 0;
 
     this.precipitation_forecast = variation(this.mo[s].precip_f);
     this.clouds_coverage = variation(this.mo[s].clouds_v);
-    this.wind_speed = variation(this.mo[s].wind_v);
+    this.wind_speed = variation_f(this.mo[s].wind_v, 1);
     this.wind_direction = Math.floor(Math.random() * 360);
+
+    this.wave_heigth = variation_f([2, 7]);
+    this.wave_frequency = variation([12, 20]);
 
     this.return_all_value();
   },
 
   tick: function() {
+    //quakes
     if (this.next_quake == 0) {
       this.quake_count++;
       this.next_quake = variation(this.quake_t_v) * 60;
-      this.last_quake_intensity = variation(this.quake_i_v);
+      this.last_quake_intensity = variation_f(this.quake_i_v, 1);
+
+      runTimeInput.quake_count = this.quake_count;
+      runTimeInput.last_quake_intensity = this.last_quake_intensity;
     } else this.next_quake--;
+
+    if (this.wind_timer == 0) {
+      this.wind_timer = 10 * 60;
+      this.wind_speed =
+        Number(this.wind_speed) + Number((Math.random() * 0.5).toFixed(1));
+      this.wind_direction += Math.floor(Math.random() * 3);
+
+      runTimeInput.wind_speed = this.wind_speed;
+      runTimeInput.wind_direction = this.wind_direction;
+    } else this.wind_timer--;
   },
 
   return_all_value: function() {
@@ -269,7 +287,11 @@ Datasets.prototype = {
       "sunset",
       "sun_height",
       "moon_phase",
-      "moon_phase_description"
+      "moon_phase_description",
+      "quake_count",
+      "last_quake_intensity",
+      "wave_height",
+      "wave_frequency"
     ];
     for (let i in prop) {
       runTimeInput[prop[i]] = this[prop[i]];
@@ -290,8 +312,8 @@ function rnd_elem_pndered(array) {
   }
   return i;
 }
-function variation_f(op) {
-  return Math.random() * (op[1] - op[0]) + op[0];
+function variation_f(op, f) {
+  return (Math.random() * (op[1] - op[0]) + op[0]).toFixed(f ? f : 2);
 }
 function variation(op) {
   return Math.floor(Math.random() * (op[1] - op[0])) + op[0];
